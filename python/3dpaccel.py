@@ -7,14 +7,17 @@ from enum import Enum
 
 from serial.tools.list_ports import comports
 
-from lib.device_io import CdcSerial
-from lib.device_types import OutputDataRate, Range, TransportHeaderId, Scale
+from lib.device_constants import OutputDataRate, Range, Scale
+from lib.device_io import Adxl345
 
 
 class LogLevel(Enum):
-    i = "i"  # info
-    v = "v"  # info, verbose
-    d = "d"  # info, verbose, debug
+    CRITICAL = 50
+    ERROR = 40
+    WARNING = 30
+    INFO = 20
+    DEBUG = 10
+    NOTSET = 0
 
 
 class Args:
@@ -82,10 +85,11 @@ class Args:
         sub_group = self.parser.add_argument_group("Logging",
                                                    description="Manipulate the verbosity level.")
         grp = sub_group.add_mutually_exclusive_group()
+
         grp.add_argument("-l", "--log",
-                         help="Set the logging level. Info (I): lesser logs; "
-                              "Verbose (V): more logs; Debug (D): all logs.",
-                         choices=[e.name for e in LogLevel])
+                         help="Set the logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL",
+                         choices=[e.name for e in LogLevel],
+                         default="INFO")
 
         grp.add_argument("-d", "--device",
                          help="Specify the serial device to communicate with.",
@@ -98,6 +102,7 @@ class Runner:
 
     def __init__(self) -> None:
         self._cli_args: Args = Args()
+        logging.basicConfig(level=LogLevel[self.args.log].value)
 
     @property
     def args(self):
@@ -112,22 +117,10 @@ class Runner:
             self.parser.print_help()
             return 1
 
-        # setup log levels
-        def disable_levels(levels):
-            for log_level in levels:
-                logging.disable(log_level)
-
-        {
-            LogLevel.i.value: lambda: disable_levels([logging.DEBUG, logging.WARNING]),
-            LogLevel.v.value: lambda: disable_levels([logging.WARNING]),
-            LogLevel.d.value: lambda: disable_levels([]),
-            None: lambda: disable_levels([]),
-        }[self.args.log]()
-
         if self.args.command == "device":
             if self.args.list:
                 for s in comports():
-                    print(f"{s.device} {s.manufacturer} {s.description} {s.hwid}")
+                    logging.info(f"{s.device} {s.manufacturer} {s.description} {s.hwid}")
             else:
                 logging.warning("noting to do")
 
@@ -137,45 +130,48 @@ class Runner:
 
         if self.args.command == "set":
             if self.args.outputdatarate:
-                print("set odr")
+                logging.info(f"send outputdatarate={self.args.outputdatarate}")
+                with Adxl345(self.args.device) as sensor:
+                    sensor.set_output_data_rate(OutputDataRate[self.args.outputdatarate])
             elif self.args.scale:
-                print("set scale")
+                logging.info(f"send scale={self.args.scale}")
+                with Adxl345(self.args.device) as sensor:
+                    sensor.set_scale(Scale[self.args.scale])
             elif self.args.range:
-                print("set range")
+                logging.info(f"send range={self.args.range}")
+                with Adxl345(self.args.device) as sensor:
+                    sensor.set_range(Range[self.args.range])
             else:
                 logging.warning("noting to do")
                 return 1
 
         if self.args.command == "get":
             if self.args.outputdatarate:
-                with CdcSerial(self.args.device, 0.1) as s:
-                    r = s.send_request(TransportHeaderId.GetOutputDataRate, 1)[0]
-                    print(f"odr={OutputDataRate(r).name}")
+                with Adxl345(self.args.device) as sensor:
+                    logging.debug(f"request odr")
+                    logging.info(f"odr={sensor.get_output_data_rate().name}")
             elif self.args.scale:
-                with CdcSerial(self.args.device, 0.1) as s:
-                    r = s.send_request(TransportHeaderId.GetScale, 1)[0]
-                    print(f"scale={Scale(r).name}")
+                logging.debug(f"request scale")
+                with Adxl345(self.args.device) as sensor:
+                    logging.info(f"scale={sensor.get_scale().name}")
             elif self.args.range:
-                with CdcSerial(self.args.device, 0.1) as s:
-                    r = s.send_request(TransportHeaderId.GetRange, 1)[0]
-                    print(f"range={Range(r).name}")
+                logging.debug(f"request range")
+                with Adxl345(self.args.device) as sensor:
+                    logging.info(f"range={sensor.get_range().name}")
             elif self.args.all:
-                with CdcSerial(self.args.device, 0.1) as s:
-                    r = s.send_request(TransportHeaderId.GetOutputDataRate, 1)[0]
-                    print(f"odr={OutputDataRate(r).name}")
-                    r = s.send_request(TransportHeaderId.GetScale, 1)[0]
-                    print(f"scale={Scale(r).name}")
-                    r = s.send_request(TransportHeaderId.GetRange, 1)[0]
-                    print(f"range={Range(r).name}")
+                with Adxl345(self.args.device) as sensor:
+                    logging.info(f"odr={sensor.get_output_data_rate().name}")
+                    logging.info(f"scale={sensor.get_scale().name}")
+                    logging.info(f"range={sensor.get_range().name}")
             else:
                 logging.warning("noting to do")
                 return 1
 
         if self.args.command == "stream":
             if self.args.start:
-                print("start")
+                logging.info("start")
             elif self.args.stop:
-                print("stop")
+                logging.info("stop")
             else:
                 logging.warning("noting to do")
                 return 1
