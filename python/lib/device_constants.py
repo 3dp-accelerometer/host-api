@@ -24,9 +24,13 @@ class Scale(Enum):
 
 
 class TransportHeaderId(Enum):
-    SetOutputDataRate = 1
-    GetOutputDataRate = 2
-    SetRange = 3
-    GetRange = 4
-    SetScale = 5
-    GetScale = 6
+    SET_OUTPUT_DATA_RATE = 1
+    GET_OUTPUT_DATA_RATE = 2
+    SET_RANGE = 3
+    GET_RANGE = 4
+    SET_SCALE = 5
+    GET_SCALE = 6
+    DEVICE_REBOOT = 32
+    SAMPLING_START = 33
+    SAMPLING_START_N = 34
+    SAMPLING_STOP = 35

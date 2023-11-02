@@ -1,4 +1,4 @@
-from device_constants import TransportHeaderId
+from lib.device_constants import TransportHeaderId
 
 
 class TxFrame:
@@ -11,4 +11,6 @@ class TxFrame:
         Packs header_id + payload into bytes: [header_id, byte1, byte2, ...]
         :return:
         """
-        return bytes([int(self.header_id.value), self.payload[0]])
+        values = [int(self.header_id.value)]
+        values.extend(self.payload)
+        return bytes(values)
