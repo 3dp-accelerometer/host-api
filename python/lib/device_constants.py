@@ -28,8 +28,8 @@ class Range(Enum):
 
 
 class Scale(Enum):
-    FULL_RES_G4 = 0
-    SCALED_10BIT = 1
+    FULL_RES_4MG_LSB = 1
+    SCALED_10BIT = 0
 
 
 class TransportHeaderId(Enum):
