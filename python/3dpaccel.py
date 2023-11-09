@@ -3,6 +3,7 @@
 import argparse
 import logging
 import sys
+from datetime import datetime
 from enum import Enum
 
 from serial.tools.list_ports import comports
@@ -45,7 +46,7 @@ class Args:
 
         sup = sub_parsers.add_parser(
             "set",
-            help="set sampling parameter",
+            help="device setup",
             description="Configure output data rate, resolution and range.")
         grp = sup.add_mutually_exclusive_group()
         grp.add_argument(
@@ -63,7 +64,7 @@ class Args:
 
         sup = sub_parsers.add_parser(
             "get",
-            help="read config device status",
+            help="read device setup",
             description="Reads device parameters.")
         grp = sup.add_mutually_exclusive_group()
         grp.add_argument(
@@ -80,13 +81,13 @@ class Args:
             action="store_true")
         grp.add_argument(
             "-a", "--all",
-            help="Read all parameter (-org).",
+            help="Read all parameter.",
             action="store_true")
 
         sup = sub_parsers.add_parser(
             "stream",
-            help="enable disable data streaming",
-            description="Will start or stop the acceleration data streaming.")
+            help="start/stop streaming",
+            description="Starts or stops data streaming from device.")
         grp = sup.add_mutually_exclusive_group()
 
         def max_n(n: str) -> int | None:
@@ -102,14 +103,32 @@ class Args:
 
         grp.add_argument(
             "-p", "--stop",
-            help="Stops streaming started with --start.",
+            help="Stops current stream.",
             action="store_true")
 
+        sup = sub_parsers.add_parser(
+            "decode",
+            help="data decoding",
+            description="Connects to device and decodes input stream. "
+                        "The connection must be established before the data stream is started. "
+                        "While decoding, subsequent script calls with \"stream\" and \"set\" commands are allowed.")
+        grp = sup.add_mutually_exclusive_group()
+
         grp.add_argument(
-            "-d", "--decode",
-            help="Connects to device and decodes input stream. "
-                 "While decoding, simultaneous calls to output stream are allowed: start, stop and setup commands.",
+            "-", "--stdout",
+            help="Prints streamed data to stdout. Script does not finish when stream stops and waits for subsequent runs.",
             action="store_true")
+
+        timestamp = datetime.now().strftime("%Y-%m-%d-%H%M%S")
+        default_filename = f"./stream-{timestamp}.tsv"
+        grp.add_argument(
+            "-f", "--file",
+            help="Writes streamed data to file. Script finishes when stream is stopped. "
+                 "While decoding, simultaneous calls to output stream are allowed: start, stop and setup commands. "
+                 f"Leave empty string for default fallback filename \"{default_filename}\".",
+            type=str,
+            nargs='?',
+            const=default_filename)
 
         sub_group = self.parser.add_argument_group(
             "Logging",
@@ -216,6 +235,20 @@ class Runner:
                 logging.info("sampling decode")
                 with Adxl345(self.args.device) as sensor:
                     sensor.decode()
+            else:
+                logging.warning("noting to do")
+                return 1
+
+        elif self.args.command == "decode":
+            if self.args.stdout:
+                logging.info("decode stream to stdout")
+                with Adxl345(self.args.device) as sensor:
+                    sensor.decode(return_on_stop=False)
+            if self.args.file:
+                logging.info(f"decode stream to file {self.args.file}")
+                with open(self.args.file, "x") as file:
+                    with Adxl345(self.args.device) as sensor:
+                        sensor.decode(return_on_stop=True, file=file)
             else:
                 logging.warning("noting to do")
                 return 1

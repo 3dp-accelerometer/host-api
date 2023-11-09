@@ -1,11 +1,12 @@
+import logging
 import time
-from typing import List
+from typing import List, TextIO
 
 import serial
 from serial import Serial
 
 from lib.device_constants import Range, Scale, OutputDataRate
-from lib.device_types import TransportHeaderId, TxFrame, RxFrame, Acceleration, SamplingStopped, SamplingStarted, FifoOverflow, SamplingFinished, SamplingAborted
+from lib.device_types import TransportHeaderId, TxFrame, RxFrame, Acceleration, SamplingStopped, SamplingStarted, FifoOverflow, SamplingFinished, SamplingAborted, UnknownResponse
 
 
 class CdcSerial:
@@ -58,6 +59,10 @@ class ErrorFifoOverflow:
     pass
 
 
+class ErrorUnknownResponse:
+    pass
+
+
 class Adxl345(CdcSerial):
 
     def __init__(self, ser_dev_name: str, timeout: float = 0.1):
@@ -106,7 +111,7 @@ class Adxl345(CdcSerial):
     def stop_sampling(self):
         self._send_header(TransportHeaderId.SAMPLING_STOP)
 
-    def decode(self, return_on_stop: bool = False):
+    def decode(self, return_on_stop: bool = False, file: None | TextIO = None):
         data: bytearray = bytearray()
         run_count: int = 0
         sample_count: int = 0
@@ -117,28 +122,35 @@ class Adxl345(CdcSerial):
             if len(data) >= 1:
                 package = RxFrame(data).unpack()
                 if package is not None:
-
-                    if isinstance(package, SamplingStarted):
-                        print("#run #sample x[mg] y[mg] z[mg]")
-                        run_count += 1
-                        sample_count = 0
-                        start = time.time()
+                    if isinstance(package, UnknownResponse):
+                        raise ErrorUnknownResponse
 
                     if isinstance(package, FifoOverflow):
                         raise ErrorFifoOverflow
 
+                    if isinstance(package, SamplingStarted):
+                        logging.info(package)
+                        header = "#run #sample x[mg] y[mg] z[mg]"
+                        file.write(header + "\n") if file is not None else logging.info(header)
+                        run_count += 1
+                        sample_count = 0
+                        start = time.time()
+
                     if isinstance(package, Acceleration):
                         sample_count += 1
-                        print(f"#{run_count:02} {sample_count:05} {package}")
-                    else:
-                        print(package)
+                        acceleration = f"{run_count:02} {sample_count:05} {package}"
+                        file.write(acceleration + "\n") if file is not None else logging.info("#" + acceleration)
 
                     if isinstance(package, (SamplingStopped, SamplingFinished, SamplingAborted)):
                         elapsed = time.time() - start
+                        if isinstance(package, SamplingFinished):
+                            logging.info(str(package) + f" at {sample_count} samples")
 
                     if isinstance(package, SamplingStopped):
-                        print(f"run {run_count:02}: processed {sample_count} samples in {elapsed:.9f} seconds "
-                              f"({(sample_count / elapsed):.3f} samples per second; {((sample_count * Acceleration.LEN * 8) / elapsed):.3f} baud)")
+                        logging.info(package)
+                        logging.info(f"run {run_count:02}: processed {sample_count} samples in {elapsed:.9f} seconds "
+                                     f"({(sample_count / elapsed):.3f} samples per second; "
+                                     f"{((sample_count * Acceleration.LEN * 8) / elapsed):.3f} baud)")
 
-                    if return_on_stop:
-                        return
+                        if return_on_stop or file is not None:
+                            return
