@@ -83,12 +83,13 @@ class UnknownResponse:
 
 class Acceleration:
     LEN = 7
+    FULL_RESOLUTION_LSB_SCALE = 3.9  # (min, typ, max) = (3.5, 3.9, 4.3), ADXL 345 Datasheet, rev. G, Tale 1., parameter SENSITIVITY
 
     def __init__(self, payload: bytearray):
         payload.pop(0)
-        self.x = int.from_bytes(payload[0:2], "little", signed=True)
-        self.y = int.from_bytes(payload[2:4], "little", signed=True)
-        self.z = int.from_bytes(payload[4:6], "little", signed=True)
+        self.x = Acceleration.FULL_RESOLUTION_LSB_SCALE * int.from_bytes(payload[0:2], "little", signed=True)
+        self.y = Acceleration.FULL_RESOLUTION_LSB_SCALE * int.from_bytes(payload[2:4], "little", signed=True)
+        self.z = Acceleration.FULL_RESOLUTION_LSB_SCALE * int.from_bytes(payload[4:6], "little", signed=True)
         payload.pop(0)
         payload.pop(0)
         payload.pop(0)
@@ -97,7 +98,7 @@ class Acceleration:
         payload.pop(0)
 
     def __str__(self) -> str:
-        return "x {:+06} y {:+06} z {:+06}".format(self.x, self.y, self.z)
+        return f"{self.x:+09.3f} {self.y:+09.3f} {self.z:+09.3f}"
 
 
 class RxFrame:
