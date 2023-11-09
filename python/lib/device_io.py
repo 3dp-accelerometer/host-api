@@ -108,7 +108,8 @@ class Adxl345(CdcSerial):
 
     def decode(self, return_on_stop: bool = False):
         data: bytearray = bytearray()
-        acc_count: int = 0
+        run_count: int = 0
+        sample_count: int = 0
         start = None
         elapsed = None
         while True:
@@ -118,22 +119,26 @@ class Adxl345(CdcSerial):
                 if package is not None:
 
                     if isinstance(package, SamplingStarted):
-                        acc_count = 0
+                        print("#run #sample x[mg] y[mg] z[mg]")
+                        run_count += 1
+                        sample_count = 0
                         start = time.time()
-
-                    if isinstance(package, Acceleration):
-                        acc_count += 1
-                        print(f"{acc_count:05} ", end="")
-                    print(package)
 
                     if isinstance(package, FifoOverflow):
                         raise ErrorFifoOverflow
+
+                    if isinstance(package, Acceleration):
+                        sample_count += 1
+                        print(f"#{run_count:02} {sample_count:05} {package}")
+                    else:
+                        print(package)
 
                     if isinstance(package, (SamplingStopped, SamplingFinished, SamplingAborted)):
                         elapsed = time.time() - start
 
                     if isinstance(package, SamplingStopped):
-                        print(f"processed {acc_count} samples in {elapsed:.9f} seconds ({(acc_count / elapsed):.3f} samples per second)")
+                        print(f"run {run_count:02}: processed {sample_count} samples in {elapsed:.9f} seconds "
+                              f"({(sample_count / elapsed):.3f} samples per second; {((sample_count * Acceleration.LEN * 8) / elapsed):.3f} baud)")
 
                     if return_on_stop:
                         return
