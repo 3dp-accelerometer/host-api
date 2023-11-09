@@ -131,17 +131,16 @@ class Args:
             const=default_filename)
 
         sub_group = self.parser.add_argument_group(
-            "Logging",
-            description="Manipulate the verbosity level.")
-        grp = sub_group.add_mutually_exclusive_group()
+            "Flags",
+            description="General flags applied to all commands.")
 
-        grp.add_argument(
+        sub_group.add_argument(
             "-l", "--log",
             help="Set the logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL",
             choices=[e.name for e in LogLevel],
             default="INFO")
 
-        grp.add_argument(
+        sub_group.add_argument(
             "-d", "--device",
             help="Specify the serial device to communicate with.",
             default="/dev/ttyACM0")
