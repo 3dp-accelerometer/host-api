@@ -1,10 +1,11 @@
+import time
 from typing import List
 
 import serial
 from serial import Serial
 
 from lib.device_constants import Range, Scale, OutputDataRate
-from lib.device_types import TransportHeaderId, TxFrame, RxFrame, Acceleration
+from lib.device_types import TransportHeaderId, TxFrame, RxFrame, Acceleration, SamplingStopped, SamplingStarted, FifoOverflow, SamplingFinished, SamplingAborted
 
 
 class CdcSerial:
@@ -53,6 +54,10 @@ class CdcSerial:
         self.close()
 
 
+class ErrorFifoOverflow:
+    pass
+
+
 class Adxl345(CdcSerial):
 
     def __init__(self, ser_dev_name: str, timeout: float = 0.1):
@@ -96,20 +101,39 @@ class Adxl345(CdcSerial):
 
     def start_sampling(self, num_samples: int = 0):
         assert (0 <= num_samples) and (num_samples <= 65535)
-        self._send_header_and_payload(TransportHeaderId.SAMPLING_START, [num_samples & 0x00ff, num_samples & 0xff00])
+        self._send_header_and_payload(TransportHeaderId.SAMPLING_START, [num_samples & 0x00ff, (num_samples & 0xff00) >> 8])
 
     def stop_sampling(self):
         self._send_header(TransportHeaderId.SAMPLING_STOP)
 
-    def decode(self):
+    def decode(self, return_on_stop: bool = False):
         data: bytearray = bytearray()
         acc_count: int = 0
+        start = None
+        elapsed = None
         while True:
             data.extend(self.read_bytes(1, 0.1))
             if len(data) >= 1:
                 package = RxFrame(data).unpack()
                 if package is not None:
+
+                    if isinstance(package, SamplingStarted):
+                        acc_count = 0
+                        start = time.time()
+
                     if isinstance(package, Acceleration):
                         acc_count += 1
                         print(f"{acc_count:05} ", end="")
                     print(package)
+
+                    if isinstance(package, FifoOverflow):
+                        raise ErrorFifoOverflow
+
+                    if isinstance(package, (SamplingStopped, SamplingFinished, SamplingAborted)):
+                        elapsed = time.time() - start
+
+                    if isinstance(package, SamplingStopped):
+                        print(f"processed {acc_count} samples in {elapsed:.9f} seconds ({(acc_count / elapsed):.3f} samples per second)")
+
+                    if return_on_stop:
+                        return
