@@ -88,22 +88,27 @@ class Args:
             help="enable disable data streaming",
             description="Will start or stop the acceleration data streaming.")
         grp = sup.add_mutually_exclusive_group()
-        grp.add_argument(
-            "-s", "--start",
-            help="Enables streaming until stop is rquested (--stop).",
-            action="store_true")
 
         def max_n(n: str) -> int | None:
             value = int(n)
             return value if value <= 65536 else None
 
         grp.add_argument(
-            "-n", "--startn",
-            help="Enables streaming for N samples (N=UINT16_MAX).",
-            type=max_n)
+            "-s", "--start",
+            help="Starts streaming for n samples, If n=0 enables streaming until stop is requested (0 <= n <= UINT16_MAX).",
+            type=max_n,
+            nargs='?',
+            const=0)
+
         grp.add_argument(
             "-p", "--stop",
             help="Stops streaming started with --start.",
+            action="store_true")
+
+        grp.add_argument(
+            "-d", "--decode",
+            help="Connects to device and decodes input stream. "
+                 "While decoding, simultaneous calls to output stream are allowed: start, stop and setup commands.",
             action="store_true")
 
         sub_group = self.parser.add_argument_group(
@@ -199,18 +204,18 @@ class Runner:
                 return 1
 
         elif self.args.command == "stream":
-            if self.args.start:
-                logging.info("sampling start")
+            if self.args.start is not None:
+                logging.info("sampling start n=%s", self.args.start)
                 with Adxl345(self.args.device) as sensor:
-                    sensor.start_sampling()
-            elif self.args.startn:
-                logging.info("sampling start n=%s", self.args.startn)
-                with Adxl345(self.args.device) as sensor:
-                    sensor.start_sampling_n(self.args.startn)
+                    sensor.start_sampling(self.args.start)
             elif self.args.stop:
                 logging.info("sampling stop")
                 with Adxl345(self.args.device) as sensor:
                     sensor.stop_sampling()
+            elif self.args.decode:
+                logging.info("sampling decode")
+                with Adxl345(self.args.device) as sensor:
+                    sensor.decode()
             else:
                 logging.warning("noting to do")
                 return 1
