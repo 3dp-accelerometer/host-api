@@ -245,7 +245,7 @@ class Runner:
                     sensor.decode(return_on_stop=False)
             if self.args.file:
                 logging.info(f"decode stream to file {self.args.file}")
-                with open(self.args.file, "x") as file:
+                with open(self.args.file, "w") as file:
                     with Adxl345(self.args.device) as sensor:
                         sensor.decode(return_on_stop=True, file=file)
             else:
