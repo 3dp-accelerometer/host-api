@@ -130,8 +130,7 @@ class Adxl345(CdcSerial):
 
                     if isinstance(package, SamplingStarted):
                         logging.info(package)
-                        header = "#run #sample x[mg] y[mg] z[mg]"
-                        file.write(header + "\n") if file is not None else logging.info(header)
+                        file.write("run sample x y z\n") if file is not None else logging.info("#run #sample x[mg] y[mg] z[mg]")
                         run_count += 1
                         sample_count = 0
                         start = time.time()
