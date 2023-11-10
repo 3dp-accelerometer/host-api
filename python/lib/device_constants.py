@@ -20,6 +20,26 @@ class OutputDataRate(Enum):
     ODR0_10 = 0b0000
 
 
+OutputDataRateDelay = {
+    OutputDataRate.ODR3200: 1.0 / 3200,
+    OutputDataRate.ODR1600: 1.0 / 1600,
+    OutputDataRate.ODR800: 1.0 / 800,
+    OutputDataRate.ODR400: 1.0 / 400,
+    OutputDataRate.ODR200: 1.0 / 200,
+    OutputDataRate.ODR100: 1.0 / 100,
+    OutputDataRate.ODR50: 1.0 / 50,
+    OutputDataRate.ODR25: 1.0 / 25,
+    OutputDataRate.ODR12_5: 1.0 / 12.5,
+    OutputDataRate.ODR6_25: 1.0 / 6.25,
+    OutputDataRate.ODR3_13: 1.0 / 3.13,
+    OutputDataRate.ODR1_56: 1.0 / 1.56,
+    OutputDataRate.ODR0_78: 1.0 / 0.78,
+    OutputDataRate.ODR0_39: 1.0 / 0.39,
+    OutputDataRate.ODR0_20: 1.0 / 0.20,
+    OutputDataRate.ODR0_10: 1.0 / 0.10,
+}
+
+
 class Range(Enum):
     G2 = 0b00
     G4 = 0b01
