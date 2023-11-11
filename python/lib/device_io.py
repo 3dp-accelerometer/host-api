@@ -157,13 +157,13 @@ class Adxl345(CdcSerial):
                     if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):
                         elapsed = time.time() - start
                         if isinstance(package, RxSamplingFinished):
-                            logging.info(str(package) + f" at {sample_count} samples")
+                            logging.info(str(package) + f" at sample {sample_count}")
 
                     if isinstance(package, RxSamplingStopped):
                         logging.info(package)
-                        logging.info(f"run {run_count:02}: processed {sample_count} samples in {elapsed:.9f} seconds "
-                                     f"({(sample_count / elapsed):.3f} samples per second; "
-                                     f"{((sample_count * RxAcceleration.LEN * 8) / elapsed):.3f} baud)")
+                        logging.info(f"run {run_count:02}: processed {sample_count} samples in {elapsed:.6f} s "
+                                     f"({(sample_count / elapsed):.1f} samples/s; "
+                                     f"{((sample_count * RxAcceleration.LEN * 8) / elapsed):.1f} baud)")
                         run_count += 1
 
                         if return_on_stop or file is not None:
