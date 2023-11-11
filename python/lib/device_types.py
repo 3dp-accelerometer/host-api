@@ -50,7 +50,7 @@ class TxSetScale(TxFrame):
 
 class TxGetScale(TxFrame):
     def __init__(self):
-        super().__init__(TransportHeaderId.TX_SET_SCALE)
+        super().__init__(TransportHeaderId.TX_GET_SCALE)
 
 
 class TxReboot(TxFrame):
@@ -105,7 +105,7 @@ class RxScale(RxFrame):
     LEN = 2
 
     def __init__(self, payload: bytearray):
-        self.scale: Scale = Scale(payload[1])
+        self.scale: Scale = Scale(int.from_bytes([payload[1]], byteorder="little", signed=False))
         self.consume_all(payload)
 
     def __str__(self) -> str:
