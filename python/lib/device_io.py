@@ -60,11 +60,13 @@ class CdcSerial:
 
 
 class ErrorFifoOverflow:
-    pass
+    def __str__(self):
+        return "controller detected accelerometer FiFo overrun"
 
 
 class ErrorUnknownResponse:
-    pass
+    def __str__(self):
+        return "received unknown response from controller"
 
 
 class Adxl345(CdcSerial):
@@ -125,10 +127,14 @@ class Adxl345(CdcSerial):
                 package = RxFrame(data).unpack()
                 if package is not None:
                     if isinstance(package, UnknownResponse):
-                        raise ErrorUnknownResponse
+                        e = ErrorUnknownResponse()
+                        logging.fatal(str(e))
+                        raise e
 
                     if isinstance(package, RxFifoOverflow):
-                        raise ErrorFifoOverflow
+                        e = ErrorFifoOverflow()
+                        logging.fatal(str(e))
+                        raise e
 
                     if isinstance(package, RxSamplingStarted):
                         logging.info(package)
@@ -140,6 +146,8 @@ class Adxl345(CdcSerial):
                         acceleration = f"{run_count:02} {package}"
                         assert sample_count == package.index
                         sample_count += 1
+                        if sample_count > 65535:
+                            sample_count = 0
                         file.write(acceleration + "\n") if file is not None else logging.info(acceleration)
 
                     if isinstance(package, RxDeviceSetup):

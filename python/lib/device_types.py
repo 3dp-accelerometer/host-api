@@ -139,13 +139,14 @@ class RxFifoOverflow(RxFrame):
 
 
 class RxSamplingStarted(RxFrame):
-    LEN = 1
+    LEN = 3
 
     def __init__(self, payload: bytearray):
+        self.maxSamples: int = int.from_bytes(payload[1:2], "little", signed=False)
         self.consume_all(payload)
 
     def __str__(self) -> str:
-        return "Sampling Started"
+        return f"Sampling Started maxSamples={self.maxSamples}"
 
 
 class RxSamplingStopped(RxFrame):
