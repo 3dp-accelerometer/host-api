@@ -1,12 +1,16 @@
 import logging
+import re
 import time
-from typing import List, TextIO
+from typing import TextIO
 
 import serial
 from serial import Serial
 
 from lib.device_constants import Range, Scale, OutputDataRate
-from lib.device_types import TransportHeaderId, TxFrame, RxFrame, Acceleration, SamplingStopped, SamplingStarted, FifoOverflow, SamplingFinished, SamplingAborted, UnknownResponse
+from lib.device_types import (TxFrame, RxFrame, UnknownResponse, RxOutputDataRate,
+                              RxScale, RxRange, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted,
+                              RxAcceleration, RxSamplingStarted, RxFifoOverflow, RxDeviceSetup, TxGetOutputDataRate, TxSetOutputDataRate, TxGetScale, TxSetScale, TxGetRange, TxSetRange, TxReboot,
+                              TxSamplingStart, TxSamplingStop)
 
 
 class CdcSerial:
@@ -68,48 +72,46 @@ class Adxl345(CdcSerial):
     def __init__(self, ser_dev_name: str, timeout: float = 0.1):
         super().__init__(ser_dev_name, timeout)
 
-    def _send_header_then_receive(self, request: TransportHeaderId, rx_bytes_count: int) -> bytes:
-        b = bytearray()
-        b.append(request.value)
-        self.write_bytes(b)
-        return self.read_bytes(rx_bytes_count)
+    def _send_frame_then_receive(self, frame: TxFrame, rx_bytes_count: int) -> bytearray:
+        self.write_bytes(frame.pack())
+        return bytearray(self.read_bytes(rx_bytes_count))
 
-    def _send_header(self, header_id: TransportHeaderId) -> None:
-        self.write_byte(header_id.value)
-
-    def _send_header_and_payload(self, header_id: TransportHeaderId, value: List[int]) -> None:
-        self.write_bytes(TxFrame(header_id, bytearray(value)).pack())
+    def _send_frame(self, frame: TxFrame) -> None:
+        self.write_bytes(frame.pack())
 
     def get_output_data_rate(self) -> OutputDataRate:
-        o = self._send_header_then_receive(TransportHeaderId.GET_OUTPUT_DATA_RATE, 1)[0]
-        return OutputDataRate(o)
+        payload = self._send_frame_then_receive(TxGetOutputDataRate(), RxOutputDataRate.LEN)
+        response = RxOutputDataRate(payload)
+        return response.outputDataRate
 
     def set_output_data_rate(self, odr: OutputDataRate) -> None:
-        self._send_header_and_payload(TransportHeaderId.SET_OUTPUT_DATA_RATE, [odr.value])
+        self._send_frame(TxSetOutputDataRate(odr))
 
     def get_scale(self) -> Scale:
-        s = self._send_header_then_receive(TransportHeaderId.GET_SCALE, 1)[0]
-        return Scale(s)
+        payload = self._send_frame_then_receive(TxGetScale(), RxScale.LEN)
+        response = RxScale(payload)
+        return response.scale
 
     def set_scale(self, scale: Scale) -> None:
-        self._send_header_and_payload(TransportHeaderId.SET_SCALE, [scale.value])
+        self._send_frame(TxSetScale(scale))
 
     def get_range(self) -> Range:
-        r = self._send_header_then_receive(TransportHeaderId.GET_RANGE, 1)[0]
-        return Range(r)
+        payload = self._send_frame_then_receive(TxGetRange(), RxRange.LEN)
+        response = RxRange(payload)
+        return response.range
 
-    def set_range(self, value: Range) -> None:
-        self._send_header_and_payload(TransportHeaderId.SET_RANGE, [value.value])
+    def set_range(self, data_range: Range) -> None:
+        self._send_frame(TxSetRange(data_range))
 
     def reboot(self):
-        self._send_header(TransportHeaderId.DEVICE_REBOOT)
+        self._send_frame(TxReboot())
 
     def start_sampling(self, num_samples: int = 0):
         assert (0 <= num_samples) and (num_samples <= 65535)
-        self._send_header_and_payload(TransportHeaderId.SAMPLING_START, [num_samples & 0x00ff, (num_samples & 0xff00) >> 8])
+        self._send_frame(TxSamplingStart(num_samples))
 
     def stop_sampling(self):
-        self._send_header(TransportHeaderId.SAMPLING_STOP)
+        self._send_frame(TxSamplingStop())
 
     def decode(self, return_on_stop: bool = False, file: None | TextIO = None):
         data: bytearray = bytearray()
@@ -125,31 +127,36 @@ class Adxl345(CdcSerial):
                     if isinstance(package, UnknownResponse):
                         raise ErrorUnknownResponse
 
-                    if isinstance(package, FifoOverflow):
+                    if isinstance(package, RxFifoOverflow):
                         raise ErrorFifoOverflow
 
-                    if isinstance(package, SamplingStarted):
+                    if isinstance(package, RxSamplingStarted):
                         logging.info(package)
                         file.write("run sample x y z\n") if file is not None else logging.info("#run #sample x[mg] y[mg] z[mg]")
-                        run_count += 1
                         sample_count = 0
                         start = time.time()
 
-                    if isinstance(package, Acceleration):
+                    if isinstance(package, RxAcceleration):
+                        acceleration = f"{run_count:02} {package}"
+                        assert sample_count == package.index
                         sample_count += 1
-                        acceleration = f"{run_count:02} {sample_count:05} {package}"
-                        file.write(acceleration + "\n") if file is not None else logging.info("#" + acceleration)
+                        file.write(acceleration + "\n") if file is not None else logging.info(acceleration)
 
-                    if isinstance(package, (SamplingStopped, SamplingFinished, SamplingAborted)):
+                    if isinstance(package, RxDeviceSetup):
+                        parameters = eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))
+                        file.write("# " + str(parameters) + "\n") if file is not None else logging.info("Device Setup: " + str(parameters))
+
+                    if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):
                         elapsed = time.time() - start
-                        if isinstance(package, SamplingFinished):
+                        if isinstance(package, RxSamplingFinished):
                             logging.info(str(package) + f" at {sample_count} samples")
 
-                    if isinstance(package, SamplingStopped):
+                    if isinstance(package, RxSamplingStopped):
                         logging.info(package)
                         logging.info(f"run {run_count:02}: processed {sample_count} samples in {elapsed:.9f} seconds "
                                      f"({(sample_count / elapsed):.3f} samples per second; "
-                                     f"{((sample_count * Acceleration.LEN * 8) / elapsed):.3f} baud)")
+                                     f"{((sample_count * RxAcceleration.LEN * 8) / elapsed):.3f} baud)")
+                        run_count += 1
 
                         if return_on_stop or file is not None:
                             return

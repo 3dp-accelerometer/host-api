@@ -54,20 +54,29 @@ class Scale(Enum):
 
 class TransportHeaderId(Enum):
     # configuration (tx)
-    SET_OUTPUT_DATA_RATE = 1
-    GET_OUTPUT_DATA_RATE = 2
-    SET_RANGE = 3
-    GET_RANGE = 4
-    SET_SCALE = 5
-    GET_SCALE = 6
+    TX_SET_OUTPUT_DATA_RATE = 1
+    TX_GET_OUTPUT_DATA_RATE = 2
+    TX_SET_RANGE = 3
+    TX_GET_RANGE = 4
+    TX_SET_SCALE = 5
+    TX_GET_SCALE = 6
+    TX_GET_DEVICE_SETUP = 7
+
     # sampling (tx)
-    DEVICE_REBOOT = 16
-    SAMPLING_START = 17
-    SAMPLING_STOP = 18
-    # responses (rx)
-    SAMPLING_FIFO_OVERFLOW = 24
-    SAMPLING_STARTED = 25
-    SAMPLING_FINISHED = 26
-    SAMPLING_STOPPED = 27
-    SAMPLING_ABORTED = 28
-    ACCELERATION = 29
+    TX_DEVICE_REBOOT = 17
+    TX_SAMPLING_START = 18
+    TX_SAMPLING_STOP = 19
+
+    # configuration (rx)
+    RX_OUTPUT_DATA_RATE = 25
+    RX_RANGE = 26
+    RX_SCALE = 27
+    RX_DEVICE_SETUP = 28
+
+    # sampling (rx)
+    RX_SAMPLING_FIFO_OVERFLOW = 33
+    RX_SAMPLING_STARTED = 34
+    RX_SAMPLING_FINISHED = 35
+    RX_SAMPLING_STOPPED = 36
+    RX_SAMPLING_ABORTED = 37
+    RX_ACCELERATION = 38
