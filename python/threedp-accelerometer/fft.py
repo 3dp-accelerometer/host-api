@@ -60,6 +60,7 @@ class FftAlgorithms1D:
         fftax.set_title("1D Discrete", loc="left")
         fftax.set(ylabel="amplitude", xlabel="f [Hz]")
         fftax.legend(loc="upper right")
+        fftax.set_ylim([0, 100])
 
         return 0
 
@@ -133,7 +134,7 @@ class FftAlgorithms3D:
 
         def compute_x1_mm(x0_mm: float, v_mm_ms: float, acc_mg: float):
             # todo:                                       vvv this factor shall not be here, why is it required?
-            return x0_mm + (v_mm_ms * separation_ms * separation_ms) + 0.5 * 9.81 * (acc_mg / 1000.0) * separation_ms * separation_ms
+            return x0_mm + (v_mm_ms * separation_ms / 10) + 0.5 * 9.81 * (acc_mg / 1000.0) * separation_ms * separation_ms
 
         # todo calibration:
         #  - implement offset calibration
@@ -143,7 +144,8 @@ class FftAlgorithms3D:
         #  orientation_calibration = (0, 0, 0)
         #  orientation_calibration = (0, 0, 1000)
         #  orientation_calibration = (+0000.000, +00000, +0902.800)
-        orientation_calibration = (+0007.800, +0007.800, +0897.000)
+        # orientation_calibration = (+0007.800, +0007.800, +0897.000)
+        orientation_calibration = (-1014.000, +0000.000, -0093.600)
 
         for acc_xyz_mg in accs_xyz_mg:
             print(f"ac {acc_xyz_mg[0]:+.9f} {acc_xyz_mg[1]:+.9f} {acc_xyz_mg[2]:+.9f}")
@@ -276,7 +278,7 @@ class Runner:
             ax.legend(loc="upper right")
 
         # signal re-construction to verify loss: ifft(fft())
-        FftAlgorithms1D.plot_ifft(samples, xax, yax, zax)
+        # FftAlgorithms1D.plot_ifft(samples, xax, yax, zax)
 
         # fft
         if algorithm == "all":

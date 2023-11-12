@@ -51,8 +51,20 @@ Roadmap
 Prerequisites
 -------------
 
-1. `venv -m venv venv`
-2. `source venv/bin/activate`
-3. `pip install pyserial`
-4. `pip install matplotlib`
-5. `pip install scipy`
+## Initially Create Environment
+
+```bash
+sudo apt install python3-poetry
+cd host-api/python
+poetry shell
+poetry install # only API packages
+# alternatively install extra packages
+poetry install --all-extras # for plotting and data decomposition
+```
+
+## With Initialized Environment
+
+```bash
+cd host-api/python
+poetry shell
+```
