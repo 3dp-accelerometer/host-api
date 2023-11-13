@@ -5,26 +5,16 @@ import logging
 import operator
 import os
 import sys
-from enum import Enum
 from typing import Dict, List
 
 import numpy as np
+from log.log_levels import LogLevel
+from samples.loader import Samples, SamplesLoader
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 from numpy import blackman
 from scipy.fft import fft, ifft, fftfreq
-
-from lib.samples_loader import Samples, SamplesLoader
-
-
-class LogLevel(Enum):
-    CRITICAL = 50
-    ERROR = 40
-    WARNING = 30
-    INFO = 20
-    DEBUG = 10
-    NOTSET = 0
 
 
 class FftAlgorithms1D:
@@ -49,7 +39,7 @@ class FftAlgorithms1D:
     @staticmethod
     def _compute_fft_1d_discrete(samples: Samples, fftax: Axes) -> int:
         n = len(samples)
-        xff = fftfreq(n, samples.separation_ms / 1000.0)[:n // 2]
+        xff = fftfreq(n, samples.separation_s)[:n // 2]
         yff_x = fft(samples.x)
         yff_y = fft(samples.y)
         yff_z = fft(samples.z)
@@ -68,7 +58,7 @@ class FftAlgorithms1D:
     def _compute_fft_1d_discrete_blackman_window(samples: Samples, fftax: Axes) -> int:
         # fft
         n = len(samples)
-        xff = fftfreq(n, samples.separation_ms / 1000.0)[:n // 2]
+        xff = fftfreq(n, samples.separation_s)[:n // 2]
 
         yff_x = fft(samples.x)
         yff_y = fft(samples.y)
@@ -123,7 +113,7 @@ class FftAlgorithms3D:
     def _compute_trajectory_from_acceleration_stream(samples: Samples) -> int:
         # https://web.archive.org/web/20090701062452/http://www.ugrad.math.ubc.ca/coursedoc/math101/notes/applications/velocity.html
 
-        separation_ms = samples.separation_ms
+        separation_ms = samples.separation_s * 1000
         # sensor replies in mg, where 1000mg = 1g = 9.81m/s^2 = 9810 mm/s^2 = 9.81mm/ms^2
 
         accs_xyz_mg = [acc for acc in zip(samples.x, samples.y, samples.z)]
@@ -276,6 +266,7 @@ class Runner:
             ax.grid()
             ax.set(ylabel="acc [mg]", xlabel="time [ms]")
             ax.legend(loc="upper right")
+            ax.set_ylim([-2000, 2000])
 
         # signal re-construction to verify loss: ifft(fft())
         # FftAlgorithms1D.plot_ifft(samples, xax, yax, zax)
@@ -311,6 +302,10 @@ class Runner:
             return FftAlgorithms3D().compute(algorithm, samples)
 
     def run(self) -> int:
+        if not self.args.command:
+            self.parser.print_help()
+            return 1
+
         loader = SamplesLoader(self.args.file)
         samples = loader.load()
         assert (len(samples) % 2) == 0, "found odd samples length, FFT needs even length of sample"

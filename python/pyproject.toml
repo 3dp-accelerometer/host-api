@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "threedp-accelerometer"
+name = "threedp_accelerometer"
 version = "0.1.0"
 description = "Python API for interacting with the 3dp-accelerometer controller and sensor data visualization."
 license = "Apache-2.0"

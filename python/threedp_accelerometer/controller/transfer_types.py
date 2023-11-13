@@ -1,6 +1,6 @@
 from typing import Dict, Type
 
-from lib.device_constants import TransportHeaderId, OutputDataRate, Scale, Range
+from .constants import TransportHeaderId, OutputDataRate, Scale, Range
 
 
 class Frame:
@@ -179,7 +179,7 @@ class RxSamplingAborted(RxFrame):
         return "Sampling Aborted"
 
 
-class UnknownResponse:
+class RxUnknownResponse:
     def __init__(self):
         pass
 
@@ -203,7 +203,7 @@ class RxAcceleration(RxFrame):
 
 
 class RxFrame:
-    MAPPING: Dict[TransportHeaderId, Type[RxOutputDataRate | RxRange | RxScale | RxSamplingStarted | RxSamplingStopped | RxSamplingFinished | RxSamplingAborted | UnknownResponse]] = {
+    MAPPING: Dict[TransportHeaderId, Type[RxOutputDataRate | RxRange | RxScale | RxSamplingStarted | RxSamplingStopped | RxSamplingFinished | RxSamplingAborted | RxUnknownResponse]] = {
         TransportHeaderId.RX_OUTPUT_DATA_RATE: RxOutputDataRate,
         TransportHeaderId.RX_RANGE: RxRange,
         TransportHeaderId.RX_SCALE: RxScale,
@@ -219,10 +219,10 @@ class RxFrame:
     def __init__(self, payload: bytearray):
         self.payload: bytearray = payload
 
-    def unpack(self) -> RxSamplingStarted | RxSamplingStopped | RxSamplingFinished | RxSamplingAborted | UnknownResponse | None:
+    def unpack(self) -> RxSamplingStarted | RxSamplingStopped | RxSamplingFinished | RxSamplingAborted | RxUnknownResponse | None:
         header_id = TransportHeaderId(int.from_bytes([self.payload[0]], "little", signed=False))
         if header_id in RxFrame.MAPPING:
             clazz = RxFrame.MAPPING[header_id]
             return clazz(self.payload) if len(self.payload) >= clazz.LEN else None
         else:
-            return UnknownResponse()
+            return RxUnknownResponse()

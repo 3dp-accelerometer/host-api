@@ -4,21 +4,12 @@ import argparse
 import logging
 import sys
 from datetime import datetime
-from enum import Enum
 
 from serial.tools.list_ports import comports
 
-from lib.device_constants import OutputDataRate, Range, Scale
-from lib.device_io import Adxl345
-
-
-class LogLevel(Enum):
-    CRITICAL = 50
-    ERROR = 40
-    WARNING = 30
-    INFO = 20
-    DEBUG = 10
-    NOTSET = 0
+from controller.api import Adxl345
+from controller.constants import OutputDataRate, Range, Scale
+from log.log_levels import LogLevel
 
 
 class Args:
