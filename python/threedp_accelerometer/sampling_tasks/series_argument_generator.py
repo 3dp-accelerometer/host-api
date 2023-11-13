@@ -4,14 +4,15 @@ from threedp_accelerometer.cli import file_name as fn_generator
 
 
 class RunArgs:
-    def __init__(self, run: int, frequency: int, zeta: float, file_name: str):
+    def __init__(self, run: int, axis: Literal["x", "y"], frequency: int, zeta: float, file_name: str):
         self.run: int = run
+        self.axis: Literal["x", "y"] = axis
         self.frequency: int = frequency
         self.zeta: float = zeta
         self.filename: str = file_name
 
     def __str__(self):
-        return f"run={self.run:03} fx={self.frequency:03} zeta={self.zeta:03} fn={self.filename}"
+        return f"run={self.run:03} ax={self.axis} fx={self.frequency:03} zeta={self.zeta:03} fn={self.filename}"
 
 
 class RunArgsGenerator:
@@ -42,6 +43,7 @@ class RunArgsGenerator:
             for fx in range(self.fx_start, self.fx_stop + 1, self.fx_step):
                 for run in range(0, self.runs):
                     for zeta in range(self.zeta_start, self.zeta_stop + 1, self.zeta_step):
-                        runs.append(RunArgs(run, fx, zeta,
-                                            fn_generator.generate_filename_for_run(self.file_prefix, run, ax, fx, zeta)))
+                        runs.append(RunArgs(
+                            run, ax, fx, zeta,
+                            fn_generator.generate_filename_for_run(self.file_prefix, run, ax, fx, zeta)))
         return runs

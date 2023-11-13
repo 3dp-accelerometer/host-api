@@ -25,8 +25,14 @@ def convert_uint16_from_str(n: str) -> int:
     return assert_uint16(n)
 
 
-def path_exists_and_is_file(file_path: str) -> str | None:
-    return file_path if os.path.isfile(file_path) else None
+def path_exists_and_is_file(file_path: str) -> str:
+    assert os.path.isfile(file_path), f"file {file_path} does not exist"
+    return file_path
+
+
+def path_exists_and_is_dir(file_path: str) -> str:
+    assert os.path.isdir(file_path), f"directory {file_path} does not exist"
+    return file_path
 
 
 def convert_axis_from_str(axis_names: Literal["x", "y", "xy"]) -> List[Literal["x", "y"]]:
