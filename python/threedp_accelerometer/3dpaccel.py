@@ -3,16 +3,20 @@
 import argparse
 import logging
 import sys
-from datetime import datetime
 
-from serial.tools.list_ports import comports
-
-from controller.api import Adxl345
 from controller.constants import OutputDataRate, Range, Scale
 from log.log_levels import LogLevel
+from threedp_accelerometer.cli import file_name
+from threedp_accelerometer.cli.args import convert_uint16_from_str
+from threedp_accelerometer.controller.runner import ControllerRunner
 
 
 class Args:
+
+    @staticmethod
+    def default_filename() -> str:
+        return file_name.generate_filename()
+
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(
             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -34,11 +38,11 @@ class Args:
             "-r", "--reboot",
             help="Performs a device reboot (reset).",
             action="store_true")
-
         sup = sub_parsers.add_parser(
             "set",
             help="device setup",
             description="Configure output data rate, resolution and range.")
+
         grp = sup.add_mutually_exclusive_group()
         grp.add_argument(
             "-o", "--outputdatarate",
@@ -80,18 +84,12 @@ class Args:
             help="start/stop streaming",
             description="Starts or stops data streaming from device.")
         grp = sup.add_mutually_exclusive_group()
-
-        def max_n(n: str) -> int | None:
-            value = int(n)
-            return value if value <= 65536 else None
-
         grp.add_argument(
             "-s", "--start",
             help="Starts streaming for n samples, If n=0 enables streaming until stop is requested (0 <= n <= UINT16_MAX).",
-            type=max_n,
+            type=convert_uint16_from_str,
             nargs='?',
             const=0)
-
         grp.add_argument(
             "-p", "--stop",
             help="Stops current stream.",
@@ -104,33 +102,27 @@ class Args:
                         "The connection must be established before the data stream is started. "
                         "While decoding, subsequent script calls with \"stream\" and \"set\" commands are allowed.")
         grp = sup.add_mutually_exclusive_group()
-
         grp.add_argument(
             "-", "--stdout",
             help="Prints streamed data to stdout. Script does not finish when stream stops and waits for subsequent runs.",
             action="store_true")
-
-        timestamp = datetime.now().strftime("%Y-%m-%d-%H%M%S")
-        default_filename = f"./stream-{timestamp}.tsv"
         grp.add_argument(
             "-f", "--file",
             help="Writes streamed data to file. Script finishes when stream is stopped. "
                  "While decoding, simultaneous calls to output stream are allowed: start, stop and setup commands. "
-                 f"Leave empty string for default fallback filename \"{default_filename}\".",
+                 f"Leave empty string for default fallback filename \"{self.default_filename}\".",
             type=str,
             nargs='?',
-            const=default_filename)
+            const=self.default_filename)
 
         sub_group = self.parser.add_argument_group(
             "Flags",
             description="General flags applied to all commands.")
-
         sub_group.add_argument(
             "-l", "--log",
             help="Set the logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL",
             choices=[e.name for e in LogLevel],
             default="INFO")
-
         sub_group.add_argument(
             "-d", "--device",
             help="Specify the serial device to communicate with.",
@@ -154,96 +146,24 @@ class Runner:
         return self._cli_args.parser
 
     def run(self) -> int:
-        if not self.args.command:
+        ret = ControllerRunner(
+            command=self.args.command,
+            controller_serial_dev_name=self.args.device,
+            controller_do_list_devices=self.args.list if hasattr(self.args, "list") else None,
+            controller_do_reboot=self.args.reboot if hasattr(self.args, "reboot") else None,
+            sensor_output_data_rate=OutputDataRate(self.args.outputdatarate) if hasattr(self.args, "outputdatarate") and self.args.outputdatarate is not None else None,
+            sensor_scale=Scale(self.args.scale) if hasattr(self.args, "scale") and self.args.scale is not None else None,
+            sensor_range=Range(self.args.range) if hasattr(self.args, "range") and self.args.range is not None else None,
+            sensor_all_settings=self.args.all if hasattr(self.args, "all") else None,
+            stream_start=self.args.start if hasattr(self.args, "start") else None,
+            stream_stop=self.args.stop if hasattr(self.args, "stop") else None,
+            stream_decode=self.args.decode if hasattr(self.args, "decode") else None,
+            output_file=self.args.file if hasattr(self.args, "file") else None,
+            output_stdout=self.args.stdout if hasattr(self.args, "stdout") else None).run()
+
+        if ret == -1:
             self.parser.print_help()
-            return 1
-
-        if self.args.command == "device":
-            if self.args.list:
-                for s in comports():
-                    logging.info("%s %s %s %s", s.device, s.manufacturer, s.description, s.hwid)
-            elif self.args.reboot:
-                logging.info("device reboot")
-                with Adxl345(self.args.device) as sensor:
-                    sensor.reboot()
-            else:
-                logging.warning("noting to do")
-
-        # elif self.args.device not in [c.device for c in comports()]:
-        #    logging.error("device %s not found", self.args.device)
-        #    return 1
-
-        elif self.args.command == "set":
-            if self.args.outputdatarate:
-                logging.info("send outputdatarate=%s", self.args.outputdatarate)
-                with Adxl345(self.args.device) as sensor:
-                    sensor.set_output_data_rate(OutputDataRate[self.args.outputdatarate])
-            elif self.args.scale:
-                logging.info("send scale=%s", self.args.scale)
-                with Adxl345(self.args.device) as sensor:
-                    sensor.set_scale(Scale[self.args.scale])
-            elif self.args.range:
-                logging.info("send range=%s", self.args.range)
-                with Adxl345(self.args.device) as sensor:
-                    sensor.set_range(Range[self.args.range])
-            else:
-                logging.warning("noting to do")
-                return 1
-
-        elif self.args.command == "get":
-            if self.args.outputdatarate:
-                logging.debug("request odr")
-                with Adxl345(self.args.device) as sensor:
-                    logging.info("odr=%s", sensor.get_output_data_rate().name)
-            elif self.args.scale:
-                logging.debug("request scale")
-                with Adxl345(self.args.device) as sensor:
-                    logging.info("scale=%s", sensor.get_scale().name)
-            elif self.args.range:
-                logging.debug("request range")
-                with Adxl345(self.args.device) as sensor:
-                    logging.info("range=%s", sensor.get_range().name)
-            elif self.args.all:
-                with Adxl345(self.args.device) as sensor:
-                    logging.info("odr=%s", sensor.get_output_data_rate().name)
-                    logging.info("scale=%s", sensor.get_scale().name)
-                    logging.info("range=%s", sensor.get_range().name)
-            else:
-                logging.warning("noting to do")
-                return 1
-
-        elif self.args.command == "stream":
-            if self.args.start is not None:
-                logging.info("sampling start n=%s", self.args.start)
-                with Adxl345(self.args.device) as sensor:
-                    sensor.start_sampling(self.args.start)
-            elif self.args.stop:
-                logging.info("sampling stop")
-                with Adxl345(self.args.device) as sensor:
-                    sensor.stop_sampling()
-            elif self.args.decode:
-                logging.info("sampling decode")
-                with Adxl345(self.args.device) as sensor:
-                    sensor.decode()
-            else:
-                logging.warning("noting to do")
-                return 1
-
-        elif self.args.command == "decode":
-            if self.args.stdout:
-                logging.info("decode stream to stdout")
-                with Adxl345(self.args.device) as sensor:
-                    sensor.decode(return_on_stop=False)
-            if self.args.file:
-                logging.info(f"decode stream to file {self.args.file}")
-                with open(self.args.file, "w") as file:
-                    with Adxl345(self.args.device) as sensor:
-                        sensor.decode(return_on_stop=True, file=file)
-            else:
-                logging.warning("noting to do")
-                return 1
-
-        return 0
+        return ret
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ from threedp_accelerometer.gcode.trajectory_generator import CoplanarTrajectory
 from threedp_accelerometer.octoprint.api import OctoApi
 
 
-class SamplingJob:
+class SamplingJobRunner:
     def __init__(self,
                  input_serial_device: str,
                  intput_sensor_odr: OutputDataRate,
