@@ -8,7 +8,7 @@ maintainers = ["Raoul Rubien <rubienr@sbox.tugraz.at>"]
 readme = "readme.md"
 repository = "https://github.com/3dp-accelerometer"
 packages = [{include = "threedp_accelerometer"}]
-documentation = "readme.md"
+documentation = "https://github.com/3dp-accelerometer/host-api/blob/main/python/readme.md"
 keywords =["3d printing", "accelerometer", "adxl345", "stm32", "marlin", "octoprint"]
 classifiers = ["Topic :: System :: Hardware",
                "Topic :: Software Development :: Libraries",
