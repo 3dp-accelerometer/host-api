@@ -1,8 +1,8 @@
 # captured data
 *.tsv
-!example.tsv
 data/*
 !data/.keep
+!data/example.tsv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
