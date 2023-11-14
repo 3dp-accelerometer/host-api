@@ -1,10 +1,12 @@
 import logging
+import os.path
 from typing import List
 
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
+from threedp_accelerometer.cli.file_filter import FileSelector
 from threedp_accelerometer.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
 from threedp_accelerometer.samples.loader import Samples, SamplesLoader
 
@@ -13,24 +15,28 @@ class DataVisualizerRunner:
 
     def __init__(self,
                  command: str | None,
-                 input_file_name: str,
+                 input_filename: str,
                  algorithm_d1: str | None,
                  algorithm_d2: str | None,
                  algorithm_d3: str | None):
         self.command: str | None = command
-        self.input_file_name: str = input_file_name
+        self.input_filename: str = input_filename
         self.algorithm_d1: str | None = algorithm_d1
         self.algorithm_d2: str | None = algorithm_d2
         self.algorithm_d3: str | None = algorithm_d3
 
     @staticmethod
-    def _fft_1d(algorithm: str, samples: Samples):
+    def _fft_1d(algorithm: str, samples: Samples, window_title: str | None, save_filename: str | None):
 
         fig_acc: Figure
         axes: List[Axes]
         num_fft_axes = len(FftAlgorithms1D().algorithms) if algorithm == "all" else 1
         fig_acc, axes = plt.subplots(3 + num_fft_axes, 1)
-        fig_acc.suptitle("Acceleration over Time / FFT")
+        fig_acc.suptitle("Acceleration over Time / FFT" + ("\n" + window_title) if window_title else "")
+        if window_title:
+            fig_acc.canvas.manager.set_window_title(window_title)
+        # fig_acc.canvas.manager. full_screen_toggle()
+        fig_acc.set_size_inches(60/2.45, 30/2.45)
 
         xax, yax, zax = axes[:3]
         xax.plot(samples.timestamp_ms, samples.x, color="r", linestyle="solid", marker=None, label="x")
@@ -57,11 +63,13 @@ class DataVisualizerRunner:
             fftax = axes[3]
             FftAlgorithms1D().compute(algorithm, samples, fftax)
 
-        plt.show()
+        if save_filename:
+            fig_acc.savefig(save_filename)
+        # return plt.show()
         return 0
 
     @staticmethod
-    def _fft_2d(algorithm: str, samples: Samples):
+    def _fft_2d(algorithm: str, samples: Samples, _window_title: str | None, _save_filename: str | None):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms2D().compute(a, samples)
@@ -69,7 +77,7 @@ class DataVisualizerRunner:
             return FftAlgorithms2D().compute(algorithm, samples)
 
     @staticmethod
-    def _trajectory_3d(algorithm: str, samples: Samples):
+    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: str | None, _save_filename: str | None):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms3D().compute(a, samples)
@@ -80,19 +88,38 @@ class DataVisualizerRunner:
         if not self.command:
             return -1
 
-        loader = SamplesLoader(self.input_file_name)
-        samples = loader.load()
-        assert (len(samples) % 2) == 0, "found odd samples length, FFT needs even length of sample"
-
         if self.command == "algo":
-            if self.algorithm_d1 is not None:
-                return self._fft_1d(self.algorithm_d1, samples)
-            elif self.algorithm_d2 is not None:
-                return self._fft_2d(self.algorithm_d2, samples)
-            elif self.algorithm_d3 is not None:
-                return self._trajectory_3d(self.algorithm_d3, samples)
-            else:
-                logging.info("nothing to do")
+
+            fs = (FileSelector(self.input_filename))
+            files = fs.filter()
+            logging.info(f"selected {len(files)} for plotting from {fs.directory} (filter: {fs.filename})")
+            for i in range(0, len(files)):
+                logging.info(f"file {i} {files[i].full_path}")
+
+            for i in range(0, len(files)):
+                file = files[i]
+                loader = SamplesLoader(file.full_path)
+                samples = loader.load()
+
+                assert (len(samples) % 2) == 0, "found odd samples length, FFT needs even length of sample"
+
+                logging.info(f"processing file {i} {file}...")
+                out_filename = os.path.join(file.directory, file.filename_no_ext)
+                window_title = file.filename_no_ext
+
+                if self.algorithm_d1 is not None:
+                    self._fft_1d(self.algorithm_d1, samples, window_title, out_filename)
+                elif self.algorithm_d2 is not None:
+                    self._fft_2d(self.algorithm_d2, samples, window_title, None)
+                elif self.algorithm_d3 is not None:
+                    self._trajectory_3d(self.algorithm_d3, samples, window_title, None)
+                else:
+                    logging.info("nothing to do")
+                logging.info(f"processing file {file}... done")
+
+            logging.info(f"plotting data...")
+            plt.show()
+            logging.info(f"plotting data... done")
         else:
             logging.info("nothing to do")
             return -1
