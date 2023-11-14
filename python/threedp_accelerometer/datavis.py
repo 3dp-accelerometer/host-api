@@ -58,6 +58,10 @@ class Args:
             "-p", "--plot",
             help="Visualizes data",
             action="store_true")
+        sub_group.add_argument(
+            "-s", "--save",
+            help="Saves plots as PNG format.",
+            action="store_true")
 
         self.args: argparse.Namespace = self.parser.parse_args()
 
@@ -85,7 +89,9 @@ class Runner:
             input_filename=self.args.file,
             algorithm_d1=self.args.d1,
             algorithm_d2=self.args.d2,
-            algorithm_d3=self.args.d3).run()
+            algorithm_d3=self.args.d3,
+            output_save=self.args.save,
+            output_plot=self.args.plot).run()
 
         if ret == -1:
             self.parser.print_help()

@@ -18,15 +18,19 @@ class DataVisualizerRunner:
                  input_filename: str,
                  algorithm_d1: Union[str, None],
                  algorithm_d2: Union[str, None],
-                 algorithm_d3: Union[str, None]) -> None:
+                 algorithm_d3: Union[str, None],
+                 output_save: bool,
+                 output_plot: bool) -> None:
         self.command: Union[str, None] = command
         self.input_filename: str = input_filename
         self.algorithm_d1: Union[str, None] = algorithm_d1
         self.algorithm_d2: Union[str, None] = algorithm_d2
         self.algorithm_d3: Union[str, None] = algorithm_d3
+        self.do_save_to_file: bool = output_save
+        self.do_plot: bool = output_plot
 
     @staticmethod
-    def _fft_1d(algorithm: str, samples: Samples, window_title: Union[str, None], save_filename: Union[str, None]):
+    def _fft_1d(algorithm: str, samples: Samples, window_title: Union[str, None], do_plot: bool, save_filename: Union[str, None]):
 
         fig_acc: Figure
         axes: List[Axes]
@@ -69,7 +73,7 @@ class DataVisualizerRunner:
         return 0
 
     @staticmethod
-    def _fft_2d(algorithm: str, samples: Samples, _window_title: Union[str, None], _save_filename: Union[str, None]):
+    def _fft_2d(algorithm: str, samples: Samples, _window_title: Union[str, None], _do_plot: bool, _save_filename: Union[str, None]):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms2D().compute(a, samples)
@@ -77,7 +81,7 @@ class DataVisualizerRunner:
             return FftAlgorithms2D().compute(algorithm, samples)
 
     @staticmethod
-    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: Union[str, None], _save_filename: Union[str, None]):
+    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: Union[str, None], _do_plot: bool, _save_filename: Union[str, None]):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms3D().compute(a, samples)
@@ -101,25 +105,31 @@ class DataVisualizerRunner:
                 loader = SamplesLoader(file.full_path)
                 samples = loader.load()
 
-                assert (len(samples) % 2) == 0, "found odd samples length, FFT needs even length of sample"
+                assert (len(samples) % 2) == 0, "found odd number of samples, FFT needs even length of sample"
 
-                logging.info(f"processing file {i} {file}...")
-                out_filename = os.path.join(file.directory, file.filename_no_ext)
+                logging.debug(f"processing file {i} {file.filename_ext}...")
                 window_title = file.filename_no_ext
+                out_filename = os.path.join(file.directory, file.filename_no_ext) if self.do_save_to_file else None
+                if out_filename:
+                    logging.debug(f"rendering image {file.filename_no_ext} upon user request")
 
                 if self.algorithm_d1 is not None:
-                    self._fft_1d(self.algorithm_d1, samples, window_title, out_filename)
+                    self._fft_1d(self.algorithm_d1, samples, window_title, self.do_plot, out_filename)
                 elif self.algorithm_d2 is not None:
-                    self._fft_2d(self.algorithm_d2, samples, window_title, None)
+                    self._fft_2d(self.algorithm_d2, samples, window_title, self.do_plot, out_filename)
                 elif self.algorithm_d3 is not None:
-                    self._trajectory_3d(self.algorithm_d3, samples, window_title, None)
+                    self._trajectory_3d(self.algorithm_d3, samples, window_title, self.do_plot, out_filename)
                 else:
                     logging.info("nothing to do")
-                logging.info(f"processing file {file}... done")
+                logging.info(f"processing file {file.filename_ext}... done")
 
-            logging.info(f"plotting data...")
-            plt.show()
-            logging.info(f"plotting data... done")
+            if self.do_plot:
+                logging.info(f"plotting data...")
+                plt.show()
+                logging.info(f"plotting data... done")
+            else:
+                logging.debug("plotting skipped upon user request")
+
         else:
             logging.info("nothing to do")
             return -1
