@@ -1,4 +1,5 @@
 import logging
+from typing import Union
 
 from serial.tools.list_ports import comports
 
@@ -9,33 +10,33 @@ from .constants import OutputDataRate, Range, Scale
 class ControllerRunner:
 
     def __init__(self,
-                 command: str | None,
-                 controller_serial_dev_name: str | None,
-                 controller_do_list_devices: bool | None,
-                 controller_do_reboot: bool | None,
-                 sensor_output_data_rate: OutputDataRate | None,
-                 sensor_scale: Scale | None,
-                 sensor_range: Range | None,
-                 sensor_all_settings: bool | None,
-                 stream_start: int | None,
-                 stream_stop: bool | None,
-                 stream_decode: bool | None,
-                 output_file: str | None,
-                 output_stdout: bool | None,
+                 command: Union[str, None],
+                 controller_serial_dev_name: Union[str, None],
+                 controller_do_list_devices: Union[bool, None],
+                 controller_do_reboot: Union[bool, None],
+                 sensor_output_data_rate: Union[OutputDataRate, None],
+                 sensor_scale: Union[Scale, None],
+                 sensor_range: Union[Range, None],
+                 sensor_all_settings: Union[bool, None],
+                 stream_start: Union[int, None],
+                 stream_stop: Union[bool, None],
+                 stream_decode: Union[bool, None],
+                 output_file: Union[str, None],
+                 output_stdout: Union[bool, None],
                  ):
-        self.command: str | None = command
-        self.controller_serial_dev_name: str | None = controller_serial_dev_name
-        self.controller_do_list_devices: bool | None = controller_do_list_devices
-        self.controller_do_reboot: bool | None = controller_do_reboot
-        self.sensor_output_data_rate: OutputDataRate | None = sensor_output_data_rate
-        self.sensor_scale: Scale | None = sensor_scale
-        self.sensor_range: Range | None = sensor_range
-        self.sensor_all_settings: bool | None = sensor_all_settings
-        self.stream_start: int | None = stream_start
-        self.stream_stop: bool | None = stream_stop
-        self.stream_decode: bool | None = stream_decode
-        self.output_file: str | None = output_file
-        self.output_stdout: bool | None = output_stdout
+        self.command: Union[str, None] = command
+        self.controller_serial_dev_name: Union[str, None] = controller_serial_dev_name
+        self.controller_do_list_devices: Union[bool, None] = controller_do_list_devices
+        self.controller_do_reboot: Union[bool, None] = controller_do_reboot
+        self.sensor_output_data_rate: Union[OutputDataRate, None] = sensor_output_data_rate
+        self.sensor_scale: Union[Scale, None] = sensor_scale
+        self.sensor_range: Union[Range, None] = sensor_range
+        self.sensor_all_settings: Union[bool, None] = sensor_all_settings
+        self.stream_start: Union[int, None] = stream_start
+        self.stream_stop: Union[bool, None] = stream_stop
+        self.stream_decode: Union[bool, None] = stream_decode
+        self.output_file: Union[str, None] = output_file
+        self.output_stdout: Union[bool, None] = output_stdout
 
     def run(self) -> int:
         if not self.command:

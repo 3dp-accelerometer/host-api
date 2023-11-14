@@ -2,7 +2,6 @@
 
 import argparse
 import sys
-import time
 
 from controller.constants import OutputDataRate
 from log.log_levels import LogLevel

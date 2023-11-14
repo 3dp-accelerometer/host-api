@@ -3,12 +3,12 @@
 import argparse
 import sys
 
-from threedp_accelerometer.cli import args
 from threedp_accelerometer.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
 from threedp_accelerometer.data_decomposition.runner import DataVisualizerRunner
 from threedp_accelerometer.log.setup import configure_logging
 
 configure_logging()
+
 
 class Args:
     def __init__(self) -> None:

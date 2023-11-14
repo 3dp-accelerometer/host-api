@@ -1,5 +1,5 @@
 import os
-from typing import Tuple, List, Literal, get_args
+from typing import Tuple, List, Literal, get_args, Union
 
 
 def convert_xy_pos_from_str(pos: str) -> Tuple[int, int]:
@@ -36,8 +36,8 @@ def path_exists_and_is_dir(file_path: str) -> str:
 
 
 def convert_axis_from_str(axis_names: Literal["x", "y", "xy"]) -> List[Literal["x", "y"]]:
-    x: Literal["x", "y"] | None = None if len(axis_names) < 1 else axis_names[0]
-    y: Literal["x", "y"] | None = None if len(axis_names) < 2 else axis_names[1]
+    x: Union[Literal["x", "y"], None] = None if len(axis_names) < 1 else axis_names[0]
+    y: Union[Literal["x", "y"], None] = None if len(axis_names) < 2 else axis_names[1]
 
     literal = Literal["x", "y"]
 

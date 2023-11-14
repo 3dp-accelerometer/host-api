@@ -1,7 +1,7 @@
 import logging
 import re
 import time
-from typing import TextIO
+from typing import TextIO, Union
 
 from .constants import Range, Scale, OutputDataRate
 from .serial import CdcSerial
@@ -69,7 +69,7 @@ class Adxl345(CdcSerial):
     def stop_sampling(self):
         self._send_frame(TxSamplingStop())
 
-    def decode(self, return_on_stop: bool = False, file: None | TextIO = None):
+    def decode(self, return_on_stop: bool = False, file: Union[None, TextIO] = None):
         data: bytearray = bytearray()
         run_count: int = 0
         sample_count: int = 0

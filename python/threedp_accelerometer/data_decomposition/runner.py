@@ -1,6 +1,6 @@
 import logging
 import os.path
-from typing import List
+from typing import List, Union
 
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
@@ -14,19 +14,19 @@ from threedp_accelerometer.samples.loader import Samples, SamplesLoader
 class DataVisualizerRunner:
 
     def __init__(self,
-                 command: str | None,
+                 command: Union[str, None],
                  input_filename: str,
-                 algorithm_d1: str | None,
-                 algorithm_d2: str | None,
-                 algorithm_d3: str | None):
-        self.command: str | None = command
+                 algorithm_d1: Union[str, None],
+                 algorithm_d2: Union[str, None],
+                 algorithm_d3: Union[str, None]):
+        self.command: Union[str, None] = command
         self.input_filename: str = input_filename
-        self.algorithm_d1: str | None = algorithm_d1
-        self.algorithm_d2: str | None = algorithm_d2
-        self.algorithm_d3: str | None = algorithm_d3
+        self.algorithm_d1: Union[str, None] = algorithm_d1
+        self.algorithm_d2: Union[str, None] = algorithm_d2
+        self.algorithm_d3: Union[str, None] = algorithm_d3
 
     @staticmethod
-    def _fft_1d(algorithm: str, samples: Samples, window_title: str | None, save_filename: str | None):
+    def _fft_1d(algorithm: str, samples: Samples, window_title: Union[str, None], save_filename: Union[str, None]):
 
         fig_acc: Figure
         axes: List[Axes]
@@ -36,7 +36,7 @@ class DataVisualizerRunner:
         if window_title:
             fig_acc.canvas.manager.set_window_title(window_title)
         # fig_acc.canvas.manager. full_screen_toggle()
-        fig_acc.set_size_inches(60/2.45, 30/2.45)
+        fig_acc.set_size_inches(60 / 2.45, 30 / 2.45)
 
         xax, yax, zax = axes[:3]
         xax.plot(samples.timestamp_ms, samples.x, color="r", linestyle="solid", marker=None, label="x")
@@ -69,7 +69,7 @@ class DataVisualizerRunner:
         return 0
 
     @staticmethod
-    def _fft_2d(algorithm: str, samples: Samples, _window_title: str | None, _save_filename: str | None):
+    def _fft_2d(algorithm: str, samples: Samples, _window_title: Union[str, None], _save_filename: Union[str, None]):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms2D().compute(a, samples)
@@ -77,7 +77,7 @@ class DataVisualizerRunner:
             return FftAlgorithms2D().compute(algorithm, samples)
 
     @staticmethod
-    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: str | None, _save_filename: str | None):
+    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: Union[str, None], _save_filename: Union[str, None]):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms3D().compute(a, samples)

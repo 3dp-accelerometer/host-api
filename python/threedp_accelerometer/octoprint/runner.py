@@ -1,7 +1,7 @@
 import logging
 import threading
 import time
-from typing import Literal, Tuple
+from typing import Literal, Tuple, Union
 
 from threedp_accelerometer.controller.background_decoder import BackgroundDecoder
 from threedp_accelerometer.controller.constants import OutputDataRate
@@ -19,7 +19,7 @@ class SamplingJobRunner:
                  octoprint_port: int,
                  octoprint_api_key: str,
                  gcode_start_point_mm: Tuple[int, int],
-                 gcode_extra_gcode: str | None,
+                 gcode_extra_gcode: Union[str, None],
                  gcode_axis: Literal["x", "y"],
                  gcode_distance_mm: int,
                  gcode_repetitions: int,
@@ -35,14 +35,14 @@ class SamplingJobRunner:
         self.octoprint_port: int = octoprint_port
         self.octoprint_api_key: str = octoprint_api_key
         self.gcode_start_point_mm: Tuple[int, int] = gcode_start_point_mm
-        self.gcode_extra_gcode: str | None = gcode_extra_gcode
+        self.gcode_extra_gcode: Union[str, None] = gcode_extra_gcode
         self.gcode_axis: Literal["x", "y"] = gcode_axis
         self.gcode_distance_mm: int = gcode_distance_mm
         self.gcode_repetitions: int = gcode_repetitions
         self.gcode_go_start: bool = gcode_go_start
         self.gcode_return_start: bool = gcode_return_start
         self.gcode_auto_home: bool = gcode_auto_home
-        self.octo_api: OctoApi | None = None
+        self.octo_api: Union[OctoApi, None] = None
 
     def run(self) -> int:
         decoder = BackgroundDecoder(self.input_serial_device,

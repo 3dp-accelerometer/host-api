@@ -1,6 +1,6 @@
 import csv
 import re
-from typing import Dict
+from typing import Dict, Union
 
 from threedp_accelerometer.controller.constants import OutputDataRateDelay, OutputDataRate, Range, Scale
 from threedp_accelerometer.samples.samples import Samples
@@ -32,7 +32,7 @@ class SamplesLoader:
         # read samples: requires pre-loaded metadata for timestamp reconstruction
         with open(self.filename, "r") as f:
             reader = csv.DictReader(filter(lambda line: line[0] != self.LINE_COMMENT_CHARACTER, f), delimiter=self.TABULAR_DELIMITER_CHARACTER)
-            row: Dict[str, int | float]
+            row: Dict[str, Union[int, float]]
             for row in reader:
                 samples.run.append(int(row["run"]))
                 index = int(row["sample"])

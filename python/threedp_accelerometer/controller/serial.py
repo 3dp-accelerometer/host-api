@@ -1,10 +1,12 @@
+from typing import Union
+
 import serial
 from serial import Serial
 
 
 class CdcSerial:
     def __init__(self, ser_dev_name: str, timeout: float):
-        self.dev: None | Serial = None
+        self.dev: Union[None, Serial] = None
         self.ser_dev_name = ser_dev_name
         self.timeout: float = timeout
 
@@ -15,7 +17,7 @@ class CdcSerial:
     def write_bytes(self, tx_bytes: bytes) -> None:
         self.dev.write(tx_bytes)
 
-    def read_bytes(self, num_bytes: int, timeout: None | float = None) -> bytes:
+    def read_bytes(self, num_bytes: int, timeout: Union[None, float] = None) -> bytes:
         if timeout:
             self.dev.timeout = timeout
             rx_bytes = self.dev.read(num_bytes)

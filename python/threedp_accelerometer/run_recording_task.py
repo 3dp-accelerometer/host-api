@@ -2,6 +2,7 @@
 
 import argparse
 import sys
+from typing import Union
 
 from cli import args
 from controller.constants import OutputDataRate
@@ -121,7 +122,7 @@ class Args:
 class Runner:
     def __init__(self):
         self._cli_args: Args = Args()
-        self.octo_api: OctoApi | None = None
+        self.octo_api: Union[OctoApi, None] = None
 
     @property
     def args(self):

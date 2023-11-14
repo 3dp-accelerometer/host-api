@@ -1,4 +1,4 @@
-from typing import Dict, Type
+from typing import Dict, Type, Union
 
 from .constants import TransportHeaderId, OutputDataRate, Scale, Range
 
@@ -73,7 +73,7 @@ class RxOutputDataRate:
     LEN = 2
 
     def __init__(self, payload: bytearray):
-        self.outputDataRate: OutputDataRate | None = None
+        self.outputDataRate: Union[OutputDataRate, None] = None
         payload.pop(0)
         self.outputDataRate: OutputDataRate = OutputDataRate(payload[0])
         payload.pop(0)
@@ -117,7 +117,7 @@ class RxDeviceSetup(RxFrame):
     REPR_FILTER_REGEX: str = '^Device Setup.*({.*})$'
 
     def __init__(self, payload: bytearray):
-        self.outputDataRate: OutputDataRate | None = None
+        self.outputDataRate: Union[OutputDataRate, None] = None
         payload_byte: int = payload[1]
         self.outputDataRate: OutputDataRate = OutputDataRate(payload_byte & 0b0001111)
         self.range: Range = Range((payload_byte & 0b010000) >> 4)
@@ -203,7 +203,7 @@ class RxAcceleration(RxFrame):
 
 
 class RxFrame:
-    MAPPING: Dict[TransportHeaderId, Type[RxOutputDataRate | RxRange | RxScale | RxSamplingStarted | RxSamplingStopped | RxSamplingFinished | RxSamplingAborted | RxUnknownResponse]] = {
+    MAPPING: Dict[TransportHeaderId, Type[Union[RxOutputDataRate, RxRange, RxScale, RxSamplingStarted, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted, RxUnknownResponse]]] = {
         TransportHeaderId.RX_OUTPUT_DATA_RATE: RxOutputDataRate,
         TransportHeaderId.RX_RANGE: RxRange,
         TransportHeaderId.RX_SCALE: RxScale,
@@ -219,7 +219,7 @@ class RxFrame:
     def __init__(self, payload: bytearray):
         self.payload: bytearray = payload
 
-    def unpack(self) -> RxSamplingStarted | RxSamplingStopped | RxSamplingFinished | RxSamplingAborted | RxUnknownResponse | None:
+    def unpack(self) -> Union[RxSamplingStarted, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted, RxUnknownResponse, None]:
         header_id = TransportHeaderId(int.from_bytes([self.payload[0]], "little", signed=False))
         if header_id in RxFrame.MAPPING:
             clazz = RxFrame.MAPPING[header_id]
