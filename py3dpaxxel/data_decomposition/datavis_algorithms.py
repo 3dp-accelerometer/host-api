@@ -8,7 +8,7 @@ from matplotlib.axes import Axes
 from numpy import blackman
 from scipy.fft import fft, ifft, fftfreq
 
-from threedp_accelerometer.samples.loader import Samples
+from py3dpaxxel.samples.loader import Samples
 
 
 class FftAlgorithms1D:

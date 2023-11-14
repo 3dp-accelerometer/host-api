@@ -3,9 +3,9 @@ import os
 import time
 from typing import List, Literal, Tuple
 
-from threedp_accelerometer.controller.constants import OutputDataRate
-from threedp_accelerometer.octoprint.runner import SamplingJobRunner
-from threedp_accelerometer.sampling_tasks.series_argument_generator import RunArgsGenerator, RunArgs
+from py3dpaxxel.controller.constants import OutputDataRate
+from py3dpaxxel.octoprint.runner import SamplingJobRunner
+from py3dpaxxel.sampling_tasks.series_argument_generator import RunArgsGenerator, RunArgs
 
 
 class SamplingSeriesRunner:

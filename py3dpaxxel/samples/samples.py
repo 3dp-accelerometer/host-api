@@ -1,6 +1,6 @@
 from typing import Union
 
-from threedp_accelerometer.controller.constants import OutputDataRateDelay, OutputDataRate, Range, Scale
+from py3dpaxxel.controller.constants import OutputDataRateDelay, OutputDataRate, Range, Scale
 
 
 class Samples:

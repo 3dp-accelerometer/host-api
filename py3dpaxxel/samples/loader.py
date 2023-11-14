@@ -2,8 +2,8 @@ import csv
 import re
 from typing import Dict, Union
 
-from threedp_accelerometer.controller.constants import OutputDataRateDelay, OutputDataRate, Range, Scale
-from threedp_accelerometer.samples.samples import Samples
+from py3dpaxxel.controller.constants import OutputDataRateDelay, OutputDataRate, Range, Scale
+from py3dpaxxel.samples.samples import Samples
 
 
 class SamplesLoader:

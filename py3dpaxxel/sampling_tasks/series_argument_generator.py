@@ -1,6 +1,6 @@
 from typing import List, Literal
 
-from threedp_accelerometer.cli import filename as fn_generator
+from py3dpaxxel.cli import filename as fn_generator
 
 
 class RunArgs:

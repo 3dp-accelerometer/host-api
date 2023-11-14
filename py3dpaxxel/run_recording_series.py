@@ -5,9 +5,9 @@ import sys
 
 from controller.constants import OutputDataRate
 from log.log_levels import LogLevel
-from threedp_accelerometer.cli import args
-from threedp_accelerometer.log.setup import configure_logging
-from threedp_accelerometer.sampling_tasks.runner import SamplingSeriesRunner
+from py3dpaxxel.cli import args
+from py3dpaxxel.log.setup import configure_logging
+from py3dpaxxel.sampling_tasks.runner import SamplingSeriesRunner
 
 configure_logging()
 

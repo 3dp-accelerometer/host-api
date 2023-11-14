@@ -6,9 +6,9 @@ from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from threedp_accelerometer.cli.file_filter import FileSelector
-from threedp_accelerometer.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
-from threedp_accelerometer.samples.loader import Samples, SamplesLoader
+from py3dpaxxel.cli.file_filter import FileSelector
+from py3dpaxxel.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
+from py3dpaxxel.samples.loader import Samples, SamplesLoader
 
 
 class DataVisualizerRunner:

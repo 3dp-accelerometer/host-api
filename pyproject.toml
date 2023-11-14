@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "threedp_accelerometer"
+name = "py3dpaxxel"
 version = "0.1.0"
 description = "Python API for interacting with the 3DP Accelerometer controller and sensor data visualization."
 license = "Apache-2.0"
@@ -7,15 +7,15 @@ authors = ["Raoul Rubien <rubienr@sbox.tugraz.at>"]
 maintainers = ["Raoul Rubien <rubienr@sbox.tugraz.at>"]
 readme = "readme.md"
 repository = "https://github.com/3dp-accelerometer"
-packages = [{ include = "threedp_accelerometer" }]
-documentation = "https://github.com/3dp-accelerometer/host-api/blob/main/python/readme.md"
+packages = [{ include = "py3dpaxxel" }]
+documentation = "https://github.com/3dp-accelerometer/py3dpaxxel/readme.md"
 keywords = ["3d printing", "accelerometer", "adxl345", "stm32", "marlin", "octoprint"]
 classifiers = ["Topic :: System :: Hardware",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Libraries :: Python Modules"]
 include = [{ path = "setup.py", format = "sdist" }]
 exclude = [
-    "threedp_accelerometer/data",
+    "py3dpaxxel/data",
     "**/.gitignore",
     "**/.idea",
     "**/__pycache__"]
@@ -39,7 +39,7 @@ visualization = ["matplotlib", "scipy"]
 
 [tool.poetry.build]
 generate-setup-file = false
-script = "threedp_accelerometer/build/update_setup.py"
+script = "py3dpaxxel/build/update_setup.py"
 
 [tool.poetry.group.dev.dependencies]
 poetry2setup = "^1.1.0"

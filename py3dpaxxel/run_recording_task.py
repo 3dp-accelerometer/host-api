@@ -7,9 +7,9 @@ from typing import Union
 from cli import args
 from controller.constants import OutputDataRate
 from octoprint.api import OctoApi
-from threedp_accelerometer.cli import filename
-from threedp_accelerometer.log.setup import configure_logging
-from threedp_accelerometer.octoprint.runner import SamplingJobRunner
+from py3dpaxxel.cli import filename
+from py3dpaxxel.log.setup import configure_logging
+from py3dpaxxel.octoprint.runner import SamplingJobRunner
 
 configure_logging()
 

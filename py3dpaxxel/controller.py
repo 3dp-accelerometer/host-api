@@ -4,10 +4,10 @@ import argparse
 import sys
 
 from controller.constants import OutputDataRate, Range, Scale
-from threedp_accelerometer.cli import filename
-from threedp_accelerometer.cli.args import convert_uint16_from_str
-from threedp_accelerometer.controller.runner import ControllerRunner
-from threedp_accelerometer.log.setup import configure_logging
+from py3dpaxxel.cli import filename
+from py3dpaxxel.cli.args import convert_uint16_from_str
+from py3dpaxxel.controller.runner import ControllerRunner
+from py3dpaxxel.log.setup import configure_logging
 
 configure_logging()
 

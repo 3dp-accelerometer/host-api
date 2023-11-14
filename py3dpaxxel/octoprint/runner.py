@@ -3,10 +3,10 @@ import threading
 import time
 from typing import Literal, Tuple, Union
 
-from threedp_accelerometer.controller.background_decoder import BackgroundDecoder
-from threedp_accelerometer.controller.constants import OutputDataRate
-from threedp_accelerometer.gcode.trajectory_generator import CoplanarTrajectory
-from threedp_accelerometer.octoprint.api import OctoApi
+from py3dpaxxel.controller.background_decoder import BackgroundDecoder
+from py3dpaxxel.controller.constants import OutputDataRate
+from py3dpaxxel.gcode.trajectory_generator import CoplanarTrajectory
+from py3dpaxxel.octoprint.api import OctoApi
 
 
 class SamplingJobRunner:
