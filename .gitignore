@@ -1,7 +1,4 @@
-# Platformio
-.pio
-cmake-build-debug
-stm32pio.ini
+dist
+**/.venv
+**/.idea
 
-# IDE
-.idea
