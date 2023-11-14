@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 from typing import List, Literal, Tuple
 
@@ -29,6 +30,7 @@ class SamplingSeriesRunner:
                  zeta_step: int,
                  axis: List[Literal["x", "y"]],
                  output_file_prefix: str,
+                 output_dir: str,
                  dry_run: bool):
         self.octoprint_address: str = octoprint_address
         self.octoprint_port: int = octoprint_port
@@ -49,6 +51,7 @@ class SamplingSeriesRunner:
         self.zeta_step: int = zeta_step
         self.axis: List[Literal["x", "y"]] = axis
         self.output_file_prefix: str = output_file_prefix
+        self.output_dir: str = output_dir
         self.dry_run: bool = dry_run
 
     def run(self) -> int:
@@ -73,13 +76,14 @@ class SamplingSeriesRunner:
         run_nr = 1
         for r in runs:
             run_percent = int((run_nr / run_count_total) * 100 + 0.5)
-            logging.info(f"{run_percent: 4}% run {run_nr:03}/{run_count_total:03}")
+            logging.info(f"{run_percent}% run {run_nr}/{run_count_total}")
             if not self.dry_run:
+                start = time.time()
                 job_runner = SamplingJobRunner(
                     input_serial_device=self.controller_serial_device,
                     intput_sensor_odr=self.sensor_odr,
                     record_timelapse_s=self.controller_record_timelapse_s,
-                    output_file_name=r.filename,
+                    output_filename=os.path.join(self.output_dir, r.filename),
                     octoprint_address=self.octoprint_address,
                     octoprint_port=self.octoprint_port,
                     octoprint_api_key=self.octoprint_key,
@@ -92,6 +96,7 @@ class SamplingSeriesRunner:
                     gcode_return_start=True,
                     gcode_auto_home=True)
                 job_runner.run()
+                logging.info(f"sampling job done in {time.time() - start:.3f}s")
                 time.sleep(0.2)
             run_nr += 1
         return 0

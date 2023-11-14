@@ -1,21 +1,22 @@
 #!/bin/env python3
 
 import argparse
-import logging
 import sys
 
 from controller.constants import OutputDataRate, Range, Scale
-from log.log_levels import LogLevel
-from threedp_accelerometer.cli import file_name
+from threedp_accelerometer.cli import filename
 from threedp_accelerometer.cli.args import convert_uint16_from_str
 from threedp_accelerometer.controller.runner import ControllerRunner
+from threedp_accelerometer.log.setup import configure_logging
+
+configure_logging()
 
 
 class Args:
 
     @staticmethod
     def default_filename() -> str:
-        return file_name.generate_filename()
+        return filename.generate_filename()
 
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(
@@ -119,11 +120,6 @@ class Args:
             "Flags",
             description="General flags applied to all commands.")
         sub_group.add_argument(
-            "-l", "--log",
-            help="Set the logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL",
-            choices=[e.name for e in LogLevel],
-            default="INFO")
-        sub_group.add_argument(
             "-d", "--device",
             help="Specify the serial device to communicate with.",
             default="/dev/ttyACM0")
@@ -135,7 +131,6 @@ class Runner:
 
     def __init__(self) -> None:
         self._cli_args: Args = Args()
-        logging.basicConfig(level=LogLevel[self.args.log].value)
 
     @property
     def args(self):

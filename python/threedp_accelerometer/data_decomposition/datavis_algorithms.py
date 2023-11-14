@@ -154,7 +154,7 @@ class FftAlgorithms3D:
         ax.legend()
         ax.set(ylabel="y [mm]", xlabel="x [mm]", zlabel="z [mm]")
 
-        plt.show()
+        # plt.show()
 
         return 0
 

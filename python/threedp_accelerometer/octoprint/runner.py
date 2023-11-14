@@ -14,7 +14,7 @@ class SamplingJobRunner:
                  input_serial_device: str,
                  intput_sensor_odr: OutputDataRate,
                  record_timelapse_s: float,
-                 output_file_name: str,
+                 output_filename: str,
                  octoprint_address: str,
                  octoprint_port: int,
                  octoprint_api_key: str,
@@ -30,7 +30,7 @@ class SamplingJobRunner:
         self.input_serial_device: str = input_serial_device
         self.intput_sensor_odr: OutputDataRate = intput_sensor_odr
         self.record_timelapse_s: float = record_timelapse_s
-        self.output_file_name: str = output_file_name
+        self.output_filename: str = output_filename
         self.octoprint_address: str = octoprint_address
         self.octoprint_port: int = octoprint_port
         self.octoprint_api_key: str = octoprint_api_key
@@ -48,13 +48,14 @@ class SamplingJobRunner:
         decoder = BackgroundDecoder(self.input_serial_device,
                                     self.record_timelapse_s,
                                     self.intput_sensor_odr,
-                                    self.output_file_name)
+                                    self.output_filename)
         controller_task = threading.Thread(target=decoder)
         controller_task.start()
 
         self.octo_api = OctoApi(self.octoprint_api_key, self.octoprint_address, self.octoprint_port)
 
         time.sleep(0.1)
+        start = time.time()
         decoder.start_sampling()
 
         commands = [self.gcode_extra_gcode] if "" != self.gcode_extra_gcode else []
@@ -71,6 +72,7 @@ class SamplingJobRunner:
 
         logging.info("waiting for decoding task finished...")
         controller_task.join()
+        logging.info(f"sampling task done in {time.time() - start:.3f}s")
         logging.info("waiting for decoding task finished... done")
 
         return 0

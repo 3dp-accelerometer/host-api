@@ -1,22 +1,23 @@
 #!/bin/env python3
 
 import argparse
-import logging
 import sys
 
 from cli import args
 from controller.constants import OutputDataRate
-from log.log_levels import LogLevel
 from octoprint.api import OctoApi
-from threedp_accelerometer.cli import file_name
+from threedp_accelerometer.cli import filename
+from threedp_accelerometer.log.setup import configure_logging
 from threedp_accelerometer.octoprint.runner import SamplingJobRunner
+
+configure_logging()
 
 
 class Args:
 
     @staticmethod
     def default_filename() -> str:
-        return file_name.generate_filename(prefix="op-capture")
+        return filename.generate_filename(prefix="op-capture")
 
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(
@@ -113,11 +114,6 @@ class Args:
             type=str,
             nargs='?',
             const=self.default_filename)
-        sub_group.add_argument(
-            "-l", "--log",
-            help="Set the logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL",
-            choices=[e.name for e in LogLevel],
-            default="INFO")
 
         self.args: argparse.Namespace = self.parser.parse_args()
 
@@ -125,7 +121,6 @@ class Args:
 class Runner:
     def __init__(self):
         self._cli_args: Args = Args()
-        logging.basicConfig(level=LogLevel[self.args.log].value)
         self.octo_api: OctoApi | None = None
 
     @property
@@ -141,11 +136,11 @@ class Runner:
             self.parser.print_help()
             return 1
 
-        ret =  SamplingJobRunner(
+        ret = SamplingJobRunner(
             input_serial_device=self.args.device,
             intput_sensor_odr=OutputDataRate[self.args.outputdatarate],
             record_timelapse_s=self.args.timelapse,
-            output_file_name=self.args.file,
+            output_filename=self.args.file,
             octoprint_address=self.args.address,
             octoprint_port=self.args.port,
             octoprint_api_key=self.args.key,

@@ -1,4 +1,5 @@
 import logging
+import os
 from typing import TextIO
 
 from .api import (Adxl345)
@@ -6,10 +7,10 @@ from .constants import OutputDataRate, OutputDataRateDelay
 
 
 class BackgroundDecoder:
-    def __init__(self, controller_serial: str, timelapse_s: float, sensor_output_data_rate: OutputDataRate, out_file_name: str | None):
+    def __init__(self, controller_serial: str, timelapse_s: float, sensor_output_data_rate: OutputDataRate, out_filename: str | None):
         self.file: TextIO | None = None
-        if out_file_name is not None:
-            self.file = open(out_file_name, "w")
+        if out_filename is not None:
+            self.file = open(out_filename, "w")
 
         self.dev: Adxl345 = Adxl345(controller_serial)
         self.dev.open()
@@ -36,5 +37,6 @@ class BackgroundDecoder:
         self.dev.close()
         if self.file is not None:
             self.file.close()
+        logging.info(f"data saved to {self.file.name}")
         logging.info(f"decoding ... done")
         return 0

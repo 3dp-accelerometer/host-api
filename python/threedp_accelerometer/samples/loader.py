@@ -10,12 +10,12 @@ class SamplesLoader:
     TABULAR_DELIMITER_CHARACTER = " "
     LINE_COMMENT_CHARACTER = "#"  # comments must start at beginning of line
 
-    def __init__(self, file_name: str):
-        self.file_name = file_name
+    def __init__(self, filename: str):
+        self.filename = filename
 
     def _try_read_metadata_if_any(self, samples: Samples):
         # read metadata (if any): ODR, rate, scale
-        with open(self.file_name, "r") as f:
+        with open(self.filename, "r") as f:
             for line in reversed(f.readlines()):
                 if line[0] == "#":
                     sampling_args = eval(re.search("^# .*({.*})$", line).group(1))
@@ -30,7 +30,7 @@ class SamplesLoader:
         self._try_read_metadata_if_any(samples)
 
         # read samples: requires pre-loaded metadata for timestamp reconstruction
-        with open(self.file_name, "r") as f:
+        with open(self.filename, "r") as f:
             reader = csv.DictReader(filter(lambda line: line[0] != self.LINE_COMMENT_CHARACTER, f), delimiter=self.TABULAR_DELIMITER_CHARACTER)
             row: Dict[str, int | float]
             for row in reader:

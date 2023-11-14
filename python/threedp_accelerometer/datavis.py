@@ -1,14 +1,14 @@
 #!/bin/env python3
 
 import argparse
-import logging
 import sys
 
-from log.log_levels import LogLevel
 from threedp_accelerometer.cli import args
 from threedp_accelerometer.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
 from threedp_accelerometer.data_decomposition.runner import DataVisualizerRunner
+from threedp_accelerometer.log.setup import configure_logging
 
+configure_logging()
 
 class Args:
     def __init__(self) -> None:
@@ -51,18 +51,13 @@ class Args:
             description="General flags applied to all commands.")
         sub_group.add_argument(
             "-f", "--file",
-            help="Specify input file (*.tsv)",
-            type=args.path_exists_and_is_file,
+            help="Input file name or regexp-pattern. Examples: \"example.tsv\", \"data/\",...)",
+            type=str,
             default="example.tsv")
         sub_group.add_argument(
             "-p", "--plot",
             help="Visualizes data",
             action="store_true")
-        sub_group.add_argument(
-            "-l", "--log",
-            help="Set the logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL",
-            choices=[e.name for e in LogLevel],
-            default="INFO")
 
         self.args: argparse.Namespace = self.parser.parse_args()
 
@@ -71,7 +66,6 @@ class Runner:
 
     def __init__(self) -> None:
         self._cli_args: Args = Args()
-        logging.basicConfig(level=LogLevel[self.args.log].value)
 
     @property
     def args(self):
@@ -88,7 +82,7 @@ class Runner:
 
         ret = DataVisualizerRunner(
             command=self.args.command,
-            input_file_name=self.args.file,
+            input_filename=self.args.file,
             algorithm_d1=self.args.d1,
             algorithm_d2=self.args.d2,
             algorithm_d3=self.args.d3).run()

@@ -9,8 +9,8 @@ def convert_xy_pos_from_str(pos: str) -> Tuple[int, int]:
     return x, y
 
 
-def assert_uint_0_100(f: str) -> float:
-    value = float(f)
+def assert_uint_0_100(f: str) -> int:
+    value = int(f)
     assert 0 <= value <= 100
     return value
 
