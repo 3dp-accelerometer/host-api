@@ -4,13 +4,13 @@ from .constants import TransportHeaderId, OutputDataRate, Scale, Range
 
 
 class Frame:
-    def __init__(self, header_id: TransportHeaderId, payload: bytearray):
+    def __init__(self, header_id: TransportHeaderId, payload: bytearray) -> None:
         self.header_id: TransportHeaderId = header_id
         self.payload: bytearray = payload
 
 
 class TxFrame(Frame):
-    def __init__(self, header_id: TransportHeaderId, payload: bytearray = bytearray()):
+    def __init__(self, header_id: TransportHeaderId, payload: bytearray = bytearray()) -> None:
         super().__init__(header_id, payload)
 
     def pack(self) -> bytes:
@@ -24,55 +24,55 @@ class TxFrame(Frame):
 
 
 class TxSetOutputDataRate(TxFrame):
-    def __init__(self, odr: OutputDataRate):
+    def __init__(self, odr: OutputDataRate) -> None:
         super().__init__(TransportHeaderId.TX_SET_OUTPUT_DATA_RATE, bytearray([int(odr.value)]))
 
 
 class TxGetOutputDataRate(TxFrame):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_GET_OUTPUT_DATA_RATE)
 
 
 class TxSetRange(TxFrame):
-    def __init__(self, data_range: Range):
+    def __init__(self, data_range: Range) -> None:
         super().__init__(TransportHeaderId.TX_SET_RANGE, bytearray([int(data_range.value)]))
 
 
 class TxGetRange(TxFrame):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_GET_RANGE)
 
 
 class TxSetScale(TxFrame):
-    def __init__(self, scale: Scale):
+    def __init__(self, scale: Scale) -> None:
         super().__init__(TransportHeaderId.TX_SET_SCALE, bytearray([int(scale.value)]))
 
 
 class TxGetScale(TxFrame):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_GET_SCALE)
 
 
 class TxReboot(TxFrame):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_DEVICE_REBOOT)
 
 
 class TxSamplingStart(TxFrame):
-    def __init__(self, num_samples: int = 0):
+    def __init__(self, num_samples: int = 0) -> None:
         payload = [num_samples & 0x00ff, (num_samples & 0xff00) >> 8]
         super().__init__(TransportHeaderId.TX_SAMPLING_START, bytearray(payload))
 
 
 class TxSamplingStop(TxFrame):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_SAMPLING_STOP)
 
 
 class RxOutputDataRate:
     LEN = 2
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.outputDataRate: Union[OutputDataRate, None] = None
         payload.pop(0)
         self.outputDataRate: OutputDataRate = OutputDataRate(payload[0])
@@ -93,7 +93,7 @@ class RxFrame:
 class RxRange(RxFrame):
     LEN = 2
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.range: Range = Range(payload[1])
         self.consume_all(payload)
 
@@ -104,7 +104,7 @@ class RxRange(RxFrame):
 class RxScale(RxFrame):
     LEN = 2
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.scale: Scale = Scale(int.from_bytes([payload[1]], byteorder="little", signed=False))
         self.consume_all(payload)
 
@@ -116,7 +116,7 @@ class RxDeviceSetup(RxFrame):
     LEN = 2
     REPR_FILTER_REGEX: str = '^Device Setup.*({.*})$'
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.outputDataRate: Union[OutputDataRate, None] = None
         payload_byte: int = payload[1]
         self.outputDataRate: OutputDataRate = OutputDataRate(payload_byte & 0b0001111)
@@ -131,7 +131,7 @@ class RxDeviceSetup(RxFrame):
 class RxFifoOverflow(RxFrame):
     LEN = 1
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.consume_all(payload)
 
     def __str__(self) -> str:
@@ -141,7 +141,7 @@ class RxFifoOverflow(RxFrame):
 class RxSamplingStarted(RxFrame):
     LEN = 3
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.maxSamples: int = int.from_bytes(payload[1:2], "little", signed=False)
         self.consume_all(payload)
 
@@ -152,7 +152,7 @@ class RxSamplingStarted(RxFrame):
 class RxSamplingStopped(RxFrame):
     LEN = 1
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.consume_all(payload)
 
     def __str__(self) -> str:
@@ -162,7 +162,7 @@ class RxSamplingStopped(RxFrame):
 class RxSamplingFinished(RxFrame):
     LEN = 1
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.consume_all(payload)
 
     def __str__(self) -> str:
@@ -172,7 +172,7 @@ class RxSamplingFinished(RxFrame):
 class RxSamplingAborted(RxFrame):
     LEN = 1
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.consume_all(payload)
 
     def __str__(self) -> str:
@@ -180,7 +180,7 @@ class RxSamplingAborted(RxFrame):
 
 
 class RxUnknownResponse:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def __str__(self) -> str:
@@ -191,7 +191,7 @@ class RxAcceleration(RxFrame):
     LEN = 9
     FULL_RESOLUTION_LSB_SCALE = 3.9  # (min, typ, max) = (3.5, 3.9, 4.3), ADXL 345 Datasheet, rev. G, Tale 1., parameter SENSITIVITY
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.index: int = int.from_bytes(payload[1:3], "little", signed=False)
         self.x: float = RxAcceleration.FULL_RESOLUTION_LSB_SCALE * int.from_bytes(payload[3:5], "little", signed=True)
         self.y: float = RxAcceleration.FULL_RESOLUTION_LSB_SCALE * int.from_bytes(payload[5:7], "little", signed=True)
@@ -216,7 +216,7 @@ class RxFrame:
         TransportHeaderId.RX_ACCELERATION: RxAcceleration,
     }
 
-    def __init__(self, payload: bytearray):
+    def __init__(self, payload: bytearray) -> None:
         self.payload: bytearray = payload
 
     def unpack(self) -> Union[RxSamplingStarted, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted, RxUnknownResponse, None]:

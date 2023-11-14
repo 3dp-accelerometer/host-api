@@ -6,7 +6,7 @@ from .constants import OutputDataRate, OutputDataRateDelay
 
 
 class BackgroundDecoder:
-    def __init__(self, controller_serial: str, timelapse_s: float, sensor_output_data_rate: OutputDataRate, out_filename: Union[str, None]):
+    def __init__(self, controller_serial: str, timelapse_s: float, sensor_output_data_rate: OutputDataRate, out_filename: Union[str, None]) -> None:
         self.file: Union[TextIO, None] = None
         if out_filename is not None:
             self.file = open(out_filename, "w")

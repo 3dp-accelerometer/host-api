@@ -5,7 +5,7 @@ from serial import Serial
 
 
 class CdcSerial:
-    def __init__(self, ser_dev_name: str, timeout: float):
+    def __init__(self, ser_dev_name: str, timeout: float) -> None:
         self.dev: Union[None, Serial] = None
         self.ser_dev_name = ser_dev_name
         self.timeout: float = timeout

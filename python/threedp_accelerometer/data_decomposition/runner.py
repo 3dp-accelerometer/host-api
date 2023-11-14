@@ -18,7 +18,7 @@ class DataVisualizerRunner:
                  input_filename: str,
                  algorithm_d1: Union[str, None],
                  algorithm_d2: Union[str, None],
-                 algorithm_d3: Union[str, None]):
+                 algorithm_d3: Union[str, None]) -> None:
         self.command: Union[str, None] = command
         self.input_filename: str = input_filename
         self.algorithm_d1: Union[str, None] = algorithm_d1

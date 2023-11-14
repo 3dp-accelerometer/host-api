@@ -14,7 +14,7 @@ from threedp_accelerometer.samples.loader import Samples
 class FftAlgorithms1D:
     # https://docs.scipy.org/doc/scipy/tutorial/fft.html
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.algorithms: Dict[str, callable] = {
             "discrete": FftAlgorithms1D._compute_fft_1d_discrete,
             "discrete_blackman": FftAlgorithms1D._compute_fft_1d_discrete_blackman_window,
@@ -82,7 +82,7 @@ class FftAlgorithms1D:
 
 class FftAlgorithms2D:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.algorithms: Dict[str, callable] = {
             "discrete": FftAlgorithms2D._compute_fft_2d_discrete,
         }
@@ -98,7 +98,7 @@ class FftAlgorithms2D:
 
 class FftAlgorithms3D:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.algorithms: Dict[str, callable] = {
             "trajectory": FftAlgorithms3D._compute_trajectory_from_acceleration_stream,
         }

@@ -120,7 +120,7 @@ class Args:
 
 
 class Runner:
-    def __init__(self):
+    def __init__(self) -> None:
         self._cli_args: Args = Args()
         self.octo_api: Union[OctoApi, None] = None
 

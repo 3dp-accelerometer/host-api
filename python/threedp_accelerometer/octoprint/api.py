@@ -5,7 +5,7 @@ import requests
 
 class OctoApi:
 
-    def __init__(self, api_key: str, address: str, port: int):
+    def __init__(self, api_key: str, address: str, port: int) -> None:
         self.host: str = address
         self.session: requests.Session = requests.Session()
         self.session.headers.update({'X-Api-Key': api_key, 'Content-Type': 'application/json'})

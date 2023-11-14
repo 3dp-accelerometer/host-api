@@ -4,7 +4,7 @@ from threedp_accelerometer.controller.constants import OutputDataRateDelay, Outp
 
 
 class Samples:
-    def __init__(self):
+    def __init__(self) -> None:
         self.separation_s: Union[float, None] = None
         self.rate: OutputDataRate = OutputDataRateDelay[OutputDataRate.ODR3200]
         self.range: Union[Range, None] = None

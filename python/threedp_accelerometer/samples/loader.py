@@ -10,7 +10,7 @@ class SamplesLoader:
     TABULAR_DELIMITER_CHARACTER = " "
     LINE_COMMENT_CHARACTER = "#"  # comments must start at beginning of line
 
-    def __init__(self, filename: str):
+    def __init__(self, filename: str) -> None:
         self.filename = filename
 
     def _try_read_metadata_if_any(self, samples: Samples):

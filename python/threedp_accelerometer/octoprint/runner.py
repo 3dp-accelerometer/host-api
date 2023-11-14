@@ -26,7 +26,7 @@ class SamplingJobRunner:
                  gcode_go_start: bool,
                  gcode_return_start: bool,
                  gcode_auto_home: bool
-                 ):
+                 ) -> None:
         self.input_serial_device: str = input_serial_device
         self.intput_sensor_odr: OutputDataRate = intput_sensor_odr
         self.record_timelapse_s: float = record_timelapse_s

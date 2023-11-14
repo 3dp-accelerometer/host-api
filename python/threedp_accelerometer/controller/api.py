@@ -12,20 +12,17 @@ from .transfer_types import (TxFrame, RxFrame, RxUnknownResponse, RxOutputDataRa
                              TxSamplingStart, TxSamplingStop)
 
 
-class ErrorFifoOverflow(Exception):
-
-    def __init__(self):
-        super().add_note("controller detected accelerometer FiFo overrun")
+class ErrorFifoOverflow(IOError):
+    """controller detected accelerometer FiFo overrun"""
 
 
-class ErrorUnknownResponse(Exception):
-    def __init__(self):
-        super().add_note("received unknown response from controller")
+class ErrorUnknownResponse(IOError):
+    """received unknown response from controller"""
 
 
 class Adxl345(CdcSerial):
 
-    def __init__(self, ser_dev_name: str, timeout: float = 0.1):
+    def __init__(self, ser_dev_name: str, timeout: float = 0.1) -> None:
         super().__init__(ser_dev_name, timeout)
 
     def _send_frame_then_receive(self, frame: TxFrame, rx_bytes_count: int) -> bytearray:

@@ -31,7 +31,7 @@ class SamplingSeriesRunner:
                  axis: List[Literal["x", "y"]],
                  output_file_prefix: str,
                  output_dir: str,
-                 dry_run: bool):
+                 dry_run: bool) -> None:
         self.octoprint_address: str = octoprint_address
         self.octoprint_port: int = octoprint_port
         self.octoprint_key: str = octoprint_key
