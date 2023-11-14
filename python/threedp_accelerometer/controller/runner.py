@@ -9,29 +9,36 @@ from .constants import OutputDataRate, Range, Scale
 
 class ControllerRunner:
 
-    def __init__(self,
-                 command: Union[str, None],
-                 controller_serial_dev_name: Union[str, None],
-                 controller_do_list_devices: Union[bool, None],
-                 controller_do_reboot: Union[bool, None],
-                 sensor_output_data_rate: Union[OutputDataRate, None],
-                 sensor_scale: Union[Scale, None],
-                 sensor_range: Union[Range, None],
-                 sensor_all_settings: Union[bool, None],
-                 stream_start: Union[int, None],
-                 stream_stop: Union[bool, None],
-                 stream_decode: Union[bool, None],
-                 output_file: Union[str, None],
-                 output_stdout: Union[bool, None],
-                 ):
+    def __init__(
+            self,
+            command: Union[str, None],
+            controller_serial_dev_name: Union[str, None],
+            controller_do_list_devices: Union[bool, None],
+            controller_do_reboot: Union[bool, None],
+            sensor_set_output_data_rate: Union[OutputDataRate, None],
+            sensor_set_scale: Union[Scale, None],
+            sensor_set_range: Union[Range, None],
+            sensor_get_output_data_rate: bool,
+            sensor_get_scale: bool,
+            sensor_get_range: bool,
+            sensor_get_all_settings: bool,
+            stream_start: Union[int, None],
+            stream_stop: Union[bool, None],
+            stream_decode: Union[bool, None],
+            output_file: Union[str, None],
+            output_stdout: Union[bool, None]
+    ) -> None:
         self.command: Union[str, None] = command
         self.controller_serial_dev_name: Union[str, None] = controller_serial_dev_name
         self.controller_do_list_devices: Union[bool, None] = controller_do_list_devices
         self.controller_do_reboot: Union[bool, None] = controller_do_reboot
-        self.sensor_output_data_rate: Union[OutputDataRate, None] = sensor_output_data_rate
-        self.sensor_scale: Union[Scale, None] = sensor_scale
-        self.sensor_range: Union[Range, None] = sensor_range
-        self.sensor_all_settings: Union[bool, None] = sensor_all_settings
+        self.sensor_set_output_data_rate: Union[OutputDataRate, None] = sensor_set_output_data_rate
+        self.sensor_set_scale: Union[Scale, None] = sensor_set_scale
+        self.sensor_set_range: Union[Range, None] = sensor_set_range
+        self.sensor_get_output_data_rate: bool = sensor_get_output_data_rate
+        self.sensor_get_scale: bool = sensor_get_scale
+        self.sensor_get_range: bool = sensor_get_range
+        self.sensor_get_all_settings: bool = sensor_get_all_settings
         self.stream_start: Union[int, None] = stream_start
         self.stream_stop: Union[bool, None] = stream_stop
         self.stream_decode: Union[bool, None] = stream_decode
@@ -54,36 +61,36 @@ class ControllerRunner:
                 logging.warning("noting to do")
 
         elif self.command == "set":
-            if self.sensor_output_data_rate:
-                logging.info("send outputdatarate=%s", self.sensor_output_data_rate.name)
+            if self.sensor_set_output_data_rate:
+                logging.info("send outputdatarate=%s", self.sensor_set_output_data_rate.name)
                 with Adxl345(self.controller_serial_dev_name) as sensor:
-                    sensor.set_output_data_rate(self.sensor_output_data_rate)
-            elif self.sensor_scale:
-                logging.info("send scale=%s", self.sensor_scale.name)
+                    sensor.set_output_data_rate(self.sensor_set_output_data_rate)
+            elif self.sensor_set_scale:
+                logging.info("send scale=%s", self.sensor_set_scale.name)
                 with Adxl345(self.controller_serial_dev_name) as sensor:
-                    sensor.set_scale(self.sensor_scale)
-            elif self.sensor_range:
-                logging.info("send range=%s", self.sensor_range.name)
+                    sensor.set_scale(self.sensor_set_scale)
+            elif self.sensor_set_range:
+                logging.info("send range=%s", self.sensor_set_range.name)
                 with Adxl345(self.controller_serial_dev_name) as sensor:
-                    sensor.set_range(self.sensor_range)
+                    sensor.set_range(self.sensor_set_range)
             else:
                 logging.warning("noting to do")
                 return 1
 
         elif self.command == "get":
-            if self.sensor_output_data_rate:
+            if self.sensor_get_output_data_rate:
                 logging.debug("request odr")
                 with Adxl345(self.controller_serial_dev_name) as sensor:
                     logging.info("odr=%s", sensor.get_output_data_rate().name)
-            elif self.sensor_scale:
+            elif self.sensor_get_scale:
                 logging.debug("request scale")
                 with Adxl345(self.controller_serial_dev_name) as sensor:
                     logging.info("scale=%s", sensor.get_scale().name)
-            elif self.sensor_range:
+            elif self.sensor_get_range:
                 logging.debug("request range")
                 with Adxl345(self.controller_serial_dev_name) as sensor:
                     logging.info("range=%s", sensor.get_range().name)
-            elif self.sensor_all_settings:
+            elif self.sensor_get_all_settings:
                 with Adxl345(self.controller_serial_dev_name) as sensor:
                     logging.info("odr=%s", sensor.get_output_data_rate().name)
                     logging.info("scale=%s", sensor.get_scale().name)

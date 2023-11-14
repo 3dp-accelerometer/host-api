@@ -141,20 +141,45 @@ class Runner:
         return self._cli_args.parser
 
     def run(self) -> int:
+        command = self.args.command
+
+        controller_serial_dev_name = self.args.device
+        controller_do_list_devices = self.args.list if hasattr(self.args, "list") else None
+        controller_do_reboot = self.args.reboot if hasattr(self.args, "reboot") else None
+
+        sensor_set_output_data_rate = OutputDataRate[self.args.outputdatarate] if self.args.command == "set" and hasattr(self.args,
+                                                                                                                         "outputdatarate") and self.args.outputdatarate is not None else None
+        sensor_set_scale = Scale[self.args.scale] if self.args.command == "set" and hasattr(self.args, "scale") and self.args.scale is not None else None
+        sensor_set_range = Range[self.args.range] if self.args.command == "set" and hasattr(self.args, "range") and self.args.range is not None else None
+        sensor_get_output_data_rate = self.args.outputdatarate if self.args.command == "get" and hasattr(self.args, "outputdatarate") else None
+        sensor_get_scale = self.args.scale if self.args.command == "get" and hasattr(self.args, "scale") else None
+        sensor_get_range = self.args.range if self.args.command == "get" and hasattr(self.args, "range") else None
+        sensor_get_all_settings = self.args.all if self.args.command == "get" and hasattr(self.args, "all") else None
+
+        stream_start = self.args.start if hasattr(self.args, "start") else None
+        stream_stop = self.args.stop if hasattr(self.args, "stop") else None
+        stream_decode = self.args.decode if hasattr(self.args, "decode") else None
+
+        output_file = self.args.file if hasattr(self.args, "file") else None
+        output_stdout = self.args.stdout if hasattr(self.args, "stdout") else None
+
         ret = ControllerRunner(
-            command=self.args.command,
-            controller_serial_dev_name=self.args.device,
-            controller_do_list_devices=self.args.list if hasattr(self.args, "list") else None,
-            controller_do_reboot=self.args.reboot if hasattr(self.args, "reboot") else None,
-            sensor_output_data_rate=OutputDataRate(self.args.outputdatarate) if hasattr(self.args, "outputdatarate") and self.args.outputdatarate is not None else None,
-            sensor_scale=Scale(self.args.scale) if hasattr(self.args, "scale") and self.args.scale is not None else None,
-            sensor_range=Range(self.args.range) if hasattr(self.args, "range") and self.args.range is not None else None,
-            sensor_all_settings=self.args.all if hasattr(self.args, "all") else None,
-            stream_start=self.args.start if hasattr(self.args, "start") else None,
-            stream_stop=self.args.stop if hasattr(self.args, "stop") else None,
-            stream_decode=self.args.decode if hasattr(self.args, "decode") else None,
-            output_file=self.args.file if hasattr(self.args, "file") else None,
-            output_stdout=self.args.stdout if hasattr(self.args, "stdout") else None).run()
+            command=command,
+            controller_serial_dev_name=controller_serial_dev_name,
+            controller_do_list_devices=controller_do_list_devices,
+            controller_do_reboot=controller_do_reboot,
+            sensor_set_output_data_rate=sensor_set_output_data_rate,
+            sensor_set_scale=sensor_set_scale,
+            sensor_set_range=sensor_set_range,
+            sensor_get_output_data_rate=sensor_get_output_data_rate,
+            sensor_get_scale=sensor_get_scale,
+            sensor_get_range=sensor_get_range,
+            sensor_get_all_settings=sensor_get_all_settings,
+            stream_start=stream_start,
+            stream_stop=stream_stop,
+            stream_decode=stream_decode,
+            output_file=output_file,
+            output_stdout=output_stdout).run()
 
         if ret == -1:
             self.parser.print_help()
