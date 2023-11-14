@@ -13,6 +13,12 @@ keywords = ["3d printing", "accelerometer", "adxl345", "stm32", "marlin", "octop
 classifiers = ["Topic :: System :: Hardware",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Libraries :: Python Modules"]
+include = [{ path = "setup.py", format = "sdist" }]
+exclude = [
+    "threedp_accelerometer/data",
+    "**/.gitignore",
+    "**/.idea",
+    "**/__pycache__"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
@@ -31,6 +37,13 @@ visualization = ["matplotlib", "scipy"]
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/3dp-accelerometer/host-api/issues"
 
+[tool.poetry.build]
+generate-setup-file = false
+script = "threedp_accelerometer/build/update_setup.py"
+
+[tool.poetry.group.dev.dependencies]
+poetry2setup = "^1.1.0"
+
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core", "poetry2setup"]
 build-backend = "poetry.core.masonry.api"
