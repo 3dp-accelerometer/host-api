@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "threedp_accelerometer"
 version = "0.1.0"
-description = "Python API for interacting with the 3dp-accelerometer controller and sensor data visualization."
+description = "Python API for interacting with the 3DP Accelerometer controller and sensor data visualization."
 license = "Apache-2.0"
 authors = ["Raoul Rubien <rubienr@sbox.tugraz.at>"]
 maintainers = ["Raoul Rubien <rubienr@sbox.tugraz.at>"]
 readme = "readme.md"
 repository = "https://github.com/3dp-accelerometer"
-packages = [{include = "threedp-accelerometer"}]
+packages = [{include = "threedp_accelerometer"}]
 documentation = "readme.md"
 keywords =["3d printing", "accelerometer", "adxl345", "stm32", "marlin", "octoprint"]
 classifiers = ["Topic :: System :: Hardware",
@@ -15,18 +15,18 @@ classifiers = ["Topic :: System :: Hardware",
                "Topic :: Software Development :: Libraries :: Python Modules"]
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.13"
+python = ">=3.9,<3.13"
 matplotlib = {version = "^3.5.2", optional = true}
 numpy = "^1.24.2"
-pyserial = "^3.5"
 pyaml = "^23.9.7"
+pyserial = "^3.5"
 requests = {version = "^2.28.1", optional = true}
 scipy = {version = "^1.10.1", optional = true}
 
 [tool.poetry.extras]
-visualization= ["matplotlib", "scipy"]
-octoprint= ["requests"]
 data_analysis= ["scipy"]
+octoprint= ["requests"]
+visualization= ["matplotlib", "scipy"]
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/3dp-accelerometer/host-api/issues"
