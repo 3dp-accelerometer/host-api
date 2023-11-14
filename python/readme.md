@@ -55,6 +55,8 @@ Prerequisites
 
 ```bash
 sudo apt install python3-poetry
+# alternatively apply script from install.python-poetry.org as 
+# described in https://github.com/python-poetry/poetry#documentation
 cd host-api/python
 poetry shell
 poetry install # only API packages
