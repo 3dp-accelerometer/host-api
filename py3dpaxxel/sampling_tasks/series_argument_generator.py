@@ -4,9 +4,9 @@ from py3dpaxxel.cli import filename as fn_generator
 
 
 class RunArgs:
-    def __init__(self, run: int, axis: Literal["x", "y"], frequency: int, zeta: int, file_prefix: str) -> None:
+    def __init__(self, run: int, axis: Literal["x", "y", "z"], frequency: int, zeta: int, file_prefix: str) -> None:
         self.run: int = run
-        self.axis: Literal["x", "y"] = axis
+        self.axis: Literal["x", "y", "z"] = axis
         self.frequency: int = frequency
         self.zeta: int = zeta
         self.file_prefix: str = file_prefix
@@ -29,7 +29,7 @@ class RunArgsGenerator:
                  zeta_start: int,
                  zeta_stop: int,
                  zeta_step: int,
-                 axis: List[Literal["x", "y"]],
+                 axis: List[Literal["x", "y", "z"]],
                  file_prefix: str) -> None:
         self.runs: int = runs
         self.fx_start: int = fx_start
@@ -38,7 +38,7 @@ class RunArgsGenerator:
         self.zeta_start: int = zeta_start
         self.zeta_stop: int = zeta_stop
         self.zeta_step: int = zeta_step
-        self.axis: List[Literal["x", "y"]] = axis
+        self.axis: List[Literal["x", "y", "z"]] = axis
         self.file_prefix: str = file_prefix
 
     def generate(self) -> List[RunArgs]:

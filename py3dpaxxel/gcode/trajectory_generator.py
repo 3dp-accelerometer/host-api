@@ -4,12 +4,15 @@ from typing import Tuple, Literal
 class CoplanarTrajectory:
 
     @staticmethod
-    def generate(axis: Literal["x", "y"], start_xy_mm: Tuple[int, int], distance_mm: int = 10, repetitions: int = 2, go_to_start: bool = True, return_to_start: bool = True, auto_home=True):
+    def generate(axis: Literal["x", "y", "z"], start_xyz_mm: Tuple[int, int, int], distance_mm: int = 10, repetitions: int = 2, go_to_start: bool = True, return_to_start: bool = True, auto_home=True):
         """
-        Generates a simple coplanar trajectory in X or Y direction.
+        Generates a simple coplanar trajectory in X, Y or Z direction.
+        G-Code moves the tool to the start position from where it starts the forth and back movement.
+        This is done in the specified axis direction.
+        Specify negative distance to move in the opposite direction.
 
-        :param axis: coplanar axis (X or Y)
-        :param start_xy_mm: trajectory start point
+        :param axis: coplanar axis (X, Y or Z)
+        :param start_xyz_mm: trajectory start point
         :param distance_mm: travel distance
         :param repetitions:
         :param go_to_start: go to start position first before repetitions
@@ -18,9 +21,9 @@ class CoplanarTrajectory:
         :return: list of G-Code commands
         """
 
+        start_x_mm, start_y_mm, start_z_mm = start_xyz_mm
         ax = axis.upper()
-        start_x_mm, start_y_mm = start_xy_mm
-        start_axis_mm = start_x_mm if ax == "X" else start_y_mm
+        start_axis_mm = {"X": start_x_mm, "Y": start_y_mm, "Z": start_z_mm}[ax]
 
         commands = []
 
@@ -28,7 +31,7 @@ class CoplanarTrajectory:
             commands.append("G28 O X Y Z")
 
         if go_to_start:
-            commands.append(f"G1 X{start_x_mm} Y{start_y_mm}")
+            commands.append(f"G1 X{start_x_mm} Y{start_y_mm} Z{start_z_mm}")
 
         for r in range(0, repetitions):
             commands.append(f"G1 {ax}{start_axis_mm}")

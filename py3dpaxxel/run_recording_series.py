@@ -42,13 +42,13 @@ class Args:
             "-x", "--axis",
             help="Axis to move.",
             type=str,
-            choices=["x", "y", "xy"],
+            choices=["x", "y", "z", "xy", "xz", "yz", "xyz"],
             default="x")
         sub_group.add_argument(
             "-b", "--begin",
             help="Start pont in mm to begin trajectory at,",
-            type=args.convert_xy_pos_from_str,
-            default="\"200,140\"")
+            type=args.convert_xyz_pos_from_str,
+            default="\"200,140,20\"")
         sub_group.add_argument(
             "-s", "--distance",
             help="Distance in mm to travel back and forth.",
@@ -178,7 +178,7 @@ class Runner:
             axis=args.convert_axis_from_str(self.args.axis),
             output_file_prefix=self.args.fileprefix,
             output_dir=self.args.directory,
-            dry_run=self.args.dryrun).run()
+            do_dry_run=self.args.dryrun).run()
 
         if ret == -1:
             self.parser.print_help()

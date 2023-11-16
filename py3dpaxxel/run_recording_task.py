@@ -49,12 +49,12 @@ class Args:
             "-x", "--axis",
             help="Axis to move.",
             type=str,
-            choices=["x", "y"],
+            choices=["x", "y", "z"],
             default="x")
         sub_group.add_argument(
             "-b", "--begin",
             help="Start pont in mm to begin trajectory at,",
-            type=args.convert_xy_pos_from_str,
+            type=args.convert_xyz_pos_from_str,
             default="\"200,140\"")
         sub_group.add_argument(
             "-e", "--extragcode",
