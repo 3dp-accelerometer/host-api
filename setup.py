@@ -10,7 +10,8 @@ packages = \
  'py3dpaxxel.log',
  'py3dpaxxel.octoprint',
  'py3dpaxxel.samples',
- 'py3dpaxxel.sampling_tasks']
+ 'py3dpaxxel.sampling_tasks',
+ 'py3dpaxxel.scripts']
 
 package_data = \
 {'': ['*']}
@@ -39,7 +40,7 @@ setup_kwargs = {
     'extras_require': extras_require,
     'python_requires': '>=3.9,<3.13',
 }
-from py3dpaxxel.build.update_setup import *
+from py3dpaxxel.scripts.update_setup import *
 build(setup_kwargs)
 
 setup(**setup_kwargs)

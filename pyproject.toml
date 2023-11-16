@@ -39,7 +39,7 @@ visualization = ["matplotlib", "scipy"]
 
 [tool.poetry.build]
 generate-setup-file = false
-script = "py3dpaxxel/build/update_setup.py"
+script = "py3dpaxxel/scripts/update_setup.py"
 
 [tool.poetry.group.dev.dependencies]
 poetry2setup = "^1.1.0"
