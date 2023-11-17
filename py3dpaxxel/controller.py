@@ -2,6 +2,7 @@
 
 import argparse
 import sys
+from typing import Literal
 
 from controller.constants import OutputDataRate, Range, Scale
 from py3dpaxxel.cli import filename
@@ -33,7 +34,11 @@ class Args:
         grp = sup.add_mutually_exclusive_group()
         grp.add_argument(
             "-l", "--list",
-            help="List attached devices.",
+            help="List attached devices (human readable).",
+            action="store_true")
+        grp.add_argument(
+            "-j", "--json",
+            help="List attached devices (machine readable as JSON).",
             action="store_true")
         grp.add_argument(
             "-r", "--reboot",
@@ -144,7 +149,7 @@ class Runner:
         command = self.args.command
 
         controller_serial_dev_name = self.args.device
-        controller_do_list_devices = self.args.list if hasattr(self.args, "list") else None
+        controller_do_list_devices: Literal["h", "j"] = "h" if hasattr(self.args, "list") and self.args.list else "j" if hasattr(self.args, "json") and self.args.json else None
         controller_do_reboot = self.args.reboot if hasattr(self.args, "reboot") else None
 
         sensor_set_output_data_rate = OutputDataRate[self.args.outputdatarate] if self.args.command == "set" and hasattr(self.args,

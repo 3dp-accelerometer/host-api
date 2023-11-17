@@ -4,7 +4,6 @@ import argparse
 import sys
 
 from controller.constants import OutputDataRate
-from log.log_levels import LogLevel
 from py3dpaxxel.cli import args
 from py3dpaxxel.log.setup import configure_logging
 from py3dpaxxel.sampling_tasks.runner import SamplingSeriesRunner
@@ -134,11 +133,6 @@ class Args:
             help=f"Output path.",
             type=args.path_exists_and_is_dir,
             default="./data/")
-        sub_group.add_argument(
-            "-l", "--log",
-            help="Set the logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL",
-            choices=[e.name for e in LogLevel],
-            default="INFO")
 
         self.args: argparse.Namespace = self.parser.parse_args()
 
