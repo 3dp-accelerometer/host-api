@@ -1,7 +1,9 @@
 import logging
 import re
 import time
-from typing import TextIO, Union
+from typing import TextIO, Union, Dict, List
+
+from serial.tools.list_ports import comports
 
 from .constants import Range, Scale, OutputDataRate
 from .serial import CdcSerial
@@ -21,9 +23,26 @@ class ErrorUnknownResponse(IOError):
 
 
 class Adxl345(CdcSerial):
+    # see https://pid.codes/pids/
+    DEVICE_VID = 0x1209
+    DEVICE_PID = 0xE11A
 
     def __init__(self, ser_dev_name: str, timeout: float = 0.1) -> None:
         super().__init__(ser_dev_name, timeout)
+
+    @staticmethod
+    def get_devices_list_human_readable() -> List[str]:
+        devices: List[str] = []
+        for s in [cp for cp in comports() if cp.vid == Adxl345.DEVICE_VID and cp.pid == Adxl345.DEVICE_PID]:
+            devices.append(s.device)
+        return devices
+
+    @staticmethod
+    def get_devices_dict() -> Dict[str, Dict[str, str]]:
+        devices: Dict[str, Dict[str, str]] = dict()
+        for s in [cp for cp in comports() if cp.vid == Adxl345.DEVICE_VID and cp.pid == Adxl345.DEVICE_PID]:
+            devices[s.device] = {"manufacturer": s.manufacturer, "product": s.product, "vendor_id": s.vid, "product_id": s.pid, "serial": s.serial_number}
+        return devices
 
     def _send_frame_then_receive(self, frame: TxFrame, rx_bytes_count: int) -> bytearray:
         self.write_bytes(frame.pack())

@@ -1,17 +1,12 @@
 import json
 import logging
-from typing import Union, Dict, Literal
-
-from serial.tools.list_ports import comports
+from typing import Union, Literal
 
 from .api import Adxl345
 from .constants import OutputDataRate, Range, Scale
 
 
 class ControllerRunner:
-    # see https://pid.codes/pids/
-    DEVICE_VID = 0x1209
-    DEVICE_PID = 0xE11A
 
     def __init__(
             self,
@@ -56,13 +51,9 @@ class ControllerRunner:
         if self.command == "device":
             if self.controller_do_list_devices:
                 if "j" == self.controller_do_list_devices:
-                    devices: Dict[str, Dict[str, str]] = dict()
-                    for s in [cp for cp in comports() if cp.vid == self.DEVICE_VID and cp.pid == self.DEVICE_PID]:
-                        devices[s.device] = {"manufacturer": s.manufacturer, "product": s.product, "vendor_id": s.vid, "product_id": s.pid, "serial": s.serial_number}
-                    print(json.dumps(devices, indent=2))
+                    print(json.dumps(Adxl345.get_devices_dict(), indent=2))
                 elif "h" == self.controller_do_list_devices:
-                    for s in [cp for cp in comports() if cp.vid == self.DEVICE_VID and cp.pid == self.DEVICE_PID]:
-                        print(s.device)
+                    _x = [print(d) for d in Adxl345.get_devices_list_human_readable()]
 
             elif self.controller_do_reboot:
                 logging.info("device reboot")
