@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "py3dpaxxel"
-version = "0.1.0"
+version = "0.1.3"
 description = "Python API for interacting with the 3DP Accelerometer controller and sensor data visualization."
 license = "Apache-2.0"
 authors = ["Raoul Rubien <rubienr@sbox.tugraz.at>"]
