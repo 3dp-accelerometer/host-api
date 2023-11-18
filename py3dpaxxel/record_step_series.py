@@ -6,7 +6,8 @@ import sys
 from controller.constants import OutputDataRate
 from py3dpaxxel.cli import args
 from py3dpaxxel.log.setup import configure_logging
-from py3dpaxxel.sampling_tasks.runner import SamplingSeriesRunner
+from py3dpaxxel.octoprint.remote_api import OctoRemoteApi
+from py3dpaxxel.sampling_tasks.runner import SamplingStepsSeriesRunner
 
 configure_logging()
 
@@ -14,22 +15,23 @@ configure_logging()
 class Args:
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(
-            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+            description="Records a series of recording-steps samples while sending G-Code to the printer.")
 
         sub_group = self.parser.add_argument_group(
             "REST API",
             description="Octoprint arguments.")
         sub_group.add_argument(
-            "-a", "--address",
+            "--address",
             help="OctoPrint address",
             required=True)
         sub_group.add_argument(
-            "-p", "--port",
+            "--port",
             help="OctoPrint port (default 80)",
             type=int,
             default=80)
         sub_group.add_argument(
-            "-k", "--key",
+            "--key",
             help="OctoPrint API key.",
             type=str,
             default=80)
@@ -38,23 +40,23 @@ class Args:
             "Trajectory",
             description="Trajectory settings")
         sub_group.add_argument(
-            "-x", "--axis",
+            "--axis",
             help="Axis to move.",
             type=str,
             choices=["x", "y", "z", "xy", "xz", "yz", "xyz"],
             default="x")
         sub_group.add_argument(
-            "-b", "--begin",
-            help="Start pont in mm to begin trajectory at,",
+            "--start",
+            help="Start pont in mm to begin trajectory at.",
             type=args.convert_xyz_pos_from_str,
             default="\"200,140,20\"")
         sub_group.add_argument(
-            "-s", "--distance",
+            "--distance",
             help="Distance in mm to travel back and forth.",
             type=int,
             default=20)
         sub_group.add_argument(
-            "-n", "--repetitions",
+            "--repetitions",
             help="Repeat travel back and forth N times.",
             type=int,
             default=4)
@@ -63,37 +65,37 @@ class Args:
             "Task",
             description="Capturing task repetitions with different parameters")
         sub_group.add_argument(
-            "-r", "--runs",
+            "--runs",
             help="Repeats the capturing task with same arguments R times.",
             type=int,
             default=1)
         sub_group.add_argument(
-            "-g", "--fxstart",
+            "--fxstart",
             help="Start frequency in Hz. See https://marlinfw.org/docs/gcode/M593.html",
             type=args.assert_uint16,
             default="10")
         sub_group.add_argument(
-            "-i", "--fxstop",
+            "--fxstop",
             help="Start frequency in Hz.",
             type=args.assert_uint16,
             default="80")
         sub_group.add_argument(
-            "-j", "--fxstep",
+            "--fxstep",
             help="Frequency increment in Hz.",
             type=args.assert_uint16,
             default=10)
         sub_group.add_argument(
-            "-u", "--zetastart",
+            "--zetastart",
             help="Zeta damping factor (times 100). See https://marlinfw.org/docs/gcode/M593.html",
             type=args.assert_uint_0_100,
             default=0)
         sub_group.add_argument(
-            "-v", "--zetastop",
+            "--zetastop",
             help="Zeta damping factor (times 100).",
             type=args.assert_uint_0_100,
             default=25)
         sub_group.add_argument(
-            "-w", "--zetastep",
+            "--zetastep",
             help="Zeta damping factor increment (times 100).",
             type=args.assert_uint_0_100,
             default=5)
@@ -102,16 +104,16 @@ class Args:
             "Controller",
             description="Acceleration microcontroller arguments.")
         sub_group.add_argument(
-            "-d", "--device",
+            "--device",
             help="Controllers serial device node to communicate with.",
             default="/dev/ttyACM0")
         sub_group.add_argument(
-            "-o", "--outputdatarate",
+            "--outputdatarate",
             help="Set specified sampling rate before sending G-Code.",
             choices=[e.name for e in OutputDataRate],
             default=OutputDataRate.ODR3200.name)
         sub_group.add_argument(
-            "-t", "--timelapse",
+            "--timelapse",
             help="Timespan to record captured samples in seconds.",
             type=float,
             default=1.0)
@@ -120,16 +122,16 @@ class Args:
             "Output",
             description="Output arguments.")
         sub_group.add_argument(
-            "-y", "--dryrun",
+            "--dryrun",
             help=f"Pretends to run but does not invoke either Octoprint nor controller.",
             action="store_true")
         sub_group.add_argument(
-            "-f", "--fileprefix",
+            "--fileprefix",
             help=f"Specify prefix of output file (<prefix>-<run>-<timestamp>.tsv)",
             type=str,
             default="octo-capture")
         sub_group.add_argument(
-            "-c", "--directory",
+            "--directory",
             help=f"Output path.",
             type=args.path_exists_and_is_dir,
             default="./data/")
@@ -151,14 +153,14 @@ class Runner:
         return self._cli_args.parser
 
     def run(self) -> int:
-        ret = SamplingSeriesRunner(
-            octoprint_address=self.args.address,
-            octoprint_port=self.args.port,
-            octoprint_key=self.args.key,
+        octo_api = OctoRemoteApi(self.args.key, self.args.address, self.args.port, self.args.dryrun)
+
+        ret = SamplingStepsSeriesRunner(
+            octoprint_api=octo_api,
             controller_serial_device=self.args.device,
             controller_record_timelapse_s=self.args.timelapse,
             sensor_odr=OutputDataRate[self.args.outputdatarate],
-            gcode_start_point_mm=self.args.begin,
+            gcode_start_point_mm=self.args.start,
             gcode_axis=self.args.axis,
             gcode_distance_mm=self.args.distance,
             gcode_repetitions=self.args.repetitions,

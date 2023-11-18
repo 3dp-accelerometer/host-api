@@ -4,16 +4,15 @@ import time
 from typing import List, Literal, Tuple
 
 from py3dpaxxel.controller.constants import OutputDataRate
-from py3dpaxxel.octoprint.runner import SamplingJobRunner
+from py3dpaxxel.octoprint.api import OctoApi
+from py3dpaxxel.octoprint.runner import SamplingStepsRunner
 from py3dpaxxel.sampling_tasks.series_argument_generator import RunArgsGenerator, RunArgs
 
 
-class SamplingSeriesRunner:
+class SamplingStepsSeriesRunner:
 
     def __init__(self,
-                 octoprint_address: str,
-                 octoprint_port: int,
-                 octoprint_key: str,
+                 octoprint_api: OctoApi,
                  controller_serial_device: str,
                  controller_record_timelapse_s: float,
                  sensor_odr: OutputDataRate,
@@ -32,9 +31,7 @@ class SamplingSeriesRunner:
                  output_file_prefix: str,
                  output_dir: str,
                  do_dry_run: bool) -> None:
-        self.octoprint_address: str = octoprint_address
-        self.octoprint_port: int = octoprint_port
-        self.octoprint_key: str = octoprint_key
+        self.octoprint_api: OctoApi = octoprint_api
         self.controller_serial_device: str = controller_serial_device
         self.controller_record_timelapse_s: float = controller_record_timelapse_s
         self.sensor_odr: OutputDataRate = sensor_odr
@@ -79,14 +76,12 @@ class SamplingSeriesRunner:
             logging.info(f"{run_percent}% run {run_nr}/{run_count_total}")
 
             start = time.time()
-            job_runner = SamplingJobRunner(
+            job_runner = SamplingStepsRunner(
                 input_serial_device=self.controller_serial_device,
                 intput_sensor_odr=self.sensor_odr,
                 record_timelapse_s=self.controller_record_timelapse_s,
                 output_filename=os.path.join(self.output_dir, r.filename),
-                octoprint_address=self.octoprint_address,
-                octoprint_port=self.octoprint_port,
-                octoprint_api_key=self.octoprint_key,
+                octoprint_api=self.octoprint_api,
                 gcode_start_point_mm=self.gcode_start_point_mm,
                 gcode_extra_gcode=f"M593 {r.axis.upper()} F{r.frequency} D{r.zeta}",
                 gcode_axis=r.axis,

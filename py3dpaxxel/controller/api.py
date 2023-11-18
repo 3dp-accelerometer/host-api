@@ -39,6 +39,18 @@ class Adxl345(CdcSerial):
 
     @staticmethod
     def get_devices_dict() -> Dict[str, Dict[str, str]]:
+        """
+        Returns dict of devices:
+            {
+                "/dev/ttyACM0": {
+                    "manufacturer": "3DP Accelerometer",
+                    "product": "3dpaxxel",
+                    "vendor_id": 4617,
+                    "product_id": 57626,
+                    "serial": "3472348C3334"
+                }, ...
+            }
+        """
         devices: Dict[str, Dict[str, str]] = dict()
         for s in [cp for cp in comports() if cp.vid == Adxl345.DEVICE_VID and cp.pid == Adxl345.DEVICE_PID]:
             devices[s.device] = {"manufacturer": s.manufacturer, "product": s.product, "vendor_id": s.vid, "product_id": s.pid, "serial": s.serial_number}

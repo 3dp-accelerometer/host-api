@@ -9,7 +9,8 @@ from controller.constants import OutputDataRate
 from octoprint.api import OctoApi
 from py3dpaxxel.cli import filename
 from py3dpaxxel.log.setup import configure_logging
-from py3dpaxxel.octoprint.runner import SamplingJobRunner
+from py3dpaxxel.octoprint.remote_api import OctoRemoteApi
+from py3dpaxxel.octoprint.runner import SamplingStepsRunner
 
 configure_logging()
 
@@ -22,22 +23,22 @@ class Args:
 
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(
-            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+            description="Records acceleration while sending (G-Code) to the printer.")
 
         sub_group = self.parser.add_argument_group(
             "REST API",
             description="Octoprint arguments.")
+        sub_group.add_argument("--address",
+                               help="OctoPrint address",
+                               required=True)
         sub_group.add_argument(
-            "-a", "--address",
-            help="OctoPrint address",
-            required=True)
-        sub_group.add_argument(
-            "-p", "--port",
+            "--port",
             help="OctoPrint port (default 80)",
             type=int,
             default=80)
         sub_group.add_argument(
-            "-k", "--key",
+            "--key",
             help="OctoPrint API key.",
             type=str,
             default=80)
@@ -46,57 +47,57 @@ class Args:
             "Trajectory",
             description="Trajectory generator")
         sub_group.add_argument(
-            "-x", "--axis",
+            "--axis",
             help="Axis to move.",
             type=str,
             choices=["x", "y", "z"],
             default="x")
         sub_group.add_argument(
-            "-b", "--begin",
-            help="Start pont in mm to begin trajectory at,",
+            "--start",
+            help="Start point in mm to begin trajectory at.",
             type=args.convert_xyz_pos_from_str,
-            default="\"200,140\"")
+            default="\"200,140,20\"")
         sub_group.add_argument(
-            "-e", "--extragcode",
+            "--extragcode",
             help="Extra G-Code to send before trajectory (i.e. input shaping: \"M593 X F30 D0.15\").",
             type=str,
             default="\"\"")
         sub_group.add_argument(
-            "-s", "--distance",
+            "--distance",
             help="Distance in mm to travel back and forth.",
             type=int,
             default=20)
         sub_group.add_argument(
-            "-n", "--repetitions",
+            "--repetitions",
             help="Repeat travel back and forth N times.",
             type=int,
             default=4)
         sub_group.add_argument(
-            "-g", "--gostart",
+            "--gostart",
             help="Go to start position first, then start repetitions.",
             action="store_true")
         sub_group.add_argument(
-            "-u", "--returnstart",
+            "--returnstart",
             help="Return to start point after last repetition.",
             action="store_true")
         sub_group.add_argument(
-            "-m", "--autohome",
+            "--autohome",
             help="Perform auto homing before trajectory.",
             action="store_true")
         sub_group = self.parser.add_argument_group(
             "Controller",
             description="Acceleration microcontroller arguments.")
         sub_group.add_argument(
-            "-d", "--device",
+            "--device",
             help="Controllers serial device node to communicate with.",
             default="/dev/ttyACM0")
         sub_group.add_argument(
-            "-o", "--outputdatarate",
+            "--outputdatarate",
             help="Set specified sampling rate before sending G-Code.",
             choices=[e.name for e in OutputDataRate],
             default=OutputDataRate.ODR3200.name)
         sub_group.add_argument(
-            "-t", "--timelapse",
+            "--timelapse",
             help="Timespan to record captured samples in seconds.",
             type=float,
             default=1.0)
@@ -104,13 +105,17 @@ class Args:
         sub_group = self.parser.add_argument_group(
             "Output",
             description="Output arguments.")
+        sub_group.add_argument(
+            "--dryrun",
+            help=f"Pretends to run but does not invoke either Octoprint nor controller.",
+            action="store_true")
         mux_grp = sub_group.add_mutually_exclusive_group()
         mux_grp.add_argument(
             "-", "--stdout",
             help="Prints streamed data to stdout. Script does not finish when stream stops and waits for subsequent runs.",
             action="store_true")
         mux_grp.add_argument(
-            "-f", "--file",
+            "--file",
             help=f"Specify output file (*.tsv). Leave empty for default filename.",
             type=str,
             nargs='?',
@@ -137,22 +142,26 @@ class Runner:
             self.parser.print_help()
             return 1
 
-        ret = SamplingJobRunner(
+        if self.args.stdout:
+            self.args.file = None
+
+        octo_api = OctoRemoteApi(self.args.key, self.args.address, self.args.port, self.args.dryrun)
+
+        ret = SamplingStepsRunner(
             input_serial_device=self.args.device,
             intput_sensor_odr=OutputDataRate[self.args.outputdatarate],
             record_timelapse_s=self.args.timelapse,
             output_filename=self.args.file,
-            octoprint_address=self.args.address,
-            octoprint_port=self.args.port,
-            octoprint_api_key=self.args.key,
-            gcode_start_point_mm=self.args.begin,
+            octoprint_api=octo_api,
+            gcode_start_point_mm=self.args.start,
             gcode_extra_gcode=self.args.extragcode,
             gcode_axis=self.args.axis,
             gcode_distance_mm=self.args.distance,
             gcode_repetitions=self.args.repetitions,
             gcode_go_start=self.args.gostart,
             gcode_return_start=self.args.returnstart,
-            gcode_auto_home=self.args.autohome).run()
+            gcode_auto_home=self.args.autohome,
+            do_dry_run=self.args.dryrun).run()
 
         if ret == -1:
             self.parser.print_help()

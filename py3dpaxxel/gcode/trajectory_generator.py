@@ -1,10 +1,16 @@
-from typing import Tuple, Literal
+from typing import Tuple, Literal, List
 
 
 class CoplanarTrajectory:
 
     @staticmethod
-    def generate(axis: Literal["x", "y", "z"], start_xyz_mm: Tuple[int, int, int], distance_mm: int = 10, repetitions: int = 2, go_to_start: bool = True, return_to_start: bool = True, auto_home=True):
+    def generate(axis: Literal["x", "y", "z"],
+                 start_xyz_mm: Tuple[int, int, int],
+                 distance_mm: int = 10,
+                 repetitions: int = 2,
+                 go_to_start: bool = True,
+                 return_to_start: bool = True,
+                 auto_home=True) -> List[str]:
         """
         Generates a simple coplanar trajectory in X, Y or Z direction.
         G-Code moves the tool to the start position from where it starts the forth and back movement.
@@ -25,7 +31,7 @@ class CoplanarTrajectory:
         ax = axis.upper()
         start_axis_mm = {"X": start_x_mm, "Y": start_y_mm, "Z": start_z_mm}[ax]
 
-        commands = []
+        commands: List[str] = []
 
         if auto_home:
             commands.append("G28 O X Y Z")
