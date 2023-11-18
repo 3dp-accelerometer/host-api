@@ -5,8 +5,8 @@ from typing import List, Literal, Tuple
 
 from py3dpaxxel.controller.constants import OutputDataRate
 from py3dpaxxel.octoprint.api import OctoApi
-from py3dpaxxel.octoprint.runner import SamplingStepsRunner
 from py3dpaxxel.sampling_tasks.series_argument_generator import RunArgsGenerator, RunArgs
+from py3dpaxxel.sampling_tasks.steps_runner import SamplingStepsRunner
 
 
 class SamplingStepsSeriesRunner:

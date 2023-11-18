@@ -7,7 +7,7 @@ from controller.constants import OutputDataRate
 from py3dpaxxel.cli import args
 from py3dpaxxel.log.setup import configure_logging
 from py3dpaxxel.octoprint.remote_api import OctoRemoteApi
-from py3dpaxxel.sampling_tasks.runner import SamplingStepsSeriesRunner
+from py3dpaxxel.sampling_tasks.steps_series_runner import SamplingStepsSeriesRunner
 
 configure_logging()
 

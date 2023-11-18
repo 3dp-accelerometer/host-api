@@ -10,7 +10,7 @@ from octoprint.api import OctoApi
 from py3dpaxxel.cli import filename
 from py3dpaxxel.log.setup import configure_logging
 from py3dpaxxel.octoprint.remote_api import OctoRemoteApi
-from py3dpaxxel.octoprint.runner import SamplingStepsRunner
+from py3dpaxxel.sampling_tasks.steps_runner import SamplingStepsRunner
 
 configure_logging()
 
