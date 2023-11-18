@@ -161,7 +161,7 @@ class Runner:
             controller_record_timelapse_s=self.args.timelapse,
             sensor_odr=OutputDataRate[self.args.outputdatarate],
             gcode_start_point_mm=self.args.start,
-            gcode_axis=self.args.axis,
+            gcode_axis=args.convert_axis_from_str(self.args.axis),
             gcode_distance_mm=self.args.distance,
             gcode_repetitions=self.args.repetitions,
             runs=self.args.runs,
@@ -171,7 +171,6 @@ class Runner:
             zeta_start=self.args.zetastart,
             zeta_stop=self.args.zetastop,
             zeta_step=self.args.zetastep,
-            axis=args.convert_axis_from_str(self.args.axis),
             output_file_prefix=self.args.fileprefix,
             output_dir=self.args.directory,
             do_dry_run=self.args.dryrun).run()

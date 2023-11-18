@@ -27,7 +27,6 @@ class SamplingStepsSeriesRunner:
                  zeta_start: int,
                  zeta_stop: int,
                  zeta_step: int,
-                 axis: List[Literal["x", "y", "z"]],
                  output_file_prefix: str,
                  output_dir: str,
                  do_dry_run: bool) -> None:
@@ -46,7 +45,6 @@ class SamplingStepsSeriesRunner:
         self.zeta_start: int = zeta_start
         self.zeta_stop: int = zeta_stop
         self.zeta_step: int = zeta_step
-        self.axis: List[Literal["x", "y", "z"]] = axis
         self.output_file_prefix: str = output_file_prefix
         self.output_dir: str = output_dir
         self.do_dry_run: bool = do_dry_run
@@ -60,7 +58,7 @@ class SamplingStepsSeriesRunner:
             zeta_start=self.zeta_start,
             zeta_stop=self.zeta_stop,
             zeta_step=self.zeta_step,
-            axis=self.axis,
+            axis=self.gcode_axis,
             file_prefix=self.output_file_prefix)
 
         runs: List[RunArgs] = generator.generate()
