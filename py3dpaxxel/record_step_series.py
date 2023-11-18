@@ -122,6 +122,11 @@ class Args:
             "Output",
             description="Output arguments.")
         sub_group.add_argument(
+            "--timeout",
+            help="Duration in seconds the script waits until data is received (left unset or 0.0 waits forever). Raises exception otherwise.",
+            type=float,
+            default=0.0)
+        sub_group.add_argument(
             "--dryrun",
             help=f"Pretends to run but does not invoke either Octoprint nor controller.",
             action="store_true")
@@ -159,6 +164,7 @@ class Runner:
             octoprint_api=octo_api,
             controller_serial_device=self.args.device,
             controller_record_timelapse_s=self.args.timelapse,
+            controller_decode_timeout_s=self.args.timeout,
             sensor_odr=OutputDataRate[self.args.outputdatarate],
             gcode_start_point_mm=self.args.start,
             gcode_axis=args.convert_axis_from_str(self.args.axis),

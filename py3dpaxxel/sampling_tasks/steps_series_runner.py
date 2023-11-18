@@ -15,6 +15,7 @@ class SamplingStepsSeriesRunner:
                  octoprint_api: OctoApi,
                  controller_serial_device: str,
                  controller_record_timelapse_s: float,
+                 controller_decode_timeout_s: float,
                  sensor_odr: OutputDataRate,
                  gcode_start_point_mm: Tuple[int, int, int],
                  gcode_axis: List[Literal["x", "y", "z"]],
@@ -33,6 +34,7 @@ class SamplingStepsSeriesRunner:
         self.octoprint_api: OctoApi = octoprint_api
         self.controller_serial_device: str = controller_serial_device
         self.controller_record_timelapse_s: float = controller_record_timelapse_s
+        self.controller_decode_timeout_s: float = controller_decode_timeout_s
         self.sensor_odr: OutputDataRate = sensor_odr
         self.gcode_start_point_mm: Tuple[int, int, int] = gcode_start_point_mm
         self.gcode_axis: List[Literal["x", "y", "z"]] = gcode_axis
@@ -78,6 +80,7 @@ class SamplingStepsSeriesRunner:
                 input_serial_device=self.controller_serial_device,
                 intput_sensor_odr=self.sensor_odr,
                 record_timelapse_s=self.controller_record_timelapse_s,
+                record_timeout_s=self.controller_decode_timeout_s,
                 output_filename=os.path.join(self.output_dir, r.filename),
                 octoprint_api=self.octoprint_api,
                 gcode_start_point_mm=self.gcode_start_point_mm,

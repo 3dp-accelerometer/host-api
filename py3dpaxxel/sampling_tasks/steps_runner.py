@@ -14,6 +14,7 @@ class SamplingStepsRunner:
                  input_serial_device: str,
                  intput_sensor_odr: OutputDataRate,
                  record_timelapse_s: float,
+                 record_timeout_s: float,
                  output_filename: Optional[str],
                  octoprint_api: OctoApi,
                  gcode_start_point_mm: Tuple[int, int, int],
@@ -40,14 +41,17 @@ class SamplingStepsRunner:
         self.gcode_return_start: bool = gcode_return_start
         self.gcode_auto_home: bool = gcode_auto_home
         self.do_dry_run: bool = do_dry_run
+        self.record_timeout_s: float = record_timeout_s
 
     def run(self) -> int:
         decoder = BackgroundDecoder(self.input_serial_device,
                                     self.record_timelapse_s,
+                                    self.record_timeout_s,
                                     self.intput_sensor_odr,
                                     self.output_filename,
                                     self.do_dry_run)
-        controller_task = threading.Thread(target=decoder)
+        controller_task = threading.Thread(name="stream_decoding", target=decoder)
+        controller_task.daemon = True
         controller_task.start()
 
         time.sleep(0.1)
@@ -65,9 +69,8 @@ class SamplingStepsRunner:
             auto_home=self.gcode_auto_home))
         self.octoprint_api.send_commands(commands)
 
-        logging.info("waiting for decoding task finished...")
+        logging.debug("waiting for decoding task finished...")
         controller_task.join()
-        logging.info(f"sampling task done in {time.time() - start:.3f}s")
-        logging.info("waiting for decoding task finished... done")
+        logging.debug(f"decoding task done in {time.time() - start:.3f}s")
 
         return 0

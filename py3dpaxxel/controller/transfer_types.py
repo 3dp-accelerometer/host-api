@@ -1,4 +1,4 @@
-from typing import Dict, Type, Union
+from typing import Dict, Type, Union, Optional
 
 from .constants import TransportHeaderId, OutputDataRate, Scale, Range
 
@@ -73,7 +73,7 @@ class RxOutputDataRate:
     LEN = 2
 
     def __init__(self, payload: bytearray) -> None:
-        self.outputDataRate: Union[OutputDataRate, None] = None
+        self.outputDataRate: Optional[OutputDataRate] = None
         payload.pop(0)
         self.outputDataRate: OutputDataRate = OutputDataRate(payload[0])
         payload.pop(0)
@@ -117,7 +117,7 @@ class RxDeviceSetup(RxFrame):
     REPR_FILTER_REGEX: str = '^Device Setup.*({.*})$'
 
     def __init__(self, payload: bytearray) -> None:
-        self.outputDataRate: Union[OutputDataRate, None] = None
+        self.outputDataRate: Optional[OutputDataRate] = None
         payload_byte: int = payload[1]
         self.outputDataRate: OutputDataRate = OutputDataRate(payload_byte & 0b0001111)
         self.range: Range = Range((payload_byte & 0b010000) >> 4)
@@ -180,11 +180,11 @@ class RxSamplingAborted(RxFrame):
 
 
 class RxUnknownResponse:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, unknown_header_id: int) -> None:
+        self.unknown_header_id: int = unknown_header_id
 
     def __str__(self) -> str:
-        return "Unknown Response"
+        return f"Unknown Response header_id={self.unknown_header_id}"
 
 
 class RxAcceleration(RxFrame):
@@ -220,9 +220,14 @@ class RxFrame:
         self.payload: bytearray = payload
 
     def unpack(self) -> Union[RxSamplingStarted, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted, RxUnknownResponse, None]:
-        header_id = TransportHeaderId(int.from_bytes([self.payload[0]], "little", signed=False))
-        if header_id in RxFrame.MAPPING:
-            clazz = RxFrame.MAPPING[header_id]
-            return clazz(self.payload) if len(self.payload) >= clazz.LEN else None
-        else:
-            return RxUnknownResponse()
+        header_id_int: int = int.from_bytes([self.payload[0]], "little", signed=False)
+
+        try:
+            header_id = TransportHeaderId(header_id_int)
+            if header_id in RxFrame.MAPPING:
+                clazz = RxFrame.MAPPING[header_id]
+                return clazz(self.payload) if len(self.payload) >= clazz.LEN else None
+            else:
+                return RxUnknownResponse(header_id.value)
+        except ValueError as e:
+            return RxUnknownResponse(header_id_int)

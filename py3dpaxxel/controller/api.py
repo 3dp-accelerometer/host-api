@@ -1,7 +1,7 @@
 import logging
 import re
 import time
-from typing import TextIO, Union, Dict, List
+from typing import TextIO, Dict, List, Optional
 
 from serial.tools.list_ports import comports
 
@@ -17,9 +17,22 @@ from .transfer_types import (TxFrame, RxFrame, RxUnknownResponse, RxOutputDataRa
 class ErrorFifoOverflow(IOError):
     """controller detected accelerometer FiFo overrun"""
 
+    def __init__(self):
+        super().__init__("controller detected FiFo overrun in the accelerometer sensor")
+
 
 class ErrorUnknownResponse(IOError):
     """received unknown response from controller"""
+
+    def __init__(self, response):
+        super().__init__(f"received unknown response from controller :{response}")
+
+
+class ErrorReadTimeout(IOError):
+    """timeout error: no message received since timeout-limit"""
+
+    def __init__(self, timeout_limit, current_timeout_value):
+        super().__init__(f"timeout occurred: no message received since timeout_limit_s={timeout_limit} current_timeout_s={current_timeout_value}")
 
 
 class Adxl345(CdcSerial):
@@ -97,19 +110,29 @@ class Adxl345(CdcSerial):
     def stop_sampling(self):
         self._send_frame(TxSamplingStop())
 
-    def decode(self, return_on_stop: bool = False, file: Union[None, TextIO] = None):
+    def decode(self, return_on_stop: bool = False, timeout_s: float = 10.0, file: Optional[TextIO] = None):
         data: bytearray = bytearray()
         run_count: int = 0
         sample_count: int = 0
-        start = None
-        elapsed = None
+        start_time = Optional[float]
+        elapsed_time = Optional[float]
+        timestamp_last_message_seen: float = time.time()
         while True:
-            data.extend(self.read_bytes(1, 0.1))
+            received_bytes: bytes = self.read_bytes(1, 0.1)
+
+            if len(received_bytes) > 0:
+                timestamp_last_message_seen = time.time()
+            elif timeout_s != 0.0:
+                current_delay_s: float = time.time() - timestamp_last_message_seen
+                if current_delay_s > timeout_s:
+                    raise ErrorReadTimeout(timeout_s, current_delay_s)
+
+            data.extend(received_bytes)
             if len(data) >= 1:
                 package = RxFrame(data).unpack()
                 if package is not None:
                     if isinstance(package, RxUnknownResponse):
-                        e = ErrorUnknownResponse()
+                        e = ErrorUnknownResponse(package.unknown_header_id)
                         logging.fatal(str(e))
                         raise e
 
@@ -122,7 +145,7 @@ class Adxl345(CdcSerial):
                         logging.info(package)
                         file.write("run sample x y z\n") if file is not None else logging.info("#run #sample x[mg] y[mg] z[mg]")
                         sample_count = 0
-                        start = time.time()
+                        start_time = time.time()
 
                     if isinstance(package, RxAcceleration):
                         acceleration = f"{run_count:02} {package}"
@@ -137,15 +160,15 @@ class Adxl345(CdcSerial):
                         file.write("# " + str(parameters) + "\n") if file is not None else logging.info("Device Setup: " + str(parameters))
 
                     if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):
-                        elapsed = time.time() - start
+                        elapsed_time = time.time() - start_time
                         if isinstance(package, RxSamplingFinished):
                             logging.info(str(package) + f" at sample {sample_count}")
 
                     if isinstance(package, RxSamplingStopped):
                         logging.info(package)
-                        logging.info(f"run {run_count:02}: processed {sample_count} samples in {elapsed:.6f} s "
-                                     f"({(sample_count / elapsed):.1f} samples/s; "
-                                     f"{((sample_count * RxAcceleration.LEN * 8) / elapsed):.1f} baud)")
+                        logging.info(f"run {run_count:02}: processed {sample_count} samples in {elapsed_time:.6f} s "
+                                     f"({(sample_count / elapsed_time):.1f} samples/s; "
+                                     f"{((sample_count * RxAcceleration.LEN * 8) / elapsed_time):.1f} baud)")
                         run_count += 1
 
                         if return_on_stop or file is not None:

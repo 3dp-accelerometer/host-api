@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import Union, Literal
+from typing import Literal, Optional
 
 from .api import Adxl345
 from .constants import OutputDataRate, Range, Scale
@@ -10,39 +10,43 @@ class ControllerRunner:
 
     def __init__(
             self,
-            command: Union[str, None],
-            controller_serial_dev_name: Union[str, None],
-            controller_do_list_devices: Union[Literal["h", "j"], None],
-            controller_do_reboot: Union[bool, None],
-            sensor_set_output_data_rate: Union[OutputDataRate, None],
-            sensor_set_scale: Union[Scale, None],
-            sensor_set_range: Union[Range, None],
+            command: Optional[str],
+            controller_serial_dev_name: Optional[str],
+            controller_do_list_devices: Optional[Literal["h", "j"]],
+            controller_do_reboot: Optional[bool],
+            sensor_set_output_data_rate: Optional[OutputDataRate],
+            sensor_set_scale: Optional[Scale],
+            sensor_set_range: Optional[Range],
             sensor_get_output_data_rate: bool,
             sensor_get_scale: bool,
             sensor_get_range: bool,
             sensor_get_all_settings: bool,
-            stream_start: Union[int, None],
-            stream_stop: Union[bool, None],
-            stream_decode: Union[bool, None],
-            output_file: Union[str, None],
-            output_stdout: Union[bool, None]
+            stream_start: Optional[int],
+            stream_stop: Optional[bool],
+            stream_decode: Optional[bool],
+            stream_decode_timeout_s: Optional[float],
+            stream_wait: bool,
+            output_file: Optional[str],
+            output_stdout: Optional[bool],
     ) -> None:
-        self.command: Union[str, None] = command
-        self.controller_serial_dev_name: Union[str, None] = controller_serial_dev_name
-        self.controller_do_list_devices: Union[Literal["h", "j"], None] = controller_do_list_devices
-        self.controller_do_reboot: Union[bool, None] = controller_do_reboot
-        self.sensor_set_output_data_rate: Union[OutputDataRate, None] = sensor_set_output_data_rate
-        self.sensor_set_scale: Union[Scale, None] = sensor_set_scale
-        self.sensor_set_range: Union[Range, None] = sensor_set_range
+        self.command: Optional[str] = command
+        self.controller_serial_dev_name: Optional[str] = controller_serial_dev_name
+        self.controller_do_list_devices: Optional[Literal["h", "j"]] = controller_do_list_devices
+        self.controller_do_reboot: Optional[bool] = controller_do_reboot
+        self.sensor_set_output_data_rate: Optional[OutputDataRate] = sensor_set_output_data_rate
+        self.sensor_set_scale: Optional[Scale] = sensor_set_scale
+        self.sensor_set_range: Optional[Range] = sensor_set_range
         self.sensor_get_output_data_rate: bool = sensor_get_output_data_rate
         self.sensor_get_scale: bool = sensor_get_scale
         self.sensor_get_range: bool = sensor_get_range
         self.sensor_get_all_settings: bool = sensor_get_all_settings
-        self.stream_start: Union[int, None] = stream_start
-        self.stream_stop: Union[bool, None] = stream_stop
-        self.stream_decode: Union[bool, None] = stream_decode
-        self.output_file: Union[str, None] = output_file
-        self.output_stdout: Union[bool, None] = output_stdout
+        self.stream_start: Optional[int] = stream_start
+        self.stream_stop: Optional[bool] = stream_stop
+        self.stream_decode: Optional[bool] = stream_decode
+        self.stream_wait: bool = stream_wait
+        self.output_file: Optional[str] = output_file
+        self.output_stdout: Optional[bool] = output_stdout
+        self.stream_decode_timeout_s: float = 0.0 if stream_decode_timeout_s is None else stream_decode_timeout_s
 
     def run(self) -> int:
         if not self.command:
@@ -110,10 +114,6 @@ class ControllerRunner:
                 logging.info("sampling stop")
                 with Adxl345(self.controller_serial_dev_name) as sensor:
                     sensor.stop_sampling()
-            elif self.stream_decode:
-                logging.info("sampling decode")
-                with Adxl345(self.controller_serial_dev_name) as sensor:
-                    sensor.decode()
             else:
                 logging.warning("noting to do")
                 return 1
@@ -122,12 +122,12 @@ class ControllerRunner:
             if self.output_stdout:
                 logging.info("decode stream to stdout")
                 with Adxl345(self.controller_serial_dev_name) as sensor:
-                    sensor.decode(return_on_stop=False)
+                    sensor.decode(return_on_stop=not self.stream_wait, timeout_s=self.stream_decode_timeout_s)
             if self.output_file:
                 logging.info(f"decode stream to file {self.output_file}")
                 with open(self.output_file, "w") as file:
                     with Adxl345(self.controller_serial_dev_name) as sensor:
-                        sensor.decode(return_on_stop=True, file=file)
+                        sensor.decode(return_on_stop=not self.stream_wait, timeout_s=self.stream_decode_timeout_s, file=file)
             else:
                 logging.warning("noting to do")
                 return 1

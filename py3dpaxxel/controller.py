@@ -21,7 +21,9 @@ class Args:
 
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(
-            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+            description="Application to manipulate the py3daxxel controller (setup, streaming).")
+
         sub_parsers = self.parser.add_subparsers(
             dest='command',
             title="command (required)",
@@ -107,16 +109,25 @@ class Args:
             description="Connects to device and decodes input stream. "
                         "The connection must be established before the data stream is started. "
                         "While decoding, subsequent script calls with \"stream\" and \"set\" commands are allowed.")
+        sup.add_argument(
+            "--timeout",
+            help="Duration in seconds the script waits until data is received (left unset or 0.0 waits forever). Raises exception otherwise.",
+            type=float,
+            default=0.0)
+        sup.add_argument(
+            "--wait",
+            help="Does not return on last decoded package but waits for the next stream. Times out if --timeout is not 0.0.",
+            action="store_true")
         grp = sup.add_mutually_exclusive_group()
         grp.add_argument(
             "-", "--stdout",
             help="Prints streamed data to stdout. Script does not finish when stream stops and waits for subsequent runs.",
             action="store_true")
         grp.add_argument(
-            "-f", "--file",
+            "--file",
             help="Writes streamed data to file. Script finishes when stream is stopped. "
                  "While decoding, simultaneous calls to output stream are allowed: start, stop and setup commands. "
-                 f"Leave empty string for default fallback filename \"{self.default_filename}\".",
+                 f"Leave empty string for default fallback filename \"{self.default_filename()}\".",
             type=str,
             nargs='?',
             const=self.default_filename)
@@ -164,6 +175,8 @@ class Runner:
         stream_start = self.args.start if hasattr(self.args, "start") else None
         stream_stop = self.args.stop if hasattr(self.args, "stop") else None
         stream_decode = self.args.decode if hasattr(self.args, "decode") else None
+        stream_decode_timeout_s = self.args.timeout if hasattr(self.args, "timeout") else 0.0
+        stream_wait = self.args.wait if hasattr(self.args, "wait") else True
 
         output_file = self.args.file if hasattr(self.args, "file") else None
         output_stdout = self.args.stdout if hasattr(self.args, "stdout") else None
@@ -183,6 +196,8 @@ class Runner:
             stream_start=stream_start,
             stream_stop=stream_stop,
             stream_decode=stream_decode,
+            stream_decode_timeout_s=stream_decode_timeout_s,
+            stream_wait=stream_wait,
             output_file=output_file,
             output_stdout=output_stdout).run()
 

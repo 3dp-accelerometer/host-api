@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from typing import Union
+from typing import Optional
 
 from cli import args
 from controller.constants import OutputDataRate
@@ -106,6 +106,11 @@ class Args:
             "Output",
             description="Output arguments.")
         sub_group.add_argument(
+            "--timeout",
+            help="Duration in seconds the script waits until data is received (0.0 waits forever). Raises exception otherwise.",
+            type=float,
+            default=0.0)
+        sub_group.add_argument(
             "--dryrun",
             help=f"Pretends to run but does not invoke either Octoprint nor controller.",
             action="store_true")
@@ -127,7 +132,7 @@ class Args:
 class Runner:
     def __init__(self) -> None:
         self._cli_args: Args = Args()
-        self.octo_api: Union[OctoApi, None] = None
+        self.octo_api: Optional[OctoApi] = None
 
     @property
     def args(self):
@@ -151,6 +156,7 @@ class Runner:
             input_serial_device=self.args.device,
             intput_sensor_odr=OutputDataRate[self.args.outputdatarate],
             record_timelapse_s=self.args.timelapse,
+            record_timeout_s=self.args.timeout,
             output_filename=self.args.file,
             octoprint_api=octo_api,
             gcode_start_point_mm=self.args.start,

@@ -1,19 +1,27 @@
 import logging
 import time
-from typing import TextIO, Union, Optional
+from collections.abc import Callable
+from typing import TextIO, Optional
 
 from .api import (Adxl345)
 from .constants import OutputDataRate, OutputDataRateDelay
 
 
-class BackgroundDecoder:
-    def __init__(self, controller_serial: str, timelapse_s: float, sensor_output_data_rate: OutputDataRate, out_filename: Optional[str], do_dry_run: bool = False) -> None:
+class BackgroundDecoder(Callable):
+    def __init__(self,
+                 controller_serial: str,
+                 timelapse_s: float,
+                 record_timeout_s: float,
+                 sensor_output_data_rate: OutputDataRate,
+                 out_filename: Optional[str],
+                 do_dry_run: bool = False) -> None:
         self.timelapse_s: float = timelapse_s
+        self.record_timeout_s: float = record_timeout_s
         self.do_dry_run = do_dry_run
         self.dev: Optional[Adxl345] = None
 
         if not self.do_dry_run:
-            self.file: Union[TextIO, None] = None
+            self.file: Optional[TextIO] = None
             if out_filename is not None:
                 self.file = open(out_filename, "w")
 
@@ -42,10 +50,10 @@ class BackgroundDecoder:
         logging.info(f"send command: start sampling n={self.max_samples}... done")
 
     def __call__(self) -> int:
-        logging.info(f"decoding ...")
+        logging.debug(f"decoding ...")
 
         if not self.do_dry_run:
-            self.dev.decode(return_on_stop=True, file=self.file)
+            self.dev.decode(return_on_stop=True, timeout_s=self.record_timeout_s, file=self.file)
             self.dev.close()
             if self.file is not None:
                 self.file.close()
@@ -53,5 +61,5 @@ class BackgroundDecoder:
         else:
             time.sleep(self.timelapse_s)
 
-        logging.info(f"decoding ... done")
+        logging.debug(f"decoding ... done")
         return 0
