@@ -20,6 +20,25 @@ class OutputDataRate(Enum):
     ODR0_10 = 0b0000
 
 
+OutputDataRateFromHz = {
+    3200: OutputDataRate.ODR3200,
+    1600: OutputDataRate.ODR1600,
+    800: OutputDataRate.ODR800,
+    400: OutputDataRate.ODR400,
+    200: OutputDataRate.ODR200,
+    100: OutputDataRate.ODR100,
+    50: OutputDataRate.ODR50,
+    25: OutputDataRate.ODR25,
+    12.5: OutputDataRate.ODR12_5,
+    6.25: OutputDataRate.ODR6_25,
+    3.13: OutputDataRate.ODR3_13,
+    1.56: OutputDataRate.ODR1_56,
+    0.78: OutputDataRate.ODR0_78,
+    0.39: OutputDataRate.ODR0_39,
+    0.20: OutputDataRate.ODR0_20,
+    0.10: OutputDataRate.ODR0_10
+}
+
 OutputDataRateDelay = {
     OutputDataRate.ODR3200: 1.0 / 3200,
     OutputDataRate.ODR1600: 1.0 / 1600,
