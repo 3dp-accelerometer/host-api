@@ -17,12 +17,13 @@ package_data = \
 {'': ['*']}
 
 install_requires = \
-['numpy>=1.24.2,<2.0.0', 'pyaml>=23.9.7,<24.0.0', 'pyserial>=3.5,<4.0']
+['pyaml>=23.9.7,<24.0.0', 'pyserial>=3.5,<4.0']
 
 extras_require = \
-{'data-analysis': ['scipy>=1.10.1,<2.0.0'],
- 'octoprint': ['requests>=2.28.1,<3.0.0'],
- 'visualization': ['matplotlib>=3.5.2,<4.0.0', 'scipy>=1.10.1,<2.0.0']}
+{'data-visualization': ['numpy>=1.24.2,<2.0.0',
+                        'scipy>=1.10.1,<2.0.0',
+                        'matplotlib>=3.5.2,<4.0.0'],
+ 'octoprint-remote': ['requests>=2.28.1,<3.0.0']}
 
 setup_kwargs = {
     'name': 'py3dpaxxel',
