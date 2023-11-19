@@ -18,10 +18,10 @@ class OctoRemoteApi(OctoApi):
     def send_commands(self, commands: List[str]) -> int:
         api_url = f"{self.url}/api/printer/command"
 
-        logging.info(f"sending {commands} to {api_url}")
+        logging.debug(f"sending {commands} to {api_url}")
         if not self.do_dry_run:
             response = self.session.post(api_url, json={"commands": commands})
-            logging.info(response)
+            logging.debug(response)
             return 0 if 204 == response.status_code else -1
         else:
             return 0

@@ -133,16 +133,16 @@ class Adxl345(CdcSerial):
                 if package is not None:
                     if isinstance(package, RxUnknownResponse):
                         e = ErrorUnknownResponse(package.unknown_header_id)
-                        logging.fatal(str(e))
+                        logging.fatal(f"rx: {str(e)}")
                         raise e
 
                     if isinstance(package, RxFifoOverflow):
                         e = ErrorFifoOverflow()
-                        logging.fatal(str(e))
+                        logging.fatal("rx: {str(e)}")
                         raise e
 
                     if isinstance(package, RxSamplingStarted):
-                        logging.info(package)
+                        logging.info(f"rx: {package}")
                         file.write("run sample x y z\n") if file is not None else logging.info("#run #sample x[mg] y[mg] z[mg]")
                         sample_count = 0
                         start_time = time.time()
@@ -153,19 +153,19 @@ class Adxl345(CdcSerial):
                         sample_count += 1
                         if sample_count > 65535:
                             sample_count = 0
-                        file.write(acceleration + "\n") if file is not None else logging.info(acceleration)
+                        file.write(acceleration + "\n") if file is not None else logging.info(f"rx: {acceleration}")
 
                     if isinstance(package, RxDeviceSetup):
                         parameters = eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))
-                        file.write("# " + str(parameters) + "\n") if file is not None else logging.info("Device Setup: " + str(parameters))
+                        file.write("# " + str(parameters) + "\n") if file is not None else logging.info("rx: Device Setup: " + str(parameters))
 
                     if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):
                         elapsed_time = time.time() - start_time
                         if isinstance(package, RxSamplingFinished):
-                            logging.info(str(package) + f" at sample {sample_count}")
+                            logging.info(f"rx: {str(package)} at sample {sample_count}")
 
                     if isinstance(package, RxSamplingStopped):
-                        logging.info(package)
+                        logging.info(f"rx: {package}")
                         logging.info(f"run {run_count:02}: processed {sample_count} samples in {elapsed_time:.6f} s "
                                      f"({(sample_count / elapsed_time):.1f} samples/s; "
                                      f"{((sample_count * RxAcceleration.LEN * 8) / elapsed_time):.1f} baud)")

@@ -44,10 +44,9 @@ class BackgroundDecoder(Callable):
         pass
 
     def start_sampling(self):
-        logging.info(f"send command: start sampling n={self.max_samples}...")
+        logging.info(f"send command: start sampling n={self.max_samples}")
         if not self.do_dry_run:
             self.dev.start_sampling(self.max_samples)
-        logging.info(f"send command: start sampling n={self.max_samples}... done")
 
     def __call__(self) -> int:
         logging.debug(f"decoding ...")
