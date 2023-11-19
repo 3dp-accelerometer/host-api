@@ -68,8 +68,8 @@ class Args:
             type=int,
             default=20)
         sub_group.add_argument(
-            "--repetitions",
-            help="Repeat travel back and forth N times.",
+            "--stepcount",
+            help="Repeat travel pattern stepcount-times.",
             type=int,
             default=4)
         sub_group.add_argument(
@@ -163,7 +163,7 @@ class Runner:
             gcode_extra_gcode=self.args.extragcode,
             gcode_axis=self.args.axis,
             gcode_distance_mm=self.args.distance,
-            gcode_repetitions=self.args.repetitions,
+            gcode_step_repeat_count=self.args.stepcount,
             gcode_go_start=self.args.gostart,
             gcode_return_start=self.args.returnstart,
             gcode_auto_home=self.args.autohome,

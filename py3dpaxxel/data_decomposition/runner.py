@@ -30,7 +30,7 @@ class DataVisualizerRunner:
         self.do_plot: bool = output_plot
 
     @staticmethod
-    def _fft_1d(algorithm: str, samples: Samples, window_title: Union[str, None], do_plot: bool, save_filename: Union[str, None]):
+    def _fft_1d(algorithm: str, samples: Samples, window_title: Union[str, None], save_filename: Union[str, None]):
 
         fig_acc: Figure
         axes: List[Axes]
@@ -69,11 +69,10 @@ class DataVisualizerRunner:
 
         if save_filename:
             fig_acc.savefig(save_filename)
-        # return plt.show()
         return 0
 
     @staticmethod
-    def _fft_2d(algorithm: str, samples: Samples, _window_title: Union[str, None], _do_plot: bool, _save_filename: Union[str, None]):
+    def _fft_2d(algorithm: str, samples: Samples, _window_title: Union[str, None], _save_filename: Union[str, None]):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms2D().compute(a, samples)
@@ -81,7 +80,7 @@ class DataVisualizerRunner:
             return FftAlgorithms2D().compute(algorithm, samples)
 
     @staticmethod
-    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: Union[str, None], _do_plot: bool, _save_filename: Union[str, None]):
+    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: Union[str, None], _save_filename: Union[str, None]):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms3D().compute(a, samples)
@@ -114,11 +113,11 @@ class DataVisualizerRunner:
                     logging.debug(f"rendering image {file.filename_no_ext} upon user request")
 
                 if self.algorithm_d1 is not None:
-                    self._fft_1d(self.algorithm_d1, samples, window_title, self.do_plot, out_filename)
+                    self._fft_1d(self.algorithm_d1, samples, window_title, out_filename)
                 elif self.algorithm_d2 is not None:
-                    self._fft_2d(self.algorithm_d2, samples, window_title, self.do_plot, out_filename)
+                    self._fft_2d(self.algorithm_d2, samples, window_title, out_filename)
                 elif self.algorithm_d3 is not None:
-                    self._trajectory_3d(self.algorithm_d3, samples, window_title, self.do_plot, out_filename)
+                    self._trajectory_3d(self.algorithm_d3, samples, window_title, out_filename)
                 else:
                     logging.info("nothing to do")
                 logging.info(f"processing file {file.filename_ext}... done")

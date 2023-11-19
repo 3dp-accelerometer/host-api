@@ -59,13 +59,13 @@ class BlockingDecoder(Callable):
 
         sample_delay_s = OutputDataRateDelay[odr]
         samples_per_second = 1.0 / sample_delay_s
-        samples_total = samples_per_second * self.timelapse_s
+        samples_total = int(samples_per_second * self.timelapse_s)
 
+        # snap to even number of samples for FFT
         self.max_samples: int = int(samples_total + (1 if 1 == samples_total % 2 else 0))
 
-        logging.info(f"device {controller_serial} opened with requested_odr={sensor_output_data_rate} (effective_odr={odr}) time_lapse_s={timelapse_s} and num_samples={samples_total}")
-
-        pass
+        logging.info(f"device {controller_serial} opened with requested_odr={sensor_output_data_rate} "
+                     f"(effective_odr={odr}) time_lapse_s={timelapse_s} and num_samples={samples_total}")
 
     def start_sampling(self) -> None:
         """

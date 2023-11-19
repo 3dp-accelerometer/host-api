@@ -7,11 +7,17 @@ from py3dpaxxel.samples.samples import Samples
 
 
 class SamplesLoader:
-    TABULAR_DELIMITER_CHARACTER = " "
-    LINE_COMMENT_CHARACTER = "#"  # comments must start at beginning of line
+    """
+    Class to load samples from a file.
+    """
 
-    def __init__(self, filename: str) -> None:
-        self.filename = filename
+    TABULAR_DELIMITER_CHARACTER = " "
+    "delimiter for .tsv file"
+    LINE_COMMENT_CHARACTER = "#"
+    "comments must start at beginning of line with LINE_COMMENT_CHARACTER"
+
+    def __init__(self, in_filename: str) -> None:
+        self.filename = in_filename
 
     def _try_read_metadata_if_any(self, samples: Samples):
         # read metadata (if any): ODR, rate, scale
@@ -25,7 +31,16 @@ class SamplesLoader:
                     samples.separation_s = OutputDataRateDelay[samples.rate]
                     break
 
-    def load(self):
+    def load(self) -> Samples:
+        """
+        Loads stores stream file.
+
+        - ignores 1.st line which shall be the header (column names, i.e. `run sample x y z`)
+        - interprets sample data, i.e.: `00 06399 +0538.200 +0187.200 +0600.600`
+        - interpret last line (metadata), i.e.: `# {'rate': 'ODR3200', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB'}`
+
+        :return: Samples
+        """
         samples = Samples()
         self._try_read_metadata_if_any(samples)
 

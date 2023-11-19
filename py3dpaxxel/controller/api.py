@@ -71,6 +71,8 @@ class Py3dpAxxel(CdcSerial):
     @staticmethod
     def get_devices_dict() -> Dict[str, Dict[str, str]]:
         """
+        Example:
+
         .. code-block::
 
             dict of devices:
@@ -136,13 +138,30 @@ class Py3dpAxxel(CdcSerial):
         """
         Decodes incoming stream from controller.
 
-        :param return_on_stop: whether to return when first :class:`.RxSamplingStopped` package was seen
+        Example:
+
+        .. code-block::
+
+            run sample x y z
+            00 00000 +0553.800 +0179.400 +0616.200
+            00 00001 +0538.200 +0179.400 +0592.800
+            ...
+            00 06398 +0546.000 +0187.200 +0616.200
+            00 06399 +0530.400 +0187.200 +0639.600
+            # {'rate': 'ODR3200', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB'}
+
+        In the above example `6400` samples were received with sequence/stream number `0`.
+        The sensor had an output data rate of ODR3200 (`3,2kSamples/s`),
+        range of `4g` and the scale was set at full resolution (`1LSB=3.9mg`).
+
+        :param return_on_stop: Whether to return when first :class:`.RxSamplingStopped` package was seen or not.
+            If false, the sequence counter `seq` increases with each stream.
         :param message_timeout_s: how long to wait until next message, :class:`.ErrorReadTimeout` is thrown, set to 0.0 to disable
         :param out_file: where to save the decoded stream, set to None to disable
         :return: None
         """
         data: bytearray = bytearray()
-        run_count: int = 0
+        sequence: int = 0
         sample_count: int = 0
         start_time = Optional[float]
         elapsed_time = Optional[float]
@@ -173,12 +192,12 @@ class Py3dpAxxel(CdcSerial):
 
                     if isinstance(package, RxSamplingStarted):
                         logging.info(f"rx: {package}")
-                        out_file.write("run sample x y z\n") if out_file is not None else logging.info("#run #sample x[mg] y[mg] z[mg]")
+                        out_file.write("seq sample x y z\n") if out_file is not None else logging.info("#seq #sample x[mg] y[mg] z[mg]")
                         sample_count = 0
                         start_time = time.time()
 
                     if isinstance(package, RxAcceleration):
-                        acceleration = f"{run_count:02} {package}"
+                        acceleration = f"{sequence:02} {package}"
                         assert sample_count == package.index
                         sample_count += 1
                         if sample_count > 65535:
@@ -196,10 +215,10 @@ class Py3dpAxxel(CdcSerial):
 
                     if isinstance(package, RxSamplingStopped):
                         logging.info(f"rx: {package}")
-                        logging.info(f"run {run_count:02}: processed {sample_count} samples in {elapsed_time:.6f} s "
+                        logging.info(f"sequence {sequence:02}: processed {sample_count} samples in {elapsed_time:.6f} s "
                                      f"({(sample_count / elapsed_time):.1f} samples/s; "
                                      f"{((sample_count * RxAcceleration.LEN * 8) / elapsed_time):.1f} baud)")
-                        run_count += 1
+                        sequence += 1
 
                         if return_on_stop or out_file is not None:
                             return

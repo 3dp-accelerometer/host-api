@@ -229,5 +229,5 @@ class RxFrameFromHeaderId:
                 return clazz(self.payload) if len(self.payload) >= clazz.LEN else None
             else:
                 return RxUnknownResponse(header_id.value)
-        except ValueError as e:
+        except ValueError as _e:
             return RxUnknownResponse(header_id_int)

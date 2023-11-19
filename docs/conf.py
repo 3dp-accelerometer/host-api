@@ -59,7 +59,10 @@ autodoc_default_options = {
     "show-inheritance": None,
     "exclude-members": ",".join(config["autodoc_exclude_members"]),
     "autodoc_preserve_defaults": True,
-    "autodoc_warningiserror": True
+    "autodoc_warningiserror": True,
+    "typehints_fully_qualified": False,
+    "typehints_use_signature": True,
+    "typehints_use_signature_return": True,
 }
 
 modindex_common_prefix = ["py3dpaxxel."]

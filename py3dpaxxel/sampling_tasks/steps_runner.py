@@ -21,7 +21,7 @@ class SamplingStepsRunner:
                  gcode_extra_gcode: Optional[str],
                  gcode_axis: Literal["x", "y", "z"],
                  gcode_distance_mm: int,
-                 gcode_repetitions: int,
+                 gcode_step_repeat_count: int,
                  gcode_go_start: bool,
                  gcode_return_start: bool,
                  gcode_auto_home: bool,
@@ -36,7 +36,7 @@ class SamplingStepsRunner:
         self.gcode_extra_gcode: Optional[str] = gcode_extra_gcode
         self.gcode_axis: Literal["x", "y", "z"] = gcode_axis
         self.gcode_distance_mm: int = gcode_distance_mm
-        self.gcode_repetitions: int = gcode_repetitions
+        self.gcode_step_repeat_count: int = gcode_step_repeat_count
         self.gcode_go_start: bool = gcode_go_start
         self.gcode_return_start: bool = gcode_return_start
         self.gcode_auto_home: bool = gcode_auto_home
@@ -63,7 +63,7 @@ class SamplingStepsRunner:
             axis=self.gcode_axis,
             start_xyz_mm=self.gcode_start_point_mm,
             distance_mm=self.gcode_distance_mm,
-            repetitions=self.gcode_repetitions,
+            step_repeat_count=self.gcode_step_repeat_count,
             go_to_start=self.gcode_go_start,
             return_to_start=self.gcode_return_start,
             auto_home=self.gcode_auto_home))

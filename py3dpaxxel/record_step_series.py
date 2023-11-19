@@ -56,8 +56,8 @@ class Args:
             type=int,
             default=20)
         sub_group.add_argument(
-            "--repetitions",
-            help="Repeat travel back and forth N times.",
+            "--stepcount",
+            help="Repeat travel back and forth (steps) stepcount-times.",
             type=int,
             default=4)
 
@@ -65,8 +65,8 @@ class Args:
             "Task",
             description="Capturing task repetitions with different parameters")
         sub_group.add_argument(
-            "--runs",
-            help="Repeats the capturing task with same arguments R times.",
+            "--sequencecount",
+            help="Repeats steps sequencecount-times.",
             type=int,
             default=1)
         sub_group.add_argument(
@@ -169,8 +169,8 @@ class Runner:
             gcode_start_point_mm=self.args.start,
             gcode_axis=args.convert_axis_from_str(self.args.axis),
             gcode_distance_mm=self.args.distance,
-            gcode_repetitions=self.args.repetitions,
-            runs=self.args.runs,
+            gcode_step_repeat_count=self.args.stepcount,
+            gcode_sequence_repeat_count=self.args.sequencecount,
             fx_start=self.args.fxstart,
             fx_stop=self.args.fxstop,
             fx_step=self.args.fxstep,

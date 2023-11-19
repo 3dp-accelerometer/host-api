@@ -20,8 +20,8 @@ class SamplingStepsSeriesRunner:
                  gcode_start_point_mm: Tuple[int, int, int],
                  gcode_axis: List[Literal["x", "y", "z"]],
                  gcode_distance_mm: int,
-                 gcode_repetitions: int,
-                 runs: int,
+                 gcode_step_repeat_count: int,
+                 gcode_sequence_repeat_count: int,
                  fx_start: int,
                  fx_stop: int,
                  fx_step: int,
@@ -39,8 +39,8 @@ class SamplingStepsSeriesRunner:
         self.gcode_start_point_mm: Tuple[int, int, int] = gcode_start_point_mm
         self.gcode_axis: List[Literal["x", "y", "z"]] = gcode_axis
         self.gcode_distance_mm: int = gcode_distance_mm
-        self.gcode_repetitions: int = gcode_repetitions
-        self.runs: int = runs
+        self.gcode_step_repeat_count: int = gcode_step_repeat_count
+        self.gcode_sequence_repeat_count: int = gcode_sequence_repeat_count
         self.fx_start: int = fx_start
         self.fx_stop: int = fx_stop
         self.fx_step: int = fx_step
@@ -53,7 +53,7 @@ class SamplingStepsSeriesRunner:
 
     def run(self) -> int:
         generator = RunArgsGenerator(
-            runs=self.runs,
+            sequence_repeat_count=self.gcode_sequence_repeat_count,
             fx_start=self.fx_start,
             fx_stop=self.fx_stop,
             fx_step=self.fx_step,
@@ -61,7 +61,7 @@ class SamplingStepsSeriesRunner:
             zeta_stop=self.zeta_stop,
             zeta_step=self.zeta_step,
             axis=self.gcode_axis,
-            file_prefix=self.output_file_prefix)
+            out_file_prefix=self.output_file_prefix)
 
         runs: List[RunArgs] = generator.generate()
         logging.info(f"planned runs={len(runs)}")
@@ -87,7 +87,7 @@ class SamplingStepsSeriesRunner:
                 gcode_extra_gcode=f"M593 {r.axis.upper()} F{r.frequency} D{r.zeta}",
                 gcode_axis=r.axis,
                 gcode_distance_mm=self.gcode_distance_mm,
-                gcode_repetitions=self.gcode_repetitions,
+                gcode_step_repeat_count=self.gcode_step_repeat_count,
                 gcode_go_start=True if run_nr <= 1 else False,
                 gcode_return_start=True,
                 gcode_auto_home=True if run_nr <= 1 else False,

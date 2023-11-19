@@ -122,12 +122,14 @@ class ControllerRunner:
             if self.output_stdout:
                 logging.info("decode stream to stdout")
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    sensor.decode(return_on_stop=not self.stream_wait, timeout_s=self.stream_decode_timeout_s)
+                    sensor.decode(return_on_stop=not self.stream_wait,
+                                  message_timeout_s=self.stream_decode_timeout_s)
             if self.output_file:
                 logging.info(f"decode stream to file {self.output_file}")
                 with open(self.output_file, "w") as file:
                     with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                        sensor.decode(return_on_stop=not self.stream_wait, timeout_s=self.stream_decode_timeout_s, file=file)
+                        sensor.decode(return_on_stop=not self.stream_wait,
+                                      message_timeout_s=self.stream_decode_timeout_s, out_file=file)
             else:
                 logging.warning("noting to do")
                 return 1
