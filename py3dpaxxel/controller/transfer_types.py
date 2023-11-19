@@ -202,7 +202,7 @@ class RxAcceleration(RxFrame):
         return f"{self.index:05} {self.x:+09.3f} {self.y:+09.3f} {self.z:+09.3f}"
 
 
-class RxFrame:
+class RxFrameFromHeaderId:
     MAPPING: Dict[TransportHeaderId, Type[Union[RxOutputDataRate, RxRange, RxScale, RxSamplingStarted, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted, RxUnknownResponse]]] = {
         TransportHeaderId.RX_OUTPUT_DATA_RATE: RxOutputDataRate,
         TransportHeaderId.RX_RANGE: RxRange,
@@ -224,8 +224,8 @@ class RxFrame:
 
         try:
             header_id = TransportHeaderId(header_id_int)
-            if header_id in RxFrame.MAPPING:
-                clazz = RxFrame.MAPPING[header_id]
+            if header_id in RxFrameFromHeaderId.MAPPING:
+                clazz = RxFrameFromHeaderId.MAPPING[header_id]
                 return clazz(self.payload) if len(self.payload) >= clazz.LEN else None
             else:
                 return RxUnknownResponse(header_id.value)

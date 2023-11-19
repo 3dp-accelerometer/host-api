@@ -3,11 +3,25 @@ import time
 from collections.abc import Callable
 from typing import TextIO, Optional
 
-from .api import (Adxl345)
+from .api import (Py3dpAxxel)
 from .constants import OutputDataRate, OutputDataRateDelay
 
 
-class BackgroundDecoder(Callable):
+class BlockingDecoder(Callable):
+    """
+    A blocking decoder implementation.
+
+    This decoder allows to
+
+    - tell the controller when sampling shall start, and
+    - decode controllers' stream (blocking).
+
+    The implementation is meant to be used threaded so that the decoding can be
+    started (threaded) before sampling start is called.
+
+    Note: the serial device acquisition is performed at construction time.
+    """
+
     def __init__(self,
                  controller_serial: str,
                  timelapse_s: float,
@@ -15,17 +29,27 @@ class BackgroundDecoder(Callable):
                  sensor_output_data_rate: OutputDataRate,
                  out_filename: Optional[str],
                  do_dry_run: bool = False) -> None:
+        """
+        Acquires required resources for later interaction with controller.
+
+        :param controller_serial: i.e. "/dev/ttyACM0"
+        :param timelapse_s: how long to record
+        :param record_timeout_s: how long the controller shall record
+        :param sensor_output_data_rate: which sample rate the controller shall be configured
+        :param out_filename: decoded stream output file, leave None for not storage
+        :param do_dry_run: if true, will not invoke controller neither write output file but timing will as without dry-run
+        """
         self.timelapse_s: float = timelapse_s
         self.record_timeout_s: float = record_timeout_s
         self.do_dry_run = do_dry_run
-        self.dev: Optional[Adxl345] = None
+        self.dev: Optional[Py3dpAxxel] = None
 
         if not self.do_dry_run:
             self.file: Optional[TextIO] = None
             if out_filename is not None:
                 self.file = open(out_filename, "w")
 
-            self.dev: Adxl345 = Adxl345(controller_serial)
+            self.dev: Py3dpAxxel = Py3dpAxxel(controller_serial)
             self.dev.open()
             if sensor_output_data_rate is not None:
                 self.dev.set_output_data_rate(sensor_output_data_rate)
@@ -43,16 +67,29 @@ class BackgroundDecoder(Callable):
 
         pass
 
-    def start_sampling(self):
+    def start_sampling(self) -> None:
+        """
+        Tells the controller to start sampling, hence sent data stream to the host.
+
+        :return: None
+        """
         logging.info(f"send command: start sampling n={self.max_samples}")
         if not self.do_dry_run:
             self.dev.start_sampling(self.max_samples)
 
-    def __call__(self) -> int:
+    def __call__(self) -> None:
+        """
+        Starts decoding and waits until stream end is detected (success) or timeout occurred (error).
+
+        The decoded stream is stored to file.
+        In case of dry-run no controller and no output file is touched, but the timing is assured to be tha same as with not dry-run.
+
+        :return: None
+        """
         logging.debug(f"decoding ...")
 
         if not self.do_dry_run:
-            self.dev.decode(return_on_stop=True, timeout_s=self.record_timeout_s, file=self.file)
+            self.dev.decode(return_on_stop=True, message_timeout_s=self.record_timeout_s, out_file=self.file)
             self.dev.close()
             if self.file is not None:
                 self.file.close()
@@ -61,4 +98,3 @@ class BackgroundDecoder(Callable):
             time.sleep(self.timelapse_s)
 
         logging.debug(f"decoding ... done")
-        return 0

@@ -3,7 +3,7 @@ import threading
 import time
 from typing import Literal, Tuple, Optional
 
-from py3dpaxxel.controller.background_decoder import BackgroundDecoder
+from py3dpaxxel.controller.blocking_decoder import BlockingDecoder
 from py3dpaxxel.controller.constants import OutputDataRate
 from py3dpaxxel.gcode.trajectory_generator import CoplanarTrajectory
 from py3dpaxxel.octoprint.api import OctoApi
@@ -44,12 +44,12 @@ class SamplingStepsRunner:
         self.record_timeout_s: float = record_timeout_s
 
     def run(self) -> int:
-        decoder = BackgroundDecoder(self.input_serial_device,
-                                    self.record_timelapse_s,
-                                    self.record_timeout_s,
-                                    self.intput_sensor_odr,
-                                    self.output_filename,
-                                    self.do_dry_run)
+        decoder = BlockingDecoder(self.input_serial_device,
+                                  self.record_timelapse_s,
+                                  self.record_timeout_s,
+                                  self.intput_sensor_odr,
+                                  self.output_filename,
+                                  self.do_dry_run)
         controller_task = threading.Thread(name="stream_decoding", target=decoder)
         controller_task.daemon = True
         controller_task.start()

@@ -7,11 +7,11 @@ from serial.tools.list_ports import comports
 
 from .constants import Range, Scale, OutputDataRate
 from .serial import CdcSerial
-from .transfer_types import (TxFrame, RxFrame, RxUnknownResponse, RxOutputDataRate,
+from .transfer_types import (TxFrame, RxUnknownResponse, RxOutputDataRate,
                              RxScale, RxRange, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted,
                              RxAcceleration, RxSamplingStarted, RxFifoOverflow, RxDeviceSetup, TxGetOutputDataRate, TxSetOutputDataRate, TxGetScale, TxSetScale, TxGetRange, TxSetRange,
                              TxReboot,
-                             TxSamplingStart, TxSamplingStop)
+                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId)
 
 
 class ErrorFifoOverflow(IOError):
@@ -35,37 +35,59 @@ class ErrorReadTimeout(IOError):
         super().__init__(f"timeout occurred: no message received since timeout_limit_s={timeout_limit} current_timeout_s={current_timeout_value}")
 
 
-class Adxl345(CdcSerial):
-    # see https://pid.codes/pids/
-    DEVICE_VID = 0x1209
-    DEVICE_PID = 0xE11A
+class Py3dpAxxel(CdcSerial):
+    """
+    Implementation to manipulate the py3dpaxxel controller (firmware).
 
-    def __init__(self, ser_dev_name: str, timeout: float = 0.1) -> None:
-        super().__init__(ser_dev_name, timeout)
+    The implementation establishes the communication with the controller (tx/rx) and encoding + decoding of data packets.
+    Since the controller communicates in CDC mode, the data packets are very naive and consist only of header ID and payload.
+    No CRC, dynamic data length packet or escape sequence is considered.
+    """
+
+    DEVICE_VID = 0x1209
+    "see https://pid.codes/1209/"
+    DEVICE_PID = 0xE11A
+    "see https://pid.codes/1209/411A/"
+
+    def __init__(self, ser_dev_name: str, serial_read_timeout_s: float = 0.1) -> None:
+        """
+
+        :param ser_dev_name: i.e. "/dev/ttyACM0"
+        :param serial_read_timeout_s: how long to wait for incoming bytes until next decoding attempt
+        """
+        super().__init__(ser_dev_name, serial_read_timeout_s)
 
     @staticmethod
     def get_devices_list_human_readable() -> List[str]:
+        """
+
+        :return: list of devices, i.e. ["/dev/ttyACM0", ...]
+        """
         devices: List[str] = []
-        for s in [cp for cp in comports() if cp.vid == Adxl345.DEVICE_VID and cp.pid == Adxl345.DEVICE_PID]:
+        for s in [cp for cp in comports() if cp.vid == Py3dpAxxel.DEVICE_VID and cp.pid == Py3dpAxxel.DEVICE_PID]:
             devices.append(s.device)
         return devices
 
     @staticmethod
     def get_devices_dict() -> Dict[str, Dict[str, str]]:
         """
-        Returns dict of devices:
-            {
-                "/dev/ttyACM0": {
-                    "manufacturer": "3DP Accelerometer",
-                    "product": "3dpaxxel",
-                    "vendor_id": 4617,
-                    "product_id": 57626,
-                    "serial": "3472348C3334"
-                }, ...
-            }
+        .. code-block::
+
+            dict of devices:
+                {
+                    "/dev/ttyACM0": {
+                         "manufacturer": "3DP Accelerometer",
+                         "product": "3dpaxxel",
+                         "vendor_id": 4617,
+                         "product_id": 57626,
+                         "serial": "3472348C3334"
+                    }, ...
+                }
+
+        :return: dict of devices
         """
         devices: Dict[str, Dict[str, str]] = dict()
-        for s in [cp for cp in comports() if cp.vid == Adxl345.DEVICE_VID and cp.pid == Adxl345.DEVICE_PID]:
+        for s in [cp for cp in comports() if cp.vid == Py3dpAxxel.DEVICE_VID and cp.pid == Py3dpAxxel.DEVICE_PID]:
             devices[s.device] = {"manufacturer": s.manufacturer, "product": s.product, "vendor_id": s.vid, "product_id": s.pid, "serial": s.serial_number}
         return devices
 
@@ -100,17 +122,25 @@ class Adxl345(CdcSerial):
     def set_range(self, data_range: Range) -> None:
         self._send_frame(TxSetRange(data_range))
 
-    def reboot(self):
+    def reboot(self) -> None:
         self._send_frame(TxReboot())
 
-    def start_sampling(self, num_samples: int = 0):
+    def start_sampling(self, num_samples: int = 0) -> None:
         assert (0 <= num_samples) and (num_samples <= 65535)
         self._send_frame(TxSamplingStart(num_samples))
 
-    def stop_sampling(self):
+    def stop_sampling(self) -> None:
         self._send_frame(TxSamplingStop())
 
-    def decode(self, return_on_stop: bool = False, timeout_s: float = 10.0, file: Optional[TextIO] = None):
+    def decode(self, return_on_stop: bool = False, message_timeout_s: float = 10.0, out_file: Optional[TextIO] = None) -> None:
+        """
+        Decodes incoming stream from controller.
+
+        :param return_on_stop: whether to return when first :class:`.RxSamplingStopped` package was seen
+        :param message_timeout_s: how long to wait until next message, :class:`.ErrorReadTimeout` is thrown, set to 0.0 to disable
+        :param out_file: where to save the decoded stream, set to None to disable
+        :return: None
+        """
         data: bytearray = bytearray()
         run_count: int = 0
         sample_count: int = 0
@@ -122,14 +152,14 @@ class Adxl345(CdcSerial):
 
             if len(received_bytes) > 0:
                 timestamp_last_message_seen = time.time()
-            elif timeout_s != 0.0:
+            elif message_timeout_s != 0.0:
                 current_delay_s: float = time.time() - timestamp_last_message_seen
-                if current_delay_s > timeout_s:
-                    raise ErrorReadTimeout(timeout_s, current_delay_s)
+                if current_delay_s > message_timeout_s:
+                    raise ErrorReadTimeout(message_timeout_s, current_delay_s)
 
             data.extend(received_bytes)
             if len(data) >= 1:
-                package = RxFrame(data).unpack()
+                package = RxFrameFromHeaderId(data).unpack()
                 if package is not None:
                     if isinstance(package, RxUnknownResponse):
                         e = ErrorUnknownResponse(package.unknown_header_id)
@@ -143,7 +173,7 @@ class Adxl345(CdcSerial):
 
                     if isinstance(package, RxSamplingStarted):
                         logging.info(f"rx: {package}")
-                        file.write("run sample x y z\n") if file is not None else logging.info("#run #sample x[mg] y[mg] z[mg]")
+                        out_file.write("run sample x y z\n") if out_file is not None else logging.info("#run #sample x[mg] y[mg] z[mg]")
                         sample_count = 0
                         start_time = time.time()
 
@@ -153,11 +183,11 @@ class Adxl345(CdcSerial):
                         sample_count += 1
                         if sample_count > 65535:
                             sample_count = 0
-                        file.write(acceleration + "\n") if file is not None else logging.info(f"rx: {acceleration}")
+                        out_file.write(acceleration + "\n") if out_file is not None else logging.info(f"rx: {acceleration}")
 
                     if isinstance(package, RxDeviceSetup):
                         parameters = eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))
-                        file.write("# " + str(parameters) + "\n") if file is not None else logging.info("rx: Device Setup: " + str(parameters))
+                        out_file.write("# " + str(parameters) + "\n") if out_file is not None else logging.info("rx: Device Setup: " + str(parameters))
 
                     if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):
                         elapsed_time = time.time() - start_time
@@ -171,5 +201,5 @@ class Adxl345(CdcSerial):
                                      f"{((sample_count * RxAcceleration.LEN * 8) / elapsed_time):.1f} baud)")
                         run_count += 1
 
-                        if return_on_stop or file is not None:
+                        if return_on_stop or out_file is not None:
                             return
