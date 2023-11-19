@@ -142,7 +142,7 @@ class RxSamplingStarted(RxFrame):
     LEN = 3
 
     def __init__(self, payload: bytearray) -> None:
-        self.maxSamples: int = int.from_bytes(payload[1:2], "little", signed=False)
+        self.maxSamples: int = int.from_bytes(payload[1:3], "little", signed=False)
         self.consume_all(payload)
 
     def __str__(self) -> str:
