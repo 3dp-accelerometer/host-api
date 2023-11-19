@@ -22,17 +22,19 @@ exclude = [
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
-matplotlib = { version = "^3.5.2", optional = true }
-numpy = "^1.24.2"
+# API
 pyaml = "^23.9.7"
 pyserial = "^3.5"
+# interfaces with octoprint remotely
 requests = { version = "^2.28.1", optional = true }
+# data visualization and decomposition
+numpy = { version = "^1.24.2", optional = true }
 scipy = { version = "^1.10.1", optional = true }
+matplotlib = { version = "^3.5.2", optional = true }
 
 [tool.poetry.extras]
-data_analysis = ["scipy"]
-octoprint = ["requests"]
-visualization = ["matplotlib", "scipy"]
+octoprint_remote = ["requests"]
+data_visualization = ["numpy", "scipy", "matplotlib"]
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/3dp-accelerometer/host-api/issues"
@@ -42,8 +44,130 @@ generate-setup-file = false
 script = "py3dpaxxel/scripts/update_setup.py"
 
 [tool.poetry.group.dev.dependencies]
+# required for pip installation from repository: auto generate setup.py -scripts/update_setup.py
 poetry2setup = "^1.1.0"
+
+[tool.poetry.group.doc.dependencies]
+# sphinx documentation
+astroid = "2.15.8"
+default-values = "^0.6.0"
+html-section = "^0.3.0"
+seed-intersphinx-mapping = "^1.2.2"
+sphinx = "^7.2.6"
+sphinx-autodoc2 = "^0.4.2"
+sphinx-copybutton = "^0.5.2"
+sphinx-debuginfo = "^0.2.2"
+sphinx-notfound-page = "^1.0.0"
+sphinx-packaging = "^0.2.0"
+sphinx-pyproject = "^0.3.0"
+sphinx-rtd-theme = "^1.3.0"
+sphinx-toolbox = "^3.5.0"
 
 [build-system]
 requires = ["poetry-core", "poetry2setup"]
 build-backend = "poetry.core.masonry.api"
+
+# reqired by [tool.sphinx-pyproject]
+[project]
+name = "py3dpaxxel"
+version = "0.1.6"
+description = "Python API for interacting with the 3DP Accelerometer controller and sensor data visualization."
+readme = "readme.md"
+keywords = ["3d printing", "accelerometer", "adxl345", "stm32", "marlin", "octoprint"]
+dynamic = ["requires-python", "classifiers", "dependencies", ]
+
+# reqired by [tool.sphinx-pyproject]
+[[project.author]]
+name = "Raoul Rubien"
+email = "rubienr@sbox.tugraz.at"
+
+# reqired by [tool.sphinx-pyproject]
+[project.license]
+file = "Apache-2.0"
+
+[tool.sphinx-pyproject]
+github_username = "3dp-accelerometer"
+github_repository = "py3dpaxxel"
+author = "Raoul Rubien"
+project = "py3dpaxxel"
+copyright = "2023 Raoul Rubien"
+language = "en"
+package_root = "../py3dpaxxel"
+extensions = [
+    "sphinx_toolbox",
+    "sphinx_toolbox.more_autodoc",
+    "sphinx_toolbox.more_autosummary",
+    "sphinx_toolbox.documentation_summary",
+    "sphinx_toolbox.tweaks.param_dash",
+    # "sphinxcontrib.toctree_plus",
+    "sphinx_toolbox.tweaks.latex_layout",
+    "sphinx_toolbox.tweaks.latex_toc",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    # "sphinx_autopackagesummary",
+    "autodoc2",
+    # "sphinxcontrib.extras_require",
+    "sphinx.ext.todo",
+    # "sphinxemoji.sphinxemoji",
+    "notfound.extension",
+    "sphinx_copybutton",
+    "sphinxcontrib.default_values",
+    "sphinx_debuginfo",
+    # "sphinx_licenseinfo",
+    "seed_intersphinx_mapping",
+    "html_section",
+    "sphinx_toolbox.more_autosummary.column_widths",
+    "sphinx_toolbox.latex",
+    "sphinx_toolbox.latex.succinct_seealso",
+    # "sphinx_toolbox_experimental.missing_xref",
+    # "sphinx_toolbox_experimental.changelog",
+    "sphinx_packaging.peps",
+]
+# sphinxemoji_style = "twemoji"
+gitstamp_fmt = "%d %b %Y"
+templates_path = ["_templates", ]
+html_static_path = ["_static", ]
+source_suffix = ".rst"
+master_doc = "index"
+suppress_warnings = ["image.nonlocal_uri", ]
+pygments_style = "default"
+html_theme = "sphinx_rtd_theme"
+html_theme_path = ["../..", ]
+html_show_sourcelink = true
+toctree_plus_types = [
+    "class",
+    "confval",
+    "data",
+    "directive",
+    "enum",
+    "exception",
+    "flag",
+    "function",
+    "namedtuple",
+    "protocol",
+    "role",
+    "typeddict",
+]
+add_module_names = false
+hide_none_rtype = true
+all_typevars = true
+overloads_location = "bottom"
+html_codeblock_linenos_style = "table"
+autodoc_exclude_members = [
+    "__dict__",
+    "__class__",
+    "__dir__",
+    "__weakref__",
+    "__module__",
+    "__annotations__",
+    "__orig_bases__",
+    "__parameters__",
+    "__subclasshook__",
+    "__init_subclass__",
+    "__attrs_attrs__",
+    "__init__",
+    "__new__",
+    "__getnewargs__",
+    "__abstractmethods__",
+    "__hash__",
+]
