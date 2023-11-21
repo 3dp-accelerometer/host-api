@@ -8,8 +8,8 @@ class RunArgs:
     Invocation arguments for the one recording step.
     """
 
-    def __init__(self, step: int, axis: Literal["x", "y", "z"], frequency: int, zeta: int, file_prefix: str) -> None:
-        self.step: int = step
+    def __init__(self, sequence: int, axis: Literal["x", "y", "z"], frequency: int, zeta: int, file_prefix: str) -> None:
+        self.sequence: int = sequence
         self.axis: Literal["x", "y", "z"] = axis
         self.frequency: int = frequency
         self.zeta: int = zeta
@@ -17,10 +17,10 @@ class RunArgs:
 
     @property
     def filename(self):
-        return fn_generator.generate_filename_for_run(self.file_prefix, self.step, self.axis, self.frequency, self.zeta)
+        return fn_generator.generate_filename_for_run(self.file_prefix, self.sequence, self.axis, self.frequency, self.zeta)
 
     def __str__(self):
-        return f"step={self.step:03} ax={self.axis} fx={self.frequency:03} zeta={self.zeta:03} fn={self.filename}"
+        return f"sequence={self.sequence:03} ax={self.axis} fx={self.frequency:03} zeta={self.zeta:03} fn={self.filename}"
 
 
 class RunArgsGenerator:

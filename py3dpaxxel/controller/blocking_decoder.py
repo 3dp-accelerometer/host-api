@@ -1,4 +1,5 @@
 import logging
+import threading
 import time
 from collections.abc import Callable
 from typing import TextIO, Optional
@@ -28,7 +29,8 @@ class BlockingDecoder(Callable):
                  record_timeout_s: float,
                  sensor_output_data_rate: OutputDataRate,
                  out_filename: Optional[str],
-                 do_dry_run: bool = False) -> None:
+                 do_dry_run: bool = False,
+                 do_abort_flag: threading.Event = threading.Event()) -> None:
         """
         Acquires required resources for later interaction with controller.
 
@@ -38,11 +40,13 @@ class BlockingDecoder(Callable):
         :param sensor_output_data_rate: which sample rate the controller shall be configured
         :param out_filename: decoded stream output file, leave None for not storage
         :param do_dry_run: if true, will not invoke controller neither write output file but timing will as without dry-run
+        :param do_abort_flag: flag to externally shortcut the decoding loop
         """
         self.timelapse_s: float = timelapse_s
         self.record_timeout_s: float = record_timeout_s
         self.do_dry_run = do_dry_run
         self.dev: Optional[Py3dpAxxel] = None
+        self.do_abort_flag: threading.Event = do_abort_flag
 
         if not self.do_dry_run:
             self.file: Optional[TextIO] = None
@@ -75,7 +79,15 @@ class BlockingDecoder(Callable):
         """
         logging.info(f"send command: start sampling n={self.max_samples}")
         if not self.do_dry_run:
-            self.dev.start_sampling(self.max_samples)
+            try:
+                self.dev.start_sampling(self.max_samples)
+            except Exception as e:
+                logging.warning(f"start sampling: release resources")
+                if self.dev is not None:
+                    self.dev.close()
+                if self.file is not None:
+                    self.file.close()
+                raise e
 
     def __call__(self) -> None:
         """
@@ -88,13 +100,24 @@ class BlockingDecoder(Callable):
         """
         logging.debug(f"decoding ...")
 
-        if not self.do_dry_run:
-            self.dev.decode(return_on_stop=True, message_timeout_s=self.record_timeout_s, out_file=self.file)
-            self.dev.close()
+        try:
+            if not self.do_dry_run:
+                self.dev.decode(return_on_stop=True,
+                                message_timeout_s=self.record_timeout_s,
+                                out_file=self.file,
+                                do_stop_flag=self.do_abort_flag)
+                self.dev.close()
+                if self.file is not None:
+                    self.file.close()
+                    logging.info(f"data saved to {self.file.name}")
+            else:
+                time.sleep(self.timelapse_s)
+
+            logging.debug(f"decoding ... done")
+        except Exception as e:
+            logging.warning(f"decoding: release resources")
+            if self.dev is not None:
+                self.dev.close()
             if self.file is not None:
                 self.file.close()
-                logging.info(f"data saved to {self.file.name}")
-        else:
-            time.sleep(self.timelapse_s)
-
-        logging.debug(f"decoding ... done")
+            raise e

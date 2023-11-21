@@ -1,7 +1,9 @@
 import logging
 import os
+import threading
 import time
-from typing import List, Literal, Tuple
+import uuid
+from typing import List, Literal, Tuple, Callable
 
 from py3dpaxxel.controller.constants import OutputDataRate
 from py3dpaxxel.octoprint.api import OctoApi
@@ -9,7 +11,7 @@ from py3dpaxxel.sampling_tasks.series_argument_generator import RunArgsGenerator
 from py3dpaxxel.sampling_tasks.steps_runner import SamplingStepsRunner
 
 
-class SamplingStepsSeriesRunner:
+class SamplingStepsSeriesRunner(Callable):
 
     def __init__(self,
                  octoprint_api: OctoApi,
@@ -30,7 +32,8 @@ class SamplingStepsSeriesRunner:
                  zeta_step: int,
                  output_file_prefix: str,
                  output_dir: str,
-                 do_dry_run: bool) -> None:
+                 do_dry_run: bool,
+                 do_abort_flag: threading.Event = threading.Event()) -> None:
         self.octoprint_api: OctoApi = octoprint_api
         self.controller_serial_device: str = controller_serial_device
         self.controller_record_timelapse_s: float = controller_record_timelapse_s
@@ -50,8 +53,11 @@ class SamplingStepsSeriesRunner:
         self.output_file_prefix: str = output_file_prefix
         self.output_dir: str = output_dir
         self.do_dry_run: bool = do_dry_run
+        self.do_abort_flag: threading.Event = do_abort_flag
 
-    def run(self) -> int:
+    def __call__(self) -> int:
+        # each run shall have a pseudo UUID appended to prefix
+        file_prefix: str = f"{self.output_file_prefix}-{uuid.uuid1().time_low:x}"
         generator = RunArgsGenerator(
             sequence_repeat_count=self.gcode_sequence_repeat_count,
             fx_start=self.fx_start,
@@ -61,7 +67,7 @@ class SamplingStepsSeriesRunner:
             zeta_stop=self.zeta_stop,
             zeta_step=self.zeta_step,
             axis=self.gcode_axis,
-            out_file_prefix=self.output_file_prefix)
+            out_file_prefix=file_prefix)
 
         runs: List[RunArgs] = generator.generate()
         logging.info(f"planned runs={len(runs)}")
@@ -76,7 +82,7 @@ class SamplingStepsSeriesRunner:
             logging.info(f"{run_percent}% run {run_nr}/{run_count_total}")
 
             start = time.time()
-            job_runner = SamplingStepsRunner(
+            SamplingStepsRunner(
                 input_serial_device=self.controller_serial_device,
                 intput_sensor_odr=self.sensor_odr,
                 record_timelapse_s=self.controller_record_timelapse_s,
@@ -91,8 +97,13 @@ class SamplingStepsSeriesRunner:
                 gcode_go_start=True if run_nr <= 1 else False,
                 gcode_return_start=True,
                 gcode_auto_home=True if run_nr <= 1 else False,
-                do_dry_run=self.do_dry_run)
-            job_runner.run()
+                do_dry_run=self.do_dry_run,
+                do_abort_flag=self.do_abort_flag)()
+
+            if self.do_abort_flag.is_set():
+                logging.warning(f"sequence runner stopped ahead of time after {run_nr} sequences because stop flag was set")
+                return -1
+
             logging.info(f"sampling job done in {time.time() - start:.3f}s")
             time.sleep(0.2)
             run_nr += 1

@@ -1,33 +1,42 @@
-from typing import Union
+from typing import Union, Optional
 
 import serial
 from serial import Serial
 
 
 class CdcSerial:
-    def __init__(self, ser_dev_name: str, timeout: float) -> None:
+    def __init__(self, ser_dev_name: str,
+                 read_timeout: float,
+                 write_timeout: float) -> None:
         self.dev: Union[None, Serial] = None
         self.ser_dev_name = ser_dev_name
-        self.timeout: float = timeout
+        self.read_timeout: float = read_timeout
+        self.write_timeout: float = write_timeout
 
     def write_byte(self, tx_byte: int) -> None:
         assert tx_byte < 255
         self.dev.write(bytes([tx_byte]))
 
-    def write_bytes(self, tx_bytes: bytes) -> None:
-        self.dev.write(tx_bytes)
+    def write_bytes(self, tx_bytes: bytes, timeout: Optional[float] = None) -> int:
+        if timeout:
+            self.dev.write_timeout = timeout
+            tx_len = self.dev.write(tx_bytes)
+            self.dev.write_timeout = self.write_timeout
+            return tx_len
+        return self.dev.write(tx_bytes)
 
-    def read_bytes(self, num_bytes: int, timeout: Union[None, float] = None) -> bytes:
+    def read_bytes(self, num_bytes: int, timeout: Optional[float] = None) -> bytes:
         if timeout:
             self.dev.timeout = timeout
             rx_bytes = self.dev.read(num_bytes)
-            self.dev.timeout = self.timeout
+            self.dev.timeout = self.read_timeout
             return rx_bytes
         return self.dev.read(num_bytes)
 
     def open(self) -> None:
         self.dev = Serial(port=self.ser_dev_name,
-                          timeout=self.timeout,
+                          timeout=self.read_timeout,
+                          write_timeout=self.write_timeout,
                           bytesize=serial.EIGHTBITS,
                           parity=serial.PARITY_NONE,
                           stopbits=serial.STOPBITS_ONE,

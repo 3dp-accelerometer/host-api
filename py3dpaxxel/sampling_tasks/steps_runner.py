@@ -1,15 +1,19 @@
 import logging
 import threading
 import time
-from typing import Literal, Tuple, Optional
+from typing import Literal, Tuple, Optional, Callable
 
 from py3dpaxxel.controller.blocking_decoder import BlockingDecoder
 from py3dpaxxel.controller.constants import OutputDataRate
 from py3dpaxxel.gcode.trajectory_generator import CoplanarTrajectory
+from py3dpaxxel.log.setup import configure_logging
 from py3dpaxxel.octoprint.api import OctoApi
+from py3dpaxxel.sampling_tasks.exception_task_wrapper import ExceptionTaskWrapper
+
+configure_logging()
 
 
-class SamplingStepsRunner:
+class SamplingStepsRunner(Callable):
     def __init__(self,
                  input_serial_device: str,
                  intput_sensor_odr: OutputDataRate,
@@ -26,7 +30,7 @@ class SamplingStepsRunner:
                  gcode_return_start: bool,
                  gcode_auto_home: bool,
                  do_dry_run: bool,
-                 ) -> None:
+                 do_abort_flag: threading.Event = threading.Event()) -> None:
         self.input_serial_device: str = input_serial_device
         self.intput_sensor_odr: OutputDataRate = intput_sensor_odr
         self.record_timelapse_s: float = record_timelapse_s
@@ -42,21 +46,26 @@ class SamplingStepsRunner:
         self.gcode_auto_home: bool = gcode_auto_home
         self.do_dry_run: bool = do_dry_run
         self.record_timeout_s: float = record_timeout_s
+        self.do_abort_flag: threading.Event = do_abort_flag
 
-    def run(self) -> int:
-        decoder = BlockingDecoder(self.input_serial_device,
-                                  self.record_timelapse_s,
-                                  self.record_timeout_s,
-                                  self.intput_sensor_odr,
-                                  self.output_filename,
-                                  self.do_dry_run)
-        controller_task = threading.Thread(name="stream_decoding", target=decoder)
-        controller_task.daemon = True
-        controller_task.start()
+    def __call__(self) -> int:
+        blocking_decoder = BlockingDecoder(
+            self.input_serial_device,
+            self.record_timelapse_s,
+            self.record_timeout_s,
+            self.intput_sensor_odr,
+            self.output_filename,
+            self.do_dry_run,
+            self.do_abort_flag)
+        exception_wrapper = ExceptionTaskWrapper(target=blocking_decoder)
+        decoder_thread = threading.Thread(name="stream_decoder", target=exception_wrapper)
+        decoder_thread.daemon = True
+
+        decoder_thread.start()
 
         time.sleep(0.1)
         start = time.time()
-        decoder.start_sampling()
+        blocking_decoder.start_sampling()
 
         commands = [self.gcode_extra_gcode] if "" != self.gcode_extra_gcode else []
         commands.extend(CoplanarTrajectory.generate(
@@ -67,10 +76,17 @@ class SamplingStepsRunner:
             go_to_start=self.gcode_go_start,
             return_to_start=self.gcode_return_start,
             auto_home=self.gcode_auto_home))
+
         self.octoprint_api.send_commands(commands)
 
         logging.debug("waiting for decoding task finished...")
-        controller_task.join()
+        decoder_thread.join()
+
+        exceptions_count = len(exception_wrapper.exceptions)
+        if 0 < exceptions_count:
+            logging.error(f"subprocess terminated with {exceptions_count} exceptions, will raise first")
+            raise exception_wrapper.exceptions[0]
+
         logging.debug(f"decoding task done in {time.time() - start:.3f}s")
 
         return 0

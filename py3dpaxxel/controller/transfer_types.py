@@ -69,25 +69,23 @@ class TxSamplingStop(TxFrame):
         super().__init__(TransportHeaderId.TX_SAMPLING_STOP)
 
 
-class RxOutputDataRate:
-    LEN = 2
-
-    def __init__(self, payload: bytearray) -> None:
-        self.outputDataRate: Optional[OutputDataRate] = None
-        payload.pop(0)
-        self.outputDataRate: OutputDataRate = OutputDataRate(payload[0])
-        payload.pop(0)
-
-    def __str__(self) -> str:
-        return f"Device OutputDataRate rate={self.outputDataRate}"
-
-
 class RxFrame:
     LEN = 0
 
     def consume_all(self, payload: bytearray):
         for i in range(0, self.LEN):
             payload.pop(0)
+
+
+class RxOutputDataRate(RxFrame):
+    LEN = 2
+
+    def __init__(self, payload: bytearray) -> None:
+        self.outputDataRate: OutputDataRate = OutputDataRate(payload[1])
+        self.consume_all(payload)
+
+    def __str__(self) -> str:
+        return f"Device OutputDataRate rate={self.outputDataRate}"
 
 
 class RxRange(RxFrame):
@@ -219,7 +217,19 @@ class RxFrameFromHeaderId:
     def __init__(self, payload: bytearray) -> None:
         self.payload: bytearray = payload
 
-    def unpack(self) -> Union[RxSamplingStarted, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted, RxUnknownResponse, None]:
+    def unpack(self) -> Union[
+        RxOutputDataRate,
+        RxRange,
+        RxScale,
+        RxDeviceSetup,
+        RxFifoOverflow,
+        RxSamplingStarted,
+        RxSamplingStopped,
+        RxSamplingFinished,
+        RxSamplingAborted,
+        RxUnknownResponse,
+        None
+    ]:
         header_id_int: int = int.from_bytes([self.payload[0]], "little", signed=False)
 
         try:

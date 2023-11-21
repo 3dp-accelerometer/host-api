@@ -1,5 +1,6 @@
 import logging
 import re
+import threading
 import time
 from typing import TextIO, Dict, List, Optional
 
@@ -49,13 +50,13 @@ class Py3dpAxxel(CdcSerial):
     DEVICE_PID = 0xE11A
     "see https://pid.codes/1209/411A/"
 
-    def __init__(self, ser_dev_name: str, serial_read_timeout_s: float = 0.1) -> None:
+    def __init__(self, ser_dev_name: str, serial_read_timeout_s: float = 0.1, serial_write_timeout_s: float = 1) -> None:
         """
 
         :param ser_dev_name: i.e. "/dev/ttyACM0"
         :param serial_read_timeout_s: how long to wait for incoming bytes until next decoding attempt
         """
-        super().__init__(ser_dev_name, serial_read_timeout_s)
+        super().__init__(ser_dev_name, serial_read_timeout_s, serial_write_timeout_s)
 
     @staticmethod
     def get_devices_list_human_readable() -> List[str]:
@@ -102,7 +103,7 @@ class Py3dpAxxel(CdcSerial):
 
     def get_output_data_rate(self) -> OutputDataRate:
         payload = self._send_frame_then_receive(TxGetOutputDataRate(), RxOutputDataRate.LEN)
-        response = RxOutputDataRate(payload)
+        response: RxOutputDataRate = RxFrameFromHeaderId(payload).unpack()
         return response.outputDataRate
 
     def set_output_data_rate(self, odr: OutputDataRate) -> None:
@@ -110,7 +111,7 @@ class Py3dpAxxel(CdcSerial):
 
     def get_scale(self) -> Scale:
         payload = self._send_frame_then_receive(TxGetScale(), RxScale.LEN)
-        response = RxScale(payload)
+        response: RxScale = RxFrameFromHeaderId(payload).unpack()
         return response.scale
 
     def set_scale(self, scale: Scale) -> None:
@@ -118,7 +119,7 @@ class Py3dpAxxel(CdcSerial):
 
     def get_range(self) -> Range:
         payload = self._send_frame_then_receive(TxGetRange(), RxRange.LEN)
-        response = RxRange(payload)
+        response: RxRange = RxFrameFromHeaderId(payload).unpack()
         return response.range
 
     def set_range(self, data_range: Range) -> None:
@@ -134,7 +135,10 @@ class Py3dpAxxel(CdcSerial):
     def stop_sampling(self) -> None:
         self._send_frame(TxSamplingStop())
 
-    def decode(self, return_on_stop: bool = False, message_timeout_s: float = 10.0, out_file: Optional[TextIO] = None) -> None:
+    def decode(self, return_on_stop: bool = False,
+               message_timeout_s: float = 10.0,
+               out_file: Optional[TextIO] = None,
+               do_stop_flag: threading.Event = threading.Event()) -> None:
         """
         Decodes incoming stream from controller.
 
@@ -158,6 +162,7 @@ class Py3dpAxxel(CdcSerial):
             If false, the sequence counter `seq` increases with each stream.
         :param message_timeout_s: how long to wait until next message, :class:`.ErrorReadTimeout` is thrown, set to 0.0 to disable
         :param out_file: where to save the decoded stream, set to None to disable
+        :param do_stop_flag: aborts decoder loop if set
         :return: None
         """
         data: bytearray = bytearray()
@@ -166,7 +171,7 @@ class Py3dpAxxel(CdcSerial):
         start_time = Optional[float]
         elapsed_time = Optional[float]
         timestamp_last_message_seen: float = time.time()
-        while True:
+        while not do_stop_flag.is_set():
             received_bytes: bytes = self.read_bytes(1, 0.1)
 
             if len(received_bytes) > 0:
@@ -222,3 +227,5 @@ class Py3dpAxxel(CdcSerial):
 
                         if return_on_stop or out_file is not None:
                             return
+
+        logging.warning(f"decoder stops ahead of time after {sample_count} samples because stop flag was set")

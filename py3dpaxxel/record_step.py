@@ -167,7 +167,7 @@ class Runner:
             gcode_go_start=self.args.gostart,
             gcode_return_start=self.args.returnstart,
             gcode_auto_home=self.args.autohome,
-            do_dry_run=self.args.dryrun).run()
+            do_dry_run=self.args.dryrun)()
 
         if ret == -1:
             self.parser.print_help()
