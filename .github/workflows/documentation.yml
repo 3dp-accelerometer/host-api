@@ -16,7 +16,7 @@ jobs:
       - uses: Gr1N/setup-poetry@v8
       - name: Install dependencies
         run: |
-          poetry install --with doc
+          poetry install --all-extras --with dev --with doc
       - name: Sphinx build
         run: |
           source .venv/bin/activate
