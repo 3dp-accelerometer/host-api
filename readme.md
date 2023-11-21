@@ -1,19 +1,17 @@
 Description
------------
+===========
 
 Python host API for manipulating the acceleration controller.
-Implements binary communication with the microcontroller in CDC virtual com port mode:
+Implements binary communication with the microcontroller in CDC virtual com port mode.
 
-- decoding stream (log or save to file)
-- configuring device (setting and reading: output data rate, range, scale)
-- start/stop sampling
-
-reading and setting device configuration and to start/stop data stream from device.
+- stream decoding
+- stream recording
+- device configuration (writing and reading to/from device)
 
 Example
--------
+=======
 
-```commandline
+```bash
 +----------------------------------------------------------------------------------------------------------------------------+
 | $ ./3dpaccel.py  set --range G16 |                                                                                         |
 | $ ./3dpaccel.py  get --all       |                                                                                         |
@@ -39,19 +37,10 @@ Example
 +----------------------------------------------------------------------------------------------------------------------------+
 ```
 
-Roadmap
--------
+Getting Started
+===============
 
-- create pyproject.toml
-- implement calibration algo (see ADXL345 application note 1057: Basic Calibration Techniques )
-- split FFT script from API package
-- enhance FFT script (finding harmonics, plotting trajectory)
-- interface with OctoPrint: send gcode, start sampling, evaluate samples, visualize or textually report result
-
-Prerequisites
--------------
-
-## Initially Create Environment
+### Create Environment
 
 ```bash
 sudo apt install python3-poetry
@@ -59,14 +48,29 @@ sudo apt install python3-poetry
 # described in https://github.com/python-poetry/poetry#documentation
 cd host-api/python
 poetry shell
-poetry install # only API packages
-# alternatively install extra packages
-poetry install --all-extras # for plotting and data decomposition
+
+# minimal installation to run controller_cli.py
+poetry install
+
+# for datavis.py, record_step.py and record_step_series.py  
+poetry install --all-extras
+
+# for development (full installation)
+poetry install --all-extras --with dev --with doc
+
+# list discovered devices
+controller_cli.py device --list
+
+# retrieve device settings
+controller_cli.py get --all
 ```
 
-## With Initialized Environment
+### With Initialized Environment
 
 ```bash
 cd host-api/python
 poetry shell
+
+# list discovered devices
+controller_cli.py device --list
 ```

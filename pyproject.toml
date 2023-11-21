@@ -52,8 +52,10 @@ poetry2setup = "^1.1.0"
 astroid = "2.15.8"
 default-values = "^0.6.0"
 html-section = "^0.3.0"
+myst-parser = "^2.0.0"
 seed-intersphinx-mapping = "^1.2.2"
 sphinx = "^7.2.6"
+sphinx-argparse = "^0.4.0"
 sphinx-autodoc2 = "^0.4.2"
 sphinx-copybutton = "^0.5.2"
 sphinx-debuginfo = "^0.2.2"
@@ -94,6 +96,8 @@ copyright = "2023 Raoul Rubien"
 language = "en"
 package_root = "../py3dpaxxel"
 extensions = [
+    "myst_parser",
+    "sphinxarg.ext",
     "sphinx_toolbox",
     "sphinx_toolbox.more_autodoc",
     "sphinx_toolbox.more_autosummary",

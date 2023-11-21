@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from typing import Literal
+from typing import Literal, Optional
 
 from py3dpaxxel.cli import filename
 from py3dpaxxel.cli.args import convert_uint16_from_str
@@ -11,6 +11,10 @@ from py3dpaxxel.controller.runner import ControllerRunner
 from py3dpaxxel.log.setup import configure_logging
 
 configure_logging()
+
+
+def args_for_sphinx():
+    return Args().parser
 
 
 class Args:
@@ -140,13 +144,17 @@ class Args:
             help="Specify the serial device to communicate with.",
             default="/dev/ttyACM0")
 
-        self.args: argparse.Namespace = self.parser.parse_args()
+        self.args: Optional[argparse.Namespace] = None
+
+    def parse(self) -> "Args":
+        self.args = self.parser.parse_args()
+        return self
 
 
 class Runner:
 
     def __init__(self) -> None:
-        self._cli_args: Args = Args()
+        self._cli_args: Args = Args().parse()
 
     @property
     def args(self):

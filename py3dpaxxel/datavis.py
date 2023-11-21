@@ -2,12 +2,17 @@
 
 import argparse
 import sys
+from typing import Optional
 
 from py3dpaxxel.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
 from py3dpaxxel.data_decomposition.runner import DataVisualizerRunner
 from py3dpaxxel.log.setup import configure_logging
 
 configure_logging()
+
+
+def args_for_sphinx():
+    return Args().parser
 
 
 class Args:
@@ -63,13 +68,17 @@ class Args:
             help="Saves plots as PNG format.",
             action="store_true")
 
-        self.args: argparse.Namespace = self.parser.parse_args()
+        self.args: Optional[argparse.Namespace] = None
+
+    def parse(self) -> "Args":
+        self.args = self.parser.parse_args()
+        return self
 
 
 class Runner:
 
     def __init__(self) -> None:
-        self._cli_args: Args = Args()
+        self._cli_args: Args = Args().parse()
 
     @property
     def args(self):

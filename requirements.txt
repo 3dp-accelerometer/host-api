@@ -1,1 +1,2 @@
-# required by Sphinx
+# required by Sphinx: make html
+# however, better use `poetry shell && poetry install --all-extras --with dev --with doc`

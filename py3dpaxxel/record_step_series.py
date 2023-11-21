@@ -2,14 +2,19 @@
 
 import argparse
 import sys
+from typing import Optional
 
-from controller.constants import OutputDataRate
 from py3dpaxxel.cli import args
+from py3dpaxxel.controller.constants import OutputDataRate
 from py3dpaxxel.log.setup import configure_logging
 from py3dpaxxel.octoprint.remote_api import OctoRemoteApi
 from py3dpaxxel.sampling_tasks.steps_series_runner import SamplingStepsSeriesRunner
 
 configure_logging()
+
+
+def args_for_sphinx():
+    return Args().parser
 
 
 class Args:
@@ -141,13 +146,17 @@ class Args:
             type=args.path_exists_and_is_dir,
             default="./data/")
 
-        self.args: argparse.Namespace = self.parser.parse_args()
+        self.args: Optional[argparse.Namespace] = None
+
+    def parse(self) -> "Args":
+        self.args = self.parser.parse_args()
+        return self
 
 
 class Runner:
 
     def __init__(self) -> None:
-        self._cli_args: Args = Args()
+        self._cli_args: Args = Args().parse()
 
     @property
     def args(self):
