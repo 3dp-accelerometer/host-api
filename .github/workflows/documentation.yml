@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
-          apt install python3-poetry
+          sudo apt install python3-poetry
           poetry shell
           poetry install --with docs
       - name: Sphinx build
