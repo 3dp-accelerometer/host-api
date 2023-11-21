@@ -17,9 +17,9 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install --with doc
-          source .venv/bin/activate
       - name: Sphinx build
         run: |
+          source .venv/bin/activate
           cd docs
           make html
       - name: Deploy to GitHub Pages
