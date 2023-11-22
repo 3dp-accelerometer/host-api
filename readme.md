@@ -73,6 +73,6 @@ poetry shell
 
 # list discovered devices
 controller_cli.py device --list
+```
 
 **Read the Docs** at [3dp-accelerometer.github.io](https://3dp-accelerometer.github.io/py3dpaxxel)
-```
