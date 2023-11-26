@@ -43,6 +43,8 @@ class CoplanarTrajectory:
         for _step in range(0, step_repeat_count):
             commands.append(f"G1 {ax}{start_axis_mm}")
             commands.append(f"G1 {ax}{start_axis_mm + distance_mm}")
+
         if return_to_start:
             commands.append(f"G1 {ax}{start_axis_mm}")
+
         return commands

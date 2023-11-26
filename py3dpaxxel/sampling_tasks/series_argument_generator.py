@@ -8,20 +8,20 @@ class RunArgs:
     Invocation arguments for the one recording step.
     """
 
-    def __init__(self, sequence: int, axis: Literal["x", "y", "z"], frequency: int, zeta: int, file_prefix_1: str, file_prefix_2: str) -> None:
+    def __init__(self, sequence: int, axis: Literal["x", "y", "z"], frequency_hz: int, zeta_em2: int, file_prefix_1: str, file_prefix_2: str) -> None:
         self.sequence: int = sequence
         self.axis: Literal["x", "y", "z"] = axis
-        self.frequency: int = frequency
-        self.zeta: int = zeta
+        self.frequency_hz: int = frequency_hz
+        self.zeta_em2: int = zeta_em2
         self.file_prefix_1: str = file_prefix_1
         self.file_prefix_2: str = file_prefix_2
 
     @property
     def filename(self):
-        return fn_generator.generate_filename_for_run(self.file_prefix_1, self.file_prefix_2, self.sequence, self.axis, self.frequency, self.zeta)
+        return fn_generator.generate_filename_for_run(self.file_prefix_1, self.file_prefix_2, self.sequence, self.axis, self.frequency_hz, self.zeta_em2)
 
     def __str__(self):
-        return f"prefix_1={self.file_prefix_1} prefix_2={self.file_prefix_2} sequence={self.sequence:03} ax={self.axis} fx={self.frequency:03} zeta={self.zeta:03} fn={self.filename}"
+        return f"prefix_1={self.file_prefix_1} prefix_2={self.file_prefix_2} sequence={self.sequence:03} ax={self.axis} fx={self.frequency_hz:03} zeta={self.zeta_em2:03} fn={self.filename}"
 
 
 class RunArgsGenerator:
@@ -31,35 +31,35 @@ class RunArgsGenerator:
 
     def __init__(self,
                  sequence_repeat_count: int,
-                 fx_start: int,
-                 fx_stop: int,
-                 fx_step: int,
-                 zeta_start: int,
-                 zeta_stop: int,
-                 zeta_step: int,
+                 fx_start_hz: int,
+                 fx_stop_hz: int,
+                 fx_step_hz: int,
+                 zeta_start_em2: int,
+                 zeta_stop_em2: int,
+                 zeta_step_em2: int,
                  axis: List[Literal["x", "y", "z"]],
                  out_file_prefix: str,
                  out_file_prefix_2: str) -> None:
         """
 
         :param sequence_repeat_count: how often to repeat `Steps`
-        :param fx_start: frequency range
-        :param fx_stop: frequency range
-        :param fx_step: frequency range
-        :param zeta_start: Zeta range
-        :param zeta_stop: Zeta range
-        :param zeta_step: Zeta range
+        :param fx_start_hz: frequency range `*10^0Hz`
+        :param fx_stop_hz: frequency range `*10^0Hz`
+        :param fx_step_hz: frequency range `*10^0Hz`
+        :param zeta_start_em2: Zeta range `*10^-2Zeta`
+        :param zeta_stop_em2: Zeta range `*10^-2Zeta`
+        :param zeta_step_em2: Zeta range `*10^-2Zeta`
         :param axis: list of x,y,z
         :param out_file_prefix: see :class:`py3dpaxxel.cli.filename.generate_filename_for_run`
         :param out_file_prefix_2: see :class:`py3dpaxxel.cli.filename.generate_filename_for_run`
         """
         self.sequence_repeat_count: int = sequence_repeat_count
-        self.fx_start: int = fx_start
-        self.fx_stop: int = fx_stop
-        self.fx_step: int = fx_step
-        self.zeta_start: int = zeta_start
-        self.zeta_stop: int = zeta_stop
-        self.zeta_step: int = zeta_step
+        self.fx_start_hz: int = fx_start_hz
+        self.fx_stop_hz: int = fx_stop_hz
+        self.fx_step_hz: int = fx_step_hz
+        self.zeta_start_em2: int = zeta_start_em2
+        self.zeta_stop_em2: int = zeta_stop_em2
+        self.zeta_step_em2: int = zeta_step_em2
         self.axis: List[Literal["x", "y", "z"]] = axis
         self.out_file_prefix_1: str = out_file_prefix
         self.out_file_prefix_2: str = out_file_prefix_2
@@ -77,8 +77,8 @@ class RunArgsGenerator:
         """
         steps = []
         for ax in self.axis:
-            for fx in range(self.fx_start, self.fx_stop + 1, self.fx_step):
-                for zeta in range(self.zeta_start, self.zeta_stop + 1, self.zeta_step):
+            for fx in range(self.fx_start_hz, self.fx_stop_hz + 1, self.fx_step_hz):
+                for zeta in range(self.zeta_start_em2, self.zeta_stop_em2 + 1, self.zeta_step_em2):
                     for sequence in range(0, self.sequence_repeat_count):
                         steps.append(RunArgs(sequence, ax, fx, zeta, self.out_file_prefix_1, self.out_file_prefix_2))
         return steps

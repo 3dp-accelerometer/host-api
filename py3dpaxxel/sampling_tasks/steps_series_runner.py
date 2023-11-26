@@ -24,12 +24,12 @@ class SamplingStepsSeriesRunner(Callable):
                  gcode_distance_mm: int,
                  gcode_step_repeat_count: int,
                  gcode_sequence_repeat_count: int,
-                 fx_start: int,
-                 fx_stop: int,
-                 fx_step: int,
-                 zeta_start: int,
-                 zeta_stop: int,
-                 zeta_step: int,
+                 fx_start_hz: int,
+                 fx_stop_hz: int,
+                 fx_step_hz: int,
+                 zeta_start_em2: int,
+                 zeta_stop_em2: int,
+                 zeta_step_em2: int,
                  output_file_prefix: str,
                  output_dir: str,
                  do_dry_run: bool,
@@ -44,12 +44,12 @@ class SamplingStepsSeriesRunner(Callable):
         self.gcode_distance_mm: int = gcode_distance_mm
         self.gcode_step_repeat_count: int = gcode_step_repeat_count
         self.gcode_sequence_repeat_count: int = gcode_sequence_repeat_count
-        self.fx_start: int = fx_start
-        self.fx_stop: int = fx_stop
-        self.fx_step: int = fx_step
-        self.zeta_start: int = zeta_start
-        self.zeta_stop: int = zeta_stop
-        self.zeta_step: int = zeta_step
+        self.fx_start_hz: int = fx_start_hz
+        self.fx_stop_hz: int = fx_stop_hz
+        self.fx_step_hz: int = fx_step_hz
+        self.zeta_start_em2: int = zeta_start_em2
+        self.zeta_stop_em2: int = zeta_stop_em2
+        self.zeta_step_em2: int = zeta_step_em2
         self.output_file_prefix: str = output_file_prefix
         self.output_dir: str = output_dir
         self.do_dry_run: bool = do_dry_run
@@ -58,12 +58,12 @@ class SamplingStepsSeriesRunner(Callable):
     def __call__(self) -> int:
         generator = RunArgsGenerator(
             sequence_repeat_count=self.gcode_sequence_repeat_count,
-            fx_start=self.fx_start,
-            fx_stop=self.fx_stop,
-            fx_step=self.fx_step,
-            zeta_start=self.zeta_start,
-            zeta_stop=self.zeta_stop,
-            zeta_step=self.zeta_step,
+            fx_start_hz=self.fx_start_hz,
+            fx_stop_hz=self.fx_stop_hz,
+            fx_step_hz=self.fx_step_hz,
+            zeta_start_em2=self.zeta_start_em2,
+            zeta_stop_em2=self.zeta_stop_em2,
+            zeta_step_em2=self.zeta_step_em2,
             axis=self.gcode_axis,
             out_file_prefix=self.output_file_prefix,
             out_file_prefix_2=f"{uuid.uuid1().time_low:x}"  # each run shall have a pseudo UUID appended to prefix_1
@@ -90,7 +90,7 @@ class SamplingStepsSeriesRunner(Callable):
                 output_filename=os.path.join(self.output_dir, r.filename),
                 octoprint_api=self.octoprint_api,
                 gcode_start_point_mm=self.gcode_start_point_mm,
-                gcode_extra_gcode=f"M593 {r.axis.upper()} F{r.frequency} D{r.zeta}",
+                gcode_extra_gcode=f"M593 {r.axis.upper()} F{r.frequency_hz} D{round((r.zeta_em2/100.0), 2)}",
                 gcode_axis=r.axis,
                 gcode_distance_mm=self.gcode_distance_mm,
                 gcode_step_repeat_count=self.gcode_step_repeat_count,

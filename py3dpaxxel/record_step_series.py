@@ -64,7 +64,7 @@ class Args:
             "--stepcount",
             help="Repeat travel back and forth (steps) stepcount-times.",
             type=int,
-            default=4)
+            default=2)
 
         sub_group = self.parser.add_argument_group(
             "Task",
@@ -144,7 +144,7 @@ class Args:
             "--directory",
             help="Output path.",
             type=args.path_exists_and_is_dir,
-            default="./data/")
+            default="./test_data/")
 
         self.args: Optional[argparse.Namespace] = None
 
@@ -180,15 +180,15 @@ class Runner:
             gcode_distance_mm=self.args.distance,
             gcode_step_repeat_count=self.args.stepcount,
             gcode_sequence_repeat_count=self.args.sequencecount,
-            fx_start=self.args.fxstart,
-            fx_stop=self.args.fxstop,
-            fx_step=self.args.fxstep,
-            zeta_start=self.args.zetastart,
-            zeta_stop=self.args.zetastop,
-            zeta_step=self.args.zetastep,
+            fx_start_hz=self.args.fxstart,
+            fx_stop_hz=self.args.fxstop,
+            fx_step_hz=self.args.fxstep,
+            zeta_start_em2=self.args.zetastart,
+            zeta_stop_em2=self.args.zetastop,
+            zeta_step_em2=self.args.zetastep,
             output_file_prefix=self.args.fileprefix,
             output_dir=self.args.directory,
-            do_dry_run=self.args.dryrun).run()
+            do_dry_run=self.args.dryrun)()
 
         if ret == -1:
             self.parser.print_help()
