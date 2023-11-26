@@ -82,7 +82,7 @@ class BlockingDecoder(Callable):
             try:
                 self.dev.start_sampling(self.max_samples)
             except Exception as e:
-                logging.warning(f"start sampling: release resources")
+                logging.warning("start sampling: release resources")
                 if self.dev is not None:
                     self.dev.close()
                 if self.file is not None:
@@ -98,7 +98,7 @@ class BlockingDecoder(Callable):
 
         :return: None
         """
-        logging.debug(f"decoding ...")
+        logging.debug("decoding ...")
 
         try:
             if not self.do_dry_run:
@@ -113,9 +113,9 @@ class BlockingDecoder(Callable):
             else:
                 time.sleep(self.timelapse_s)
 
-            logging.debug(f"decoding ... done")
+            logging.debug("decoding ... done")
         except Exception as e:
-            logging.warning(f"decoding: release resources")
+            logging.warning("decoding: release resources")
             if self.dev is not None:
                 self.dev.close()
             if self.file is not None:

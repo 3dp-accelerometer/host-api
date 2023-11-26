@@ -133,16 +133,16 @@ class Args:
             default=0.0)
         sub_group.add_argument(
             "--dryrun",
-            help=f"Pretends to run but does not invoke either Octoprint nor controller.",
+            help="Pretends to run but does not invoke either Octoprint nor controller.",
             action="store_true")
         sub_group.add_argument(
             "--fileprefix",
-            help=f"Specify prefix of output file (<prefix>-<run>-<timestamp>.tsv)",
+            help="Specify prefix of output file (<prefix>-<run>-<timestamp>.tsv)",
             type=str,
             default="octo-capture")
         sub_group.add_argument(
             "--directory",
-            help=f"Output path.",
+            help="Output path.",
             type=args.path_exists_and_is_dir,
             default="./data/")
 

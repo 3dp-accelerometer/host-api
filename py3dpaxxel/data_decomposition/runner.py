@@ -123,9 +123,9 @@ class DataVisualizerRunner:
                 logging.info(f"processing file {file.filename_ext}... done")
 
             if self.do_plot:
-                logging.info(f"plotting data...")
+                logging.info("plotting data...")
                 plt.show()
-                logging.info(f"plotting data... done")
+                logging.info("plotting data... done")
             else:
                 logging.debug("plotting skipped upon user request")
 

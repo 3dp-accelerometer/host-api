@@ -116,7 +116,7 @@ class Args:
             default=0.0)
         sub_group.add_argument(
             "--dryrun",
-            help=f"Pretends to run but does not invoke either Octoprint nor controller.",
+            help="Pretends to run but does not invoke either Octoprint nor controller.",
             action="store_true")
         mux_grp = sub_group.add_mutually_exclusive_group()
         mux_grp.add_argument(
@@ -125,7 +125,7 @@ class Args:
             action="store_true")
         mux_grp.add_argument(
             "--file",
-            help=f"Specify output file (*.tsv). Leave empty for default filename.",
+            help="Specify output file (*.tsv). Leave empty for default filename.",
             type=str,
             nargs='?',
             const=self.default_filename)
