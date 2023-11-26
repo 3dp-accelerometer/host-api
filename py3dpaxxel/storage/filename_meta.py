@@ -1,10 +1,14 @@
 import re
 from typing import Optional, Literal, Dict, Tuple
 
-from py3dpaxxel.storage.filename import generate_filename_for_run_regex
+from .filename import generate_filename_for_run_regex
 
 
 class FilenameMeta:
+    """
+    Helper for parsing metadata out of file name.
+    """
+
     def __init__(self):
         self.prefix_1: Optional[str] = None
         self.prefix_2: Optional[str] = None
