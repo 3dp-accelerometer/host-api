@@ -4,7 +4,7 @@ import argparse
 import sys
 from typing import Literal, Optional
 
-from py3dpaxxel.cli import filename
+from py3dpaxxel.storage import filename
 from py3dpaxxel.cli.args import convert_uint16_from_str
 from py3dpaxxel.controller.constants import OutputDataRate, Range, Scale
 from py3dpaxxel.controller.runner import ControllerRunner

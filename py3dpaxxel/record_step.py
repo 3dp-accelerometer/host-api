@@ -5,7 +5,7 @@ import sys
 from typing import Optional
 
 from py3dpaxxel.cli import args
-from py3dpaxxel.cli import filename
+from py3dpaxxel.storage import filename
 from py3dpaxxel.controller.constants import OutputDataRate
 from py3dpaxxel.log.setup import configure_logging
 from py3dpaxxel.octoprint.api import OctoApi

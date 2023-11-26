@@ -1,12 +1,12 @@
 import logging
 import os.path
-from typing import List, Union
+from typing import List, Union, Optional
 
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from py3dpaxxel.cli.file_filter import FileSelector
+from py3dpaxxel.storage.file_filter import FileSelector
 from py3dpaxxel.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
 from py3dpaxxel.samples.loader import Samples, SamplesLoader
 
@@ -14,23 +14,23 @@ from py3dpaxxel.samples.loader import Samples, SamplesLoader
 class DataVisualizerRunner:
 
     def __init__(self,
-                 command: Union[str, None],
+                 command: Optional[str],
                  input_filename: str,
-                 algorithm_d1: Union[str, None],
-                 algorithm_d2: Union[str, None],
-                 algorithm_d3: Union[str, None],
+                 algorithm_d1: Optional[str],
+                 algorithm_d2: Optional[str],
+                 algorithm_d3: Optional[str],
                  output_save: bool,
                  output_plot: bool) -> None:
-        self.command: Union[str, None] = command
+        self.command: Optional[str] = command
         self.input_filename: str = input_filename
-        self.algorithm_d1: Union[str, None] = algorithm_d1
-        self.algorithm_d2: Union[str, None] = algorithm_d2
-        self.algorithm_d3: Union[str, None] = algorithm_d3
+        self.algorithm_d1: Optional[str] = algorithm_d1
+        self.algorithm_d2: Optional[str] = algorithm_d2
+        self.algorithm_d3: Optional[str] = algorithm_d3
         self.do_save_to_file: bool = output_save
         self.do_plot: bool = output_plot
 
     @staticmethod
-    def _fft_1d(algorithm: str, samples: Samples, window_title: Union[str, None], save_filename: Union[str, None]):
+    def _fft_1d(algorithm: str, samples: Samples, window_title: Optional[str], save_filename: Optional[str]):
 
         fig_acc: Figure
         axes: List[Axes]
@@ -72,7 +72,7 @@ class DataVisualizerRunner:
         return 0
 
     @staticmethod
-    def _fft_2d(algorithm: str, samples: Samples, _window_title: Union[str, None], _save_filename: Union[str, None]):
+    def _fft_2d(algorithm: str, samples: Samples, _window_title: Optional[str], _save_filename: Optional[str]):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms2D().compute(a, samples)
@@ -80,7 +80,7 @@ class DataVisualizerRunner:
             return FftAlgorithms2D().compute(algorithm, samples)
 
     @staticmethod
-    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: Union[str, None], _save_filename: Union[str, None]):
+    def _trajectory_3d(algorithm: str, samples: Samples, _window_title: Optional[str], _save_filename: Optional[str]):
         if algorithm == "all":
             for a in FftAlgorithms2D().algorithms.keys():
                 return FftAlgorithms3D().compute(a, samples)

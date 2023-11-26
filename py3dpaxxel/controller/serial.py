@@ -8,7 +8,7 @@ class CdcSerial:
     def __init__(self, ser_dev_name: str,
                  read_timeout: float,
                  write_timeout: float) -> None:
-        self.dev: Union[None, Serial] = None
+        self.dev: Optional[Serial] = None
         self.ser_dev_name = ser_dev_name
         self.read_timeout: float = read_timeout
         self.write_timeout: float = write_timeout
