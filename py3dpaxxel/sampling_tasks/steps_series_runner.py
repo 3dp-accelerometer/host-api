@@ -90,7 +90,7 @@ class SamplingStepsSeriesRunner(Callable):
                 output_filename=os.path.join(self.output_dir, r.filename),
                 octoprint_api=self.octoprint_api,
                 gcode_start_point_mm=self.gcode_start_point_mm,
-                gcode_extra_gcode=f"M593 {r.axis.upper()} F{r.frequency_hz} D{round((r.zeta_em2/100.0), 2)}",
+                gcode_extra_gcode=f"M593 {r.axis.upper()} F{r.frequency_hz} D{round((r.zeta_em2 / 100.0), 2)}",
                 gcode_axis=r.axis,
                 gcode_distance_mm=self.gcode_distance_mm,
                 gcode_step_repeat_count=self.gcode_step_repeat_count,

@@ -4,11 +4,11 @@ import argparse
 import sys
 from typing import Literal, Optional
 
-from py3dpaxxel.storage import filename
 from py3dpaxxel.cli.args import convert_uint16_from_str
 from py3dpaxxel.controller.constants import OutputDataRate, Range, Scale
 from py3dpaxxel.controller.runner import ControllerRunner
 from py3dpaxxel.log.setup import configure_logging
+from py3dpaxxel.storage import filename
 
 configure_logging()
 

@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Optional
 
 from py3dpaxxel.controller.constants import OutputDataRateDelay, OutputDataRate, Range, Scale
 
