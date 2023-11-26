@@ -49,7 +49,7 @@ class SamplesLoader:
             reader = csv.DictReader(filter(lambda line: line[0] != self.LINE_COMMENT_CHARACTER, f), delimiter=self.TABULAR_DELIMITER_CHARACTER)
             row: Dict[str, Union[int, float]]
             for row in reader:
-                samples.run.append(int(row["run"]))
+                samples.run.append(int(row["seq"]))
                 index = int(row["sample"])
                 samples.index.append(index)
                 samples.timestamp_ms.append(index * samples.separation_s * 1000)
