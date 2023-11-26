@@ -113,7 +113,6 @@ class BlockingDecoder(Callable):
             else:
                 time.sleep(self.timelapse_s)
 
-            logging.debug("decoding ... done")
         except Exception as e:
             logging.warning("decoding: release resources")
             if self.dev is not None:

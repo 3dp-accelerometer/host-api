@@ -1,14 +1,14 @@
 import logging
 import os.path
-from typing import List, Union, Optional
+from typing import List, Optional
 
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from py3dpaxxel.storage.file_filter import FileSelector
-from py3dpaxxel.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
+from py3dpaxxel.data_decomposition.datavis_algorithms import DataVisFftAlgorithms1D, DataVisFftAlgorithms2D, DataVisFftAlgorithms3D
 from py3dpaxxel.samples.loader import Samples, SamplesLoader
+from py3dpaxxel.storage.file_filter import FileSelector
 
 
 class DataVisualizerRunner:
@@ -34,7 +34,7 @@ class DataVisualizerRunner:
 
         fig_acc: Figure
         axes: List[Axes]
-        num_fft_axes = len(FftAlgorithms1D().algorithms) if algorithm == "all" else 1
+        num_fft_axes = len(DataVisFftAlgorithms1D().algorithms) if algorithm == "all" else 1
         fig_acc, axes = plt.subplots(3 + num_fft_axes, 1)
         fig_acc.suptitle("Acceleration over Time / FFT" + ("\n" + window_title) if window_title else "")
         if window_title:
@@ -59,13 +59,13 @@ class DataVisualizerRunner:
         # fft
         if algorithm == "all":
             fft_ax_nr = 3
-            for a in FftAlgorithms1D().algorithms.keys():
+            for a in DataVisFftAlgorithms1D().algorithms.keys():
                 fftax = axes[fft_ax_nr]
-                FftAlgorithms1D().compute(a, samples, fftax)
+                DataVisFftAlgorithms1D().compute(a, samples, fftax)
                 fft_ax_nr += 1
         else:
             fftax = axes[3]
-            FftAlgorithms1D().compute(algorithm, samples, fftax)
+            DataVisFftAlgorithms1D().compute(algorithm, samples, fftax)
 
         if save_filename:
             fig_acc.savefig(save_filename)
@@ -74,18 +74,18 @@ class DataVisualizerRunner:
     @staticmethod
     def _fft_2d(algorithm: str, samples: Samples, _window_title: Optional[str], _save_filename: Optional[str]):
         if algorithm == "all":
-            for a in FftAlgorithms2D().algorithms.keys():
-                return FftAlgorithms2D().compute(a, samples)
+            for a in DataVisFftAlgorithms2D().algorithms.keys():
+                return DataVisFftAlgorithms2D().compute(a, samples)
         else:
-            return FftAlgorithms2D().compute(algorithm, samples)
+            return DataVisFftAlgorithms2D().compute(algorithm, samples)
 
     @staticmethod
     def _trajectory_3d(algorithm: str, samples: Samples, _window_title: Optional[str], _save_filename: Optional[str]):
         if algorithm == "all":
-            for a in FftAlgorithms2D().algorithms.keys():
-                return FftAlgorithms3D().compute(a, samples)
+            for a in DataVisFftAlgorithms2D().algorithms.keys():
+                return DataVisFftAlgorithms3D().compute(a, samples)
         else:
-            return FftAlgorithms3D().compute(algorithm, samples)
+            return DataVisFftAlgorithms3D().compute(algorithm, samples)
 
     def run(self) -> int:
         if not self.command:
@@ -97,7 +97,7 @@ class DataVisualizerRunner:
             files = fs.filter()
             logging.info(f"selected {len(files)} for plotting from {fs.directory} (filter: {fs.filename})")
             for i in range(0, len(files)):
-                logging.info(f"file {i} {files[i].full_path}")
+                logging.debug(f"file {i} {files[i].full_path}")
 
             for i in range(0, len(files)):
                 file = files[i]
@@ -106,7 +106,7 @@ class DataVisualizerRunner:
 
                 assert (len(samples) % 2) == 0, "found odd number of samples, FFT needs even length of sample"
 
-                logging.debug(f"processing file {i} {file.filename_ext}...")
+                logging.info(f"processing input file {i} {file.filename_ext}...")
                 window_title = file.filename_no_ext
                 out_filename = os.path.join(file.directory, file.filename_no_ext) if self.do_save_to_file else None
                 if out_filename:
@@ -120,12 +120,10 @@ class DataVisualizerRunner:
                     self._trajectory_3d(self.algorithm_d3, samples, window_title, out_filename)
                 else:
                     logging.info("nothing to do")
-                logging.info(f"processing file {file.filename_ext}... done")
 
             if self.do_plot:
                 logging.info("plotting data...")
                 plt.show()
-                logging.info("plotting data... done")
             else:
                 logging.debug("plotting skipped upon user request")
 

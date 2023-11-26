@@ -4,8 +4,8 @@ import argparse
 import sys
 from typing import Optional
 
-from py3dpaxxel.data_decomposition.datavis_algorithms import FftAlgorithms1D, FftAlgorithms2D, FftAlgorithms3D
-from py3dpaxxel.data_decomposition.runner import DataVisualizerRunner
+from py3dpaxxel.data_decomposition.datavis_algorithms import DataVisFftAlgorithms1D, DataVisFftAlgorithms2D, DataVisFftAlgorithms3D
+from py3dpaxxel.data_decomposition.datavis_runner import DataVisualizerRunner
 from py3dpaxxel.log.setup import configure_logging
 
 configure_logging()
@@ -22,7 +22,7 @@ class Args:
         sub_parsers = self.parser.add_subparsers(
             dest='command',
             title="command (required)",
-            description="Run command with the loaded configuration.")
+            description="Run specified sub-command.")
 
         sup = sub_parsers.add_parser(
             "algo",
@@ -34,22 +34,22 @@ class Args:
             help="Performs FFT 1D algorithms: discrete 1D, discrete 1D with Blackman window or both.",
             type=str,
             nargs='?',
-            choices=["all"] + [k for k in FftAlgorithms1D().algorithms.keys()],
-            const=[k for k in FftAlgorithms1D().algorithms.keys()][0])
+            choices=["all"] + [k for k in DataVisFftAlgorithms1D().algorithms.keys()],
+            const=[k for k in DataVisFftAlgorithms1D().algorithms.keys()][0])
         grp.add_argument(
             "-2", "--d2",
             help="FFT 2D algorithms: no algorithm implemented yet (TODO)",
             type=str,
             nargs='?',
-            choices=["all"] + [k for k in FftAlgorithms2D().algorithms.keys()],
-            const=[k for k in FftAlgorithms2D().algorithms.keys()][0])
+            choices=["all"] + [k for k in DataVisFftAlgorithms2D().algorithms.keys()],
+            const=[k for k in DataVisFftAlgorithms2D().algorithms.keys()][0])
         grp.add_argument(
             "-3", "--d3",
             help="FFT 3D algorithms: compute trajectory from acceleration. Requires offset, gain and orientation calibration.",
             type=str,
             nargs='?',
-            choices=["all"] + [k for k in FftAlgorithms3D().algorithms.keys()],
-            const=[k for k in FftAlgorithms3D().algorithms.keys()][0])
+            choices=["all"] + [k for k in DataVisFftAlgorithms3D().algorithms.keys()],
+            const=[k for k in DataVisFftAlgorithms3D().algorithms.keys()][0])
 
         sub_group = self.parser.add_argument_group(
             "Flags",
