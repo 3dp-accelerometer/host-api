@@ -8,19 +8,20 @@ class RunArgs:
     Invocation arguments for the one recording step.
     """
 
-    def __init__(self, sequence: int, axis: Literal["x", "y", "z"], frequency: int, zeta: int, file_prefix: str) -> None:
+    def __init__(self, sequence: int, axis: Literal["x", "y", "z"], frequency: int, zeta: int, file_prefix_1: str, file_prefix_2: str) -> None:
         self.sequence: int = sequence
         self.axis: Literal["x", "y", "z"] = axis
         self.frequency: int = frequency
         self.zeta: int = zeta
-        self.file_prefix: str = file_prefix
+        self.file_prefix_1: str = file_prefix_1
+        self.file_prefix_2: str = file_prefix_2
 
     @property
     def filename(self):
-        return fn_generator.generate_filename_for_run(self.file_prefix, self.sequence, self.axis, self.frequency, self.zeta)
+        return fn_generator.generate_filename_for_run(self.file_prefix_1, self.file_prefix_2, self.sequence, self.axis, self.frequency, self.zeta)
 
     def __str__(self):
-        return f"sequence={self.sequence:03} ax={self.axis} fx={self.frequency:03} zeta={self.zeta:03} fn={self.filename}"
+        return f"prefix_1={self.file_prefix_1} prefix_2={self.file_prefix_2} sequence={self.sequence:03} ax={self.axis} fx={self.frequency:03} zeta={self.zeta:03} fn={self.filename}"
 
 
 class RunArgsGenerator:
@@ -37,7 +38,8 @@ class RunArgsGenerator:
                  zeta_stop: int,
                  zeta_step: int,
                  axis: List[Literal["x", "y", "z"]],
-                 out_file_prefix: str) -> None:
+                 out_file_prefix: str,
+                 out_file_prefix_2: str) -> None:
         """
 
         :param sequence_repeat_count: how often to repeat `Steps`
@@ -49,6 +51,7 @@ class RunArgsGenerator:
         :param zeta_step: Zeta range
         :param axis: list of x,y,z
         :param out_file_prefix: see :class:`py3dpaxxel.cli.filename.generate_filename_for_run`
+        :param out_file_prefix_2: see :class:`py3dpaxxel.cli.filename.generate_filename_for_run`
         """
         self.sequence_repeat_count: int = sequence_repeat_count
         self.fx_start: int = fx_start
@@ -58,7 +61,8 @@ class RunArgsGenerator:
         self.zeta_stop: int = zeta_stop
         self.zeta_step: int = zeta_step
         self.axis: List[Literal["x", "y", "z"]] = axis
-        self.out_file_prefix: str = out_file_prefix
+        self.out_file_prefix_1: str = out_file_prefix
+        self.out_file_prefix_2: str = out_file_prefix_2
 
     def generate(self) -> List[RunArgs]:
         """
@@ -76,5 +80,5 @@ class RunArgsGenerator:
             for fx in range(self.fx_start, self.fx_stop + 1, self.fx_step):
                 for zeta in range(self.zeta_start, self.zeta_stop + 1, self.zeta_step):
                     for sequence in range(0, self.sequence_repeat_count):
-                        steps.append(RunArgs(sequence, ax, fx, zeta, self.out_file_prefix))
+                        steps.append(RunArgs(sequence, ax, fx, zeta, self.out_file_prefix_1, self.out_file_prefix_2))
         return steps

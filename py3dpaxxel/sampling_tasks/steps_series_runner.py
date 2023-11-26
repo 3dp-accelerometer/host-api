@@ -56,8 +56,6 @@ class SamplingStepsSeriesRunner(Callable):
         self.do_abort_flag: threading.Event = do_abort_flag
 
     def __call__(self) -> int:
-        # each run shall have a pseudo UUID appended to prefix
-        file_prefix: str = f"{self.output_file_prefix}-{uuid.uuid1().time_low:x}"
         generator = RunArgsGenerator(
             sequence_repeat_count=self.gcode_sequence_repeat_count,
             fx_start=self.fx_start,
@@ -67,7 +65,9 @@ class SamplingStepsSeriesRunner(Callable):
             zeta_stop=self.zeta_stop,
             zeta_step=self.zeta_step,
             axis=self.gcode_axis,
-            out_file_prefix=file_prefix)
+            out_file_prefix=self.output_file_prefix,
+            out_file_prefix_2=f"{uuid.uuid1().time_low:x}"  # each run shall have a pseudo UUID appended to prefix_1
+        )
 
         runs: List[RunArgs] = generator.generate()
         logging.info(f"planned runs={len(runs)}")
