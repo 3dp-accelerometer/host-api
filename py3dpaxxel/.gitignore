@@ -2,7 +2,8 @@
 *.tsv
 test_data/*
 !test_data/.keep
-!test_data/example.tsv
+!test_data/test-stream.tsv
+!test_data/test-a81829a6-*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
