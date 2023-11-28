@@ -33,3 +33,9 @@ class Samples:
 
     def is_empty(self) -> bool:
         return 0 == len(self.timestamp_ms)
+
+    def has_meta(self) -> bool:
+        return (self.separation_s is not None
+                and self.rate is not None
+                and self.range is not None
+                and self.scale is not None)

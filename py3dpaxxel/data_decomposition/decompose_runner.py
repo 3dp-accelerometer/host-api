@@ -65,8 +65,8 @@ class DataDecomposeRunner(Callable[[], Tuple[int, int, int, int]]):
             fs = (FileSelector(os.path.join(self.input_dir, self.input_file_prefix) + "*"))
             in_files = fs.filter()
             logging.info(f"selected {len(in_files)} for FFT from {fs.directory} (filter: {fs.filename})")
-            for i in range(0, len(in_files)):
-                logging.debug(f"file {i} {in_files[i].full_path}")
+            # for i in range(0, len(in_files)):
+            #     logging.debug(f"file {i} {in_files[i].full_path}")
 
             for i in range(0, len(in_files)):
                 in_file = in_files[i]
@@ -74,9 +74,13 @@ class DataDecomposeRunner(Callable[[], Tuple[int, int, int, int]]):
                 samples = loader.load()
                 total += 1
 
+                if not samples.has_meta():
+                    skipped += 1
+                    continue
+
                 if samples.is_empty():
                     skipped += 1
-                    logging.warning(f"skip empty  input file {i} {in_file.filename_ext}")
+                    logging.warning(f"skip empty stream: file nr={i} file={in_file.filename_ext}")
                     continue
 
                 assert (len(samples) % 2) == 0, "found odd number of samples, FFT needs even length of sample"
