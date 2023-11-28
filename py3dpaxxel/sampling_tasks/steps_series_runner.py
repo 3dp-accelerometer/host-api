@@ -11,7 +11,7 @@ from py3dpaxxel.sampling_tasks.series_argument_generator import RunArgsGenerator
 from py3dpaxxel.sampling_tasks.steps_runner import SamplingStepsRunner
 
 
-class SamplingStepsSeriesRunner(Callable):
+class SamplingStepsSeriesRunner(Callable[[], int]):
 
     def __init__(self,
                  octoprint_api: OctoApi,

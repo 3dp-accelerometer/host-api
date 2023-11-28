@@ -1,7 +1,7 @@
 from typing import List, Callable
 
 
-class ExceptionTaskWrapper(Callable):
+class ExceptionTaskWrapper(Callable[[], None]):
     """
     Wrapper to store task exception that is run within its own a threading.Thread context.
     This allows the parent thread to check whether the child has raised exceptions.

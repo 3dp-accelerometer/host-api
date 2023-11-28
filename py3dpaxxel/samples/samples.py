@@ -30,3 +30,6 @@ class Samples:
 
     def __len__(self):
         return len(self.index)
+
+    def is_empty(self) -> bool:
+        return 0 == len(self.timestamp_ms)

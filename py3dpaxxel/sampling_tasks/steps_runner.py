@@ -13,7 +13,7 @@ from py3dpaxxel.sampling_tasks.exception_task_wrapper import ExceptionTaskWrappe
 configure_logging()
 
 
-class SamplingStepsRunner(Callable):
+class SamplingStepsRunner(Callable[[], int]):
     def __init__(self,
                  input_serial_device: str,
                  intput_sensor_odr: OutputDataRate,

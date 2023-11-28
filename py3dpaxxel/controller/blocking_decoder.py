@@ -8,7 +8,7 @@ from .api import (Py3dpAxxel)
 from .constants import OutputDataRate, OutputDataRateDelay
 
 
-class BlockingDecoder(Callable):
+class BlockingDecoder(Callable[[], None]):
     """
     A blocking decoder implementation.
 

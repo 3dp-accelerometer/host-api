@@ -1,7 +1,13 @@
 import re
+from enum import Enum
 from typing import Optional, Literal, Dict, Tuple
 
-from .filename import generate_filename_for_run_regex
+from .filename import generate_filename_for_run_regex, generate_filename_for_fft_regex
+
+
+class FileContent(Enum):
+    FFT = "fft"
+    STREAM = "stream"
 
 
 class FilenameMeta:
@@ -24,12 +30,14 @@ class FilenameMeta:
         self.sequence_frequency_hz: Optional[int] = None
         self.sequence_zeta_em2: Optional[int] = None
         self.file_extension: Optional[str] = None
+        self.fft_axis: Optional[str] = None
 
-    def from_filename(self, filename: str, has_prefix_1: bool = True, has_prefix_2: bool = True) -> "FilenameMeta":
+    def from_filename(self, filename: str, file_content: FileContent = FileContent.STREAM, has_prefix_1: bool = True, has_prefix_2: bool = True) -> "FilenameMeta":
         """
         Matches file name pattern and interprets data contained in name.
 
-        :param filename: input string, i.e. "foo-bar-20231110-182030456-s100-ax-f200-z300.tsv"
+        :param filename: input string, i.e. "axxel-0815-20231110-182030456-s100-ax-f200-z300.tsv", "fft-0815-20231110-182030456-s100-ax-f200-z300-z.tsv", ...
+        :param file_content: sampled stream or decomposed FFT file
         :param has_prefix_1: whether prefix 1 is contained ("foo")
         :param has_prefix_2: whether prefix 2 is contained too ("bar")
         :return: self
@@ -50,8 +58,12 @@ class FilenameMeta:
                 "sequence_axis": (11, str),
                 "sequence_frequency_hz": (12, int),
                 "sequence_zeta_em2": (13, int),
-                "file_extension": (14, str),
             }
+            if file_content == FileContent.FFT:
+                re_group_mapping["fft_axis"] = (14, str)
+                re_group_mapping["file_extension"] = (15, str)
+            else:
+                re_group_mapping["file_extension"] = (14, str)
         elif has_prefix_1:
             re_group_mapping: Dict[str, Tuple[int, type]] = {
                 "prefix_1": (1, str),
@@ -66,8 +78,12 @@ class FilenameMeta:
                 "sequence_axis": (10, str),
                 "sequence_frequency_hz": (11, int),
                 "sequence_zeta_em2": (12, int),
-                "file_extension": (13, str),
             }
+            if file_content == FileContent.FFT:
+                re_group_mapping["fft_axis"] = (13, str)
+                re_group_mapping["file_extension"] = (14, str)
+            else:
+                re_group_mapping["file_extension"] = (13, str)
         else:
             re_group_mapping: Dict[str, Tuple[int, type]] = {
                 "year": (1, int),
@@ -83,8 +99,15 @@ class FilenameMeta:
                 "sequence_zeta_em2": (11, int),
                 "file_extension": (12, str),
             }
+            if file_content == FileContent.FFT:
+                re_group_mapping["fft_axis"] = (12, str)
+                re_group_mapping["file_extension"] = (13, str)
+            else:
+                re_group_mapping["file_extension"] = (12, str)
 
-        regexp = re.compile(generate_filename_for_run_regex(with_prefix_1=has_prefix_1, with_prefix_2=has_prefix_2))
+        regex_str = generate_filename_for_run_regex(with_prefix_1=has_prefix_1, with_prefix_2=has_prefix_2) if file_content is FileContent.STREAM else generate_filename_for_fft_regex(
+            with_prefix_1=has_prefix_1, with_prefix_2=has_prefix_2)
+        regexp = re.compile(regex_str)
         match = regexp.match(filename)
         assert len(match.groups()) == len(re_group_mapping.items())
 

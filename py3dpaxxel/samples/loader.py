@@ -1,4 +1,5 @@
 import csv
+import logging
 import re
 from typing import Dict, Union
 
@@ -19,8 +20,9 @@ class SamplesLoader:
     def __init__(self, in_filename: str) -> None:
         self.filename = in_filename
 
-    def _try_read_metadata_if_any(self, samples: Samples):
+    def _try_read_metadata_if_any(self, samples: Samples) -> bool:
         # read metadata (if any): ODR, rate, scale
+        found_meta = False
         with open(self.filename, "r") as f:
             for line in reversed(f.readlines()):
                 if line[0] == "#":
@@ -29,7 +31,9 @@ class SamplesLoader:
                     samples.range = Range[sampling_args["range"]]
                     samples.scale = Scale[sampling_args["scale"]]
                     samples.separation_s = OutputDataRateDelay[samples.rate]
+                    found_meta = True
                     break
+        return found_meta
 
     def load(self) -> Samples:
         """
@@ -42,7 +46,9 @@ class SamplesLoader:
         :return: Samples
         """
         samples = Samples()
-        self._try_read_metadata_if_any(samples)
+        if not self._try_read_metadata_if_any(samples):
+            logging.warning(f"failed to read meta data: skipping file {self.filename}")
+            return samples
 
         # read samples: requires pre-loaded metadata for timestamp reconstruction
         with open(self.filename, "r") as f:

@@ -192,7 +192,7 @@ class Py3dpAxxel(CdcSerial):
 
                     if isinstance(package, RxFifoOverflow):
                         e = ErrorFifoOverflow()
-                        logging.fatal("rx: {str(e)}")
+                        logging.fatal(f"rx: {str(e)}")
                         raise e
 
                     if isinstance(package, RxSamplingStarted):

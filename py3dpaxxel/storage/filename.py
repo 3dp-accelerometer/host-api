@@ -32,3 +32,9 @@ def generate_filename_for_run_regex(with_prefix_1: bool = True, with_prefix_2: b
     pre_1_regex = r"(\w+)-" if with_prefix_1 else ""
     pre_2_regex = r"(\w+)-" if with_prefix_2 else ""
     return pre_1_regex + pre_2_regex + _timestamp_regex() + r"-s(\d{3})-a(\w{1})-f(\d{3})-z(\d{3}).(\w+)"
+
+
+def generate_filename_for_fft_regex(with_prefix_1: bool = True, with_prefix_2: bool = False) -> str:
+    pre_1_regex = r"(\w+)-" if with_prefix_1 else ""
+    pre_2_regex = r"(\w+)-" if with_prefix_2 else ""
+    return pre_1_regex + pre_2_regex + _timestamp_regex() + r"-s(\d{3})-a(\w{1})-f(\d{3})-z(\d{3})-([xyz]).(\w+)"
