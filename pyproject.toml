@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "py3dpaxxel"
-version = "0.1.9"
+version = "0.1.10"
 description = "Python API for interacting with the 3DP Accelerometer controller and sensor data visualization."
 license = "Apache-2.0"
 authors = ["Raoul Rubien <rubienr@sbox.tugraz.at>"]
@@ -73,7 +73,7 @@ build-backend = "poetry.core.masonry.api"
 # reqired by [tool.sphinx-pyproject]
 [project]
 name = "py3dpaxxel"
-version = "0.1.9"
+version = "0.1.10"
 description = "Python API for interacting with the 3DP Accelerometer controller and sensor data visualization."
 readme = "readme.md"
 keywords = ["3d printing", "accelerometer", "adxl345", "stm32", "marlin", "octoprint"]
