@@ -10,7 +10,7 @@ from py3dpaxxel.log.setup import configure_logging
 from py3dpaxxel.octoprint.api import OctoApi
 from py3dpaxxel.octoprint.remote_api import OctoRemoteApi
 from py3dpaxxel.sampling_tasks.steps_runner import SamplingStepsRunner
-from py3dpaxxel.storage import filename
+from py3dpaxxel.storage.filename import generate_filename
 
 configure_logging()
 
@@ -20,10 +20,6 @@ def args_for_sphinx():
 
 
 class Args:
-
-    @staticmethod
-    def default_filename() -> str:
-        return filename.generate_filename(prefix="op-capture")
 
     def __init__(self) -> None:
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(
@@ -128,7 +124,7 @@ class Args:
             help="Specify output file (*.tsv). Leave empty for default filename.",
             type=str,
             nargs='?',
-            const=self.default_filename)
+            const=generate_filename)
 
         self.args: Optional[argparse.Namespace] = None
 

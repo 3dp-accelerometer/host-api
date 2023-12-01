@@ -65,8 +65,8 @@ class SamplingStepsSeriesRunner(Callable[[], int]):
             zeta_stop_em2=self.zeta_stop_em2,
             zeta_step_em2=self.zeta_step_em2,
             axis=self.gcode_axis,
-            out_file_prefix=self.output_file_prefix,
-            out_file_prefix_2=f"{uuid.uuid1().time_low:x}"  # each run shall have a pseudo UUID appended to prefix_1
+            out_file_prefix_1=self.output_file_prefix,
+            out_file_prefix_2=f"{uuid.uuid1().time_low:x}",  # each run shall have a pseudo UUID appended to prefix_1
         )
 
         runs: List[RunArgs] = generator.generate()
