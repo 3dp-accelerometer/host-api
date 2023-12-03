@@ -4,12 +4,20 @@ from .constants import TransportHeaderId, OutputDataRate, Scale, Range
 
 
 class Frame:
+    """
+    TxFrame base class.
+    """
+
     def __init__(self, header_id: TransportHeaderId, payload: bytearray) -> None:
         self.header_id: TransportHeaderId = header_id
         self.payload: bytearray = payload
 
 
 class TxFrame(Frame):
+    """
+    Request base class.
+    """
+
     def __init__(self, header_id: TransportHeaderId, payload: bytearray = bytearray()) -> None:
         super().__init__(header_id, payload)
 
@@ -24,52 +32,92 @@ class TxFrame(Frame):
 
 
 class TxSetOutputDataRate(TxFrame):
+    """
+    Request package to configure the device ODR.
+    """
+
     def __init__(self, odr: OutputDataRate) -> None:
         super().__init__(TransportHeaderId.TX_SET_OUTPUT_DATA_RATE, bytearray([int(odr.value)]))
 
 
 class TxGetOutputDataRate(TxFrame):
+    """
+    Request package to receive the current device ODR.
+    """
+
     def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_GET_OUTPUT_DATA_RATE)
 
 
 class TxSetRange(TxFrame):
+    """
+    Request package to configure the device range (min/max g).
+    """
+
     def __init__(self, data_range: Range) -> None:
         super().__init__(TransportHeaderId.TX_SET_RANGE, bytearray([int(data_range.value)]))
 
 
 class TxGetRange(TxFrame):
+    """
+    Request package to receive the device range (min/max g).
+    """
+
     def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_GET_RANGE)
 
 
 class TxSetScale(TxFrame):
+    """
+    Request package to configure the device scale (g scale of LSB).
+    """
+
     def __init__(self, scale: Scale) -> None:
         super().__init__(TransportHeaderId.TX_SET_SCALE, bytearray([int(scale.value)]))
 
 
 class TxGetScale(TxFrame):
+    """
+    Request package to receive the device scale (g scale of LSB).
+    """
+
     def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_GET_SCALE)
 
 
 class TxReboot(TxFrame):
+    """
+    Request package to perform a device reboot.
+    """
+
     def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_DEVICE_REBOOT)
 
 
 class TxSamplingStart(TxFrame):
+    """
+    Request package to start sampling stream.
+    """
+
     def __init__(self, num_samples: int = 0) -> None:
         payload = [num_samples & 0x00ff, (num_samples & 0xff00) >> 8]
         super().__init__(TransportHeaderId.TX_SAMPLING_START, bytearray(payload))
 
 
 class TxSamplingStop(TxFrame):
+    """
+    Request package to stop a running stream.
+    """
+
     def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_SAMPLING_STOP)
 
 
 class RxFrame:
+    """
+    Response base class.
+    """
+
     LEN = 0
 
     def consume_all(self, payload: bytearray):
@@ -78,6 +126,10 @@ class RxFrame:
 
 
 class RxOutputDataRate(RxFrame):
+    """
+    Response from controller transporting the currently used ODR.
+    """
+
     LEN = 2
 
     def __init__(self, payload: bytearray) -> None:
@@ -89,6 +141,10 @@ class RxOutputDataRate(RxFrame):
 
 
 class RxRange(RxFrame):
+    """
+    Response from controller transporting the currently used range (min/max g).
+    """
+
     LEN = 2
 
     def __init__(self, payload: bytearray) -> None:
@@ -100,6 +156,10 @@ class RxRange(RxFrame):
 
 
 class RxScale(RxFrame):
+    """
+    Response from controller transporting the currently used scale (g scale of MSB).
+    """
+
     LEN = 2
 
     def __init__(self, payload: bytearray) -> None:
@@ -111,6 +171,11 @@ class RxScale(RxFrame):
 
 
 class RxDeviceSetup(RxFrame):
+    """
+    Response from controller transporting the currently used configuration: ODR, Range and Scale.
+    This package is received at the end of stream.
+    """
+
     LEN = 2
     REPR_FILTER_REGEX: str = '^Device Setup.*({.*})$'
 
@@ -123,10 +188,14 @@ class RxDeviceSetup(RxFrame):
         self.consume_all(payload)
 
     def __str__(self) -> str:
-        return f'Device Setup {{"rate":"{self.outputDataRate.name}", "range\":"{self.range.name}", "scale":"{self.scale.name}"}}'
+        return f'Device Setup {{"rate":"{self.outputDataRate.name}", "range":"{self.range.name}", "scale":"{self.scale.name}"}}'
 
 
 class RxFifoOverflow(RxFrame):
+    """
+    Response from controller indicating that the acceleration sensor's Fifo could not be consumed/read in time, thus an overrun occurred.
+    """
+
     LEN = 1
 
     def __init__(self, payload: bytearray) -> None:
@@ -137,6 +206,11 @@ class RxFifoOverflow(RxFrame):
 
 
 class RxSamplingStarted(RxFrame):
+    """
+    Response from controller indicating that sampling has been started just before this response was issued.
+    This package is received at the start of stream.
+    """
+
     LEN = 3
 
     def __init__(self, payload: bytearray) -> None:
@@ -148,6 +222,10 @@ class RxSamplingStarted(RxFrame):
 
 
 class RxSamplingStopped(RxFrame):
+    """
+    Response from controller indicating that the sampling has been stopped (for whatever reason).
+    """
+
     LEN = 1
 
     def __init__(self, payload: bytearray) -> None:
@@ -158,6 +236,15 @@ class RxSamplingStopped(RxFrame):
 
 
 class RxSamplingFinished(RxFrame):
+    """
+    Response from controller indicating that sampling has been finished successfully.
+    This package is received at the end of stream.
+    When this response is received, the sampling stream has been successfully transferred:
+
+    - stream is complete and
+    - without HW errors.
+    """
+
     LEN = 1
 
     def __init__(self, payload: bytearray) -> None:
@@ -168,6 +255,10 @@ class RxSamplingFinished(RxFrame):
 
 
 class RxSamplingAborted(RxFrame):
+    """
+    Response from controller indicating that the sampling has been aborted (for whatever reason: HW error, user interaction, ...).
+    """
+
     LEN = 1
 
     def __init__(self, payload: bytearray) -> None:
@@ -178,6 +269,10 @@ class RxSamplingAborted(RxFrame):
 
 
 class RxUnknownResponse:
+    """
+    Response is issued whenever a controller message could not be parsed successfully.
+    """
+
     def __init__(self, unknown_header_id: int) -> None:
         self.unknown_header_id: int = unknown_header_id
 
@@ -186,6 +281,14 @@ class RxUnknownResponse:
 
 
 class RxAcceleration(RxFrame):
+    """
+    Response from controller transporting the currently measured acceleration data.
+    It contains
+
+    - the sample counter (which shall always be +1 larger than previous counter) and
+    - the scaled acceleration data (controller must be in :class:`py3dpaxxel.controller.constant.Scale.FULL_RES_4MG_LSB` scale mode)
+    """
+
     LEN = 9
     FULL_RESOLUTION_LSB_SCALE = 3.9  # (min, typ, max) = (3.5, 3.9, 4.3), ADXL 345 Datasheet, rev. G, Tale 1., parameter SENSITIVITY
 
@@ -201,6 +304,10 @@ class RxAcceleration(RxFrame):
 
 
 class RxFrameFromHeaderId:
+    """
+    Parse response from bytes.
+    """
+
     MAPPING: Dict[TransportHeaderId, Type[Union[RxOutputDataRate, RxRange, RxScale, RxSamplingStarted, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted, RxUnknownResponse]]] = {
         TransportHeaderId.RX_OUTPUT_DATA_RATE: RxOutputDataRate,
         TransportHeaderId.RX_RANGE: RxRange,
