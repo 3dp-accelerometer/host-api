@@ -1,6 +1,7 @@
 import re
 from typing import Optional, Literal, Dict, Tuple
 
+from .filename import timestamp_from_args
 from .filename_fft import generate_filename_for_fft_regex, generate_filename_for_fft
 from .filename_stream import generate_filename_for_run_regex, generate_filename_for_run
 
@@ -150,7 +151,7 @@ class FilenameMetaStream(FilenameMeta):
         self.__delattr__("fft_axis")
         return self
 
-    def to_filename(self) -> str:
+    def to_filename(self, with_current_timestamp: bool = True) -> str:
         return generate_filename_for_run(
             prefix_1=self.prefix_1,
             prefix_2=self.prefix_2,
@@ -159,7 +160,15 @@ class FilenameMetaStream(FilenameMeta):
             axis=self.sequence_axis,
             frequency=self.sequence_frequency_hz,
             zeta=self.sequence_zeta_em2,
-            ext=self.file_extension)
+            ext=self.file_extension,
+            force_timestamp=None if with_current_timestamp else timestamp_from_args(
+                self.year,
+                self.month,
+                self.day,
+                self.hour,
+                self.minute,
+                self.second,
+                self.milli_second))
 
     def __str__(self) -> str:
         return self.to_filename()
@@ -207,7 +216,7 @@ class FilenameMetaFft(FilenameMeta):
         self.from_filename_meta(from_obj)
         return self
 
-    def to_filename(self) -> str:
+    def to_filename(self, with_current_timestamp: bool = True) -> str:
         return generate_filename_for_fft(
             prefix_1=self.prefix_1,
             prefix_2=self.prefix_2,
@@ -217,7 +226,15 @@ class FilenameMetaFft(FilenameMeta):
             frequency=self.sequence_frequency_hz,
             zeta=self.sequence_zeta_em2,
             fft_axis=self.fft_axis,
-            ext=self.file_extension)
+            ext=self.file_extension,
+            force_timestamp=None if with_current_timestamp else timestamp_from_args(
+                self.year,
+                self.month,
+                self.day,
+                self.hour,
+                self.minute,
+                self.second,
+                self.milli_second))
 
     def __str__(self) -> str:
         return self.to_filename()

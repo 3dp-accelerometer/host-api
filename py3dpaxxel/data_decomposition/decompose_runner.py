@@ -42,7 +42,7 @@ class DataDecomposeRunner(Callable[[], Tuple[int, int, int, int]]):
         for ax in ["x", "y", "z"]:
             total += 1
             out_file_meta.fft_axis = ax
-            out_file_full_path = os.path.join(out_dir, out_file_meta.to_filename())
+            out_file_full_path = os.path.join(out_dir, out_file_meta.to_filename(with_current_timestamp=False))
             if not overwrite_existing_file and os.path.isfile(out_file_full_path):
                 skipped += 1
                 continue
@@ -70,8 +70,6 @@ class DataDecomposeRunner(Callable[[], Tuple[int, int, int, int]]):
             fs = (FileSelector(os.path.join(self.input_dir, self.input_file_prefix) + "*"))
             in_files = fs.filter()
             logging.info(f"selected {len(in_files)} for FFT from {fs.directory} (filter: {fs.filename})")
-            # for i in range(0, len(in_files)):
-            #     logging.debug(f"file {i} {in_files[i].full_path}")
 
             for i in range(0, len(in_files)):
                 in_file = in_files[i]
@@ -96,7 +94,7 @@ class DataDecomposeRunner(Callable[[], Tuple[int, int, int, int]]):
                     fft_total, fft_processed, fft_skipped = self._fft_1d(self.algorithm_d1,
                                                                          samples,
                                                                          in_file_meta,
-                                                                         in_file.full_path,
+                                                                         in_file.directory,
                                                                          self.output_overwrite)
                     skipped += 1 if fft_skipped > 0 else 0
                     processed += 1 if fft_processed == fft_total else 0

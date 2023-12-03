@@ -8,6 +8,10 @@ def timestamp() -> str:
     return datetime.now().strftime(filename_timestamp_pattern)[:-3]
 
 
+def timestamp_from_args(year: int, month: int, day: int, hour: int, minute: int, second: int, milli_second: int) -> str:
+    return f"{year:04}{month:02}{day:02}-{hour:02}{minute:02}{second:02}{milli_second:03}"
+
+
 def timestamp_regex() -> str:
     return r"(\d{4})(\d{2})(\d{2})-(\d{2})(\d{2})(\d{2})(\d{3})"
 
