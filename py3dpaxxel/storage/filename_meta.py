@@ -1,4 +1,5 @@
 import re
+from dataclasses import dataclass
 from typing import Optional, Literal, Dict, Tuple
 
 from .filename import timestamp_from_args
@@ -6,26 +7,26 @@ from .filename_fft import generate_filename_for_fft_regex, generate_filename_for
 from .filename_stream import generate_filename_for_run_regex, generate_filename_for_run
 
 
+@dataclass
 class FilenameMeta:
     """
     Helper for parsing metadata from file name.
     """
 
-    def __init__(self):
-        self.prefix_1: Optional[str] = None
-        self.prefix_2: Optional[str] = None
-        self.prefix_3: Optional[str] = None
-        self.year: Optional[int] = None
-        self.month: Optional[int] = None
-        self.day: Optional[int] = None
-        self.hour: Optional[int] = None
-        self.minute: Optional[int] = None
-        self.second: Optional[int] = None
-        self.milli_second: Optional[int] = None
-        self.sequence_nr: Optional[int] = None
-        self.sequence_axis: Optional[Literal["x", "y", "z"]] = None
-        self.sequence_frequency_hz: Optional[int] = None
-        self.sequence_zeta_em2: Optional[int] = None
+    prefix: Optional[str] = None
+    prefix_2: Optional[str] = None
+    prefix_3: Optional[str] = None
+    year: Optional[int] = None
+    month: Optional[int] = None
+    day: Optional[int] = None
+    hour: Optional[int] = None
+    minute: Optional[int] = None
+    second: Optional[int] = None
+    milli_second: Optional[int] = None
+    sequence_nr: Optional[int] = None
+    sequence_axis: Optional[Literal["x", "y", "z"]] = None
+    sequence_frequency_hz: Optional[int] = None
+    sequence_zeta_em2: Optional[int] = None
 
     def from_filename_meta(self, from_obj: "FilenameMeta") -> "FilenameMeta":
         for k, v in vars(from_obj).items():
@@ -111,14 +112,13 @@ class FilenameMeta:
         return self
 
 
+@dataclass
 class FilenameMetaStream(FilenameMeta):
     """
     Helper for parsing metadata from stream file name.
     """
 
-    def __init__(self):
-        super().__init__()
-        self.file_extension: Optional[str] = None
+    file_extension: Optional[str] = None
 
     def from_filename(self,
                       filename: str,
@@ -170,19 +170,15 @@ class FilenameMetaStream(FilenameMeta):
                 self.second,
                 self.milli_second))
 
-    def __str__(self) -> str:
-        return self.to_filename()
 
-
+@dataclass
 class FilenameMetaFft(FilenameMeta):
     """
     Helper for parsing metadata from FFT file name.
     """
 
-    def __init__(self):
-        super().__init__()
-        self.fft_axis: Optional[str] = None
-        self.file_extension: Optional[str] = None
+    fft_axis: Optional[str] = None
+    file_extension: Optional[str] = None
 
     def from_filename(self,
                       filename: str,
@@ -235,6 +231,3 @@ class FilenameMetaFft(FilenameMeta):
                 self.minute,
                 self.second,
                 self.milli_second))
-
-    def __str__(self) -> str:
-        return self.to_filename()
