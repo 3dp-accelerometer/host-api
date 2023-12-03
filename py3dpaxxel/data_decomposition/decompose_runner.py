@@ -31,9 +31,10 @@ class DataDecomposeRunner(Callable[[], Tuple[int, int, int, int]]):
                 samples: Samples,
                 in_file_meta: FilenameMetaStream,
                 out_dir: str,
+                out_file_prefix: str,
                 overwrite_existing_file: bool) -> Tuple[int, int, int]:
         out_file_meta = FilenameMetaFft().from_filename_meta_stream(in_file_meta)
-        out_file_meta.prefix_1 = "fft"
+        out_file_meta.prefix = out_file_prefix
         fft_xyz: FftXYZ = DecomposeFftAlgorithms1D().compute(algorithm, samples)
         total = 0
         processed = 0
@@ -95,6 +96,7 @@ class DataDecomposeRunner(Callable[[], Tuple[int, int, int, int]]):
                                                                          samples,
                                                                          in_file_meta,
                                                                          in_file.directory,
+                                                                         self.output_file_prefix,
                                                                          self.output_overwrite)
                     skipped += 1 if fft_skipped > 0 else 0
                     processed += 1 if fft_processed == fft_total else 0
