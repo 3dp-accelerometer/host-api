@@ -211,7 +211,7 @@ class Py3dpAxxel(CdcSerial):
 
                     if isinstance(package, RxDeviceSetup):
                         parameters = eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))
-                        out_file.write("# " + str(parameters) + "\n") if out_file is not None else logging.info("rx: Device Setup: " + str(parameters))
+                        out_file.write("# " + str(parameters).replace("'", '"') + "\n") if out_file is not None else logging.info("rx: Device Setup: " + str(parameters))
 
                     if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):
                         elapsed_time = time.time() - start_time
