@@ -123,7 +123,7 @@ class RxDeviceSetup(RxFrame):
         self.consume_all(payload)
 
     def __str__(self) -> str:
-        return f"Device Setup {{'rate':'{self.outputDataRate.name}', 'range':'{self.range.name}', 'scale':'{self.scale.name}'}}"
+        return f'Device Setup {{"rate":"{self.outputDataRate.name}", "range\":"{self.range.name}", "scale":"{self.scale.name}"}}'
 
 
 class RxFifoOverflow(RxFrame):
