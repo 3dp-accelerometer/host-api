@@ -7,7 +7,7 @@ SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
-SPHINXOPTS    = -v
+SPHINXOPTS    = -v -j auto
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -20,6 +20,14 @@ help:
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-# Build and open index.html in default application.
+# build documentation from xml (sphinx + exhale)
+docs: html
+	#
+
+# open index.html in default application
 show:
-	@make html && xdg-open "$(BUILDDIR)/html/index.html"
+	xdg-open "$(BUILDDIR)/html/index.html"
+
+clean:
+	find ./_build -mindepth 1 -maxdepth 1 -not -name ".keep" -exec rm -drf {} \;
+	find ./apidocs  -mindepth 1 -maxdepth 1 -not -name ".keep" -exec rm -drf {} \;

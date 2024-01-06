@@ -1,37 +1,43 @@
-name: documentation
+name: "DOC build and deploy"
 
-on: [push, pull_request, workflow_dispatch]
-
-permissions:
-  contents: write
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "**/*"
+      - "!.github/workflows/*"
+      - ".github/workflows/documentation.yaml"
+  pull_request:
+    paths:
+      - "**/*"
+      - "!.github/workflows/*"
+      - ".github/workflows/documentation.yaml"
 
 jobs:
-  docs:
-    runs-on: ubuntu-latest
+  docs-build-deploy:
+    name: Generate docs on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-      - uses: Gr1N/setup-poetry@v8
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: ${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
-
-      - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: |
-          poetry install --all-extras --with dev --with doc
+      - name: Prerequisites
+        uses: ./.github/actions/checkout-python-poetry
 
       - name: Sphinx build
         run: |
           source .venv/bin/activate
           cd docs
-          make html
+          make clean
+          make docs
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

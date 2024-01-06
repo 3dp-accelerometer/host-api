@@ -70,24 +70,6 @@ sphinx-toolbox = "^3.5.0"
 requires = ["poetry-core", "poetry2setup"]
 build-backend = "poetry.core.masonry.api"
 
-# reqired by [tool.sphinx-pyproject]
-[project]
-name = "py3dpaxxel"
-version = "0.1.11"
-description = "Python API for interacting with the 3DP Accelerometer controller and sensor data visualization."
-readme = "readme.md"
-keywords = ["3d printing", "accelerometer", "adxl345", "stm32", "marlin", "octoprint"]
-dynamic = ["requires-python", "classifiers", "dependencies", ]
-
-# reqired by [tool.sphinx-pyproject]
-[[project.author]]
-name = "Raoul Rubien"
-email = "rubienr@sbox.tugraz.at"
-
-# reqired by [tool.sphinx-pyproject]
-[project.license]
-file = "Apache-2.0"
-
 [tool.sphinx-pyproject]
 github_username = "3dp-accelerometer"
 github_repository = "py3dpaxxel"
@@ -129,13 +111,14 @@ extensions = [
     "sphinx_packaging.peps",
 ]
 # sphinxemoji_style = "twemoji"
-gitstamp_fmt = "%d %b %Y"
 templates_path = ["_templates", ]
 html_static_path = ["_static", ]
 source_suffix = ".rst"
 master_doc = "index"
-suppress_warnings = ["image.nonlocal_uri", ]
+# suppress_warnings = ["image.nonlocal_uri", ]
 pygments_style = "default"
+gitstamp_fmt = "%d %b %Y"
+html_last_updated_fmt = "%d %b %Y"
 html_theme = "sphinx_rtd_theme"
 html_theme_path = ["../..", ]
 html_show_sourcelink = true
