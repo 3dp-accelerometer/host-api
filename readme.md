@@ -1,20 +1,37 @@
-Description
-===========
+Introduction
+============
 
-Python host API for manipulating the acceleration controller.
+Python host API for manipulating the acceleration [controller](https://github.com/3dp-accelerometer/controller/).
 Implements binary communication with the microcontroller in CDC virtual com port mode.
+This package not only provides a Python API but also command line scripts to operate the controller.
 
-- stream decoding
-- stream recording
-- device configuration (writing and reading to/from device)
+- start/stop sampling (in streaming mode or up to specific limit of samples)
+- configure/reset device (output data rate, range, scale)
+- decode samples from controller
+- print samples or store in tabular separated values file
+
+See also:
+
+- Controller [Firmware](https://github.com/3dp-accelerometer/controller)
+- OctoPrint plugin [Octoprint Accelerometer](https://github.com/3dp-accelerometer/octoprint-accelerometer)
+- **Read the Docs** at [3dp-accelerometer.github.io](https://3dp-accelerometer.github.io/py3dpaxxel/)
+
+[![Build Test Docs](https://github.com/3dp-accelerometer/py3dpaxxel/actions/workflows/pack-builddocs.yaml/badge.svg)](https://github.com/3dp-accelerometer/py3dpaxxel/actions/workflows/pack-builddocs.yaml)
 
 Example
 =======
 
+The following example illustrates how to configure and stream from the controller using CLI.
+First the controller configuration takes place (left shell).
+The controller uses it full `16g` range at an output data rate of `3200ks/s` where the scale is set at full resolution, meaning each LSB equals `4mg`.
+Subsequently, the decoder is started and waiting for the controller's data stream (right shell).
+Finally, on the left shell, the streaming of `7` samples is triggered.
+The stream from the controller also contains all required metadata for data integrity so that the decoder either reports a valid and complete stream or error.
+
 ```bash
 +----------------------------------------------------------------------------------------------------------------------------+
-| $ ./3dpaccel.py  set --range G16 |                                                                                         |
-| $ ./3dpaccel.py  get --all       |                                                                                         |
+| $ ./3dpaccel.py set --range G16  |                                                                                         |
+| $ ./3dpaccel.py get --all        |                                                                                         |
 | INFO:root:odr=ODR3200            |                                                                                         |
 | INFO:root:scale=FULL_RES_4MG_LSB |                                                                                         |
 | INFO:root:range=G16              |                                                                                         |
@@ -40,7 +57,8 @@ Example
 Getting Started
 ===============
 
-### Create Environment
+Create Environment
+------------------
 
 ```bash
 sudo apt install python3-poetry
@@ -63,16 +81,19 @@ controller_cli.py device --list
 
 # retrieve device settings
 controller_cli.py get --all
-```
-
-### With Initialized Environment
-
-```bash
-cd host-api/python
-poetry shell
 
 # list discovered devices
 controller_cli.py device --list
 ```
 
-**Read the Docs** at [3dp-accelerometer.github.io](https://3dp-accelerometer.github.io/py3dpaxxel)
+With Initialized Environment
+----------------------------
+
+```bash
+cd host-api/python
+poetry shell
+# list discovered devices
+controller_cli.py device --list
+```
+
+For all available CLI scripts refer to [Commandline Scripts](https://3dp-accelerometer.github.io/py3dpaxxel/index.html).
