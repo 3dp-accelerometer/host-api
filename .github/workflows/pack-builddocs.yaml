@@ -1,0 +1,71 @@
+name: Build Test Docs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "**/*"
+      - "!.github/workflows/**"
+      - ".github/workflows/pack-builddocs.yaml"
+  pull_request:
+    paths:
+      - "**/*"
+      - "!.github/workflows/**"
+      - ".github/workflows/pack-builddocs.yaml"
+
+jobs:
+  poetry-build:
+    name: Poetry pack on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prerequisites
+        uses: ./.github/actions/checkout-python-poetry
+
+      - name: "Build, Install, Remove"
+        run: |
+          source .venv/bin/activate
+          poetry build
+          pip install $(find ./dist -name "py3dpaxxel*.gz" | sort | tail -1)
+          pip uninstall --yes py3dpaxxel
+
+  docs-build-deploy:
+    needs: [ poetry-build ]
+    name: Generate docs on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prerequisites
+        uses: ./.github/actions/checkout-python-poetry
+
+      - name: Sphinx build
+        run: |
+          source .venv/bin/activate
+          cd docs
+          make clean
+          make docs
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        with:
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build/html
+          force_orphan: true
