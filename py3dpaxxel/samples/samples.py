@@ -1,6 +1,7 @@
 from typing import Optional
 
 from py3dpaxxel.controller.constants import OutputDataRateDelay, OutputDataRate, Range, Scale
+from py3dpaxxel.controller.transfer_types import FirmwareVersion
 
 
 class Samples:
@@ -11,8 +12,10 @@ class Samples:
         "sample rate, ODR (output data rate)"
         self.range: Optional[Range] = None
         "sensor range in `g`"
-        self.scale: Optional[Scale,] = None
+        self.scale: Optional[Scale] = None
         "sensor scale: 10bit or full scale (each LSB is 3.9mg)"
+        self.firmware_version: Optional[FirmwareVersion] = None
+        "device firmware version"
 
         self.run = []
         "series number"

@@ -4,6 +4,7 @@ import re
 from typing import Dict, Union
 
 from py3dpaxxel.controller.constants import OutputDataRateDelay, OutputDataRate, Range, Scale
+from py3dpaxxel.controller.transfer_types import FirmwareVersion
 from py3dpaxxel.samples.samples import Samples
 
 
@@ -30,6 +31,7 @@ class SamplesLoader:
                     samples.rate = OutputDataRate[sampling_args["rate"]]
                     samples.range = Range[sampling_args["range"]]
                     samples.scale = Scale[sampling_args["scale"]]
+                    samples.firmware_version = FirmwareVersion.from_string(sampling_args["version"])
                     samples.separation_s = OutputDataRateDelay[samples.rate]
                     found_meta = True
                     break
@@ -41,7 +43,7 @@ class SamplesLoader:
 
         - ignores 1.st line which shall be the header (column names, i.e. `run sample x y z`)
         - interprets sample data, i.e.: `00 06399 +0538.200 +0187.200 +0600.600`
-        - interpret last line (metadata), i.e.: `# {'rate': 'ODR3200', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB'}`
+        - interpret last line (metadata), i.e.: `# {'rate': 'ODR3200', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB', 'version': '0.1.1'}`
 
         :return: Samples
         """

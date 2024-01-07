@@ -12,7 +12,7 @@ from .transfer_types import (TxFrame, RxUnknownResponse, RxOutputDataRate,
                              RxScale, RxRange, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted,
                              RxAcceleration, RxSamplingStarted, RxFifoOverflow, RxDeviceSetup, TxGetOutputDataRate, TxSetOutputDataRate, TxGetScale, TxSetScale, TxGetRange, TxSetRange,
                              TxReboot,
-                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId)
+                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId, TxGetFirmwareVersion, RxFirmwareVersion, FirmwareVersion)
 
 
 class ErrorFifoOverflow(IOError):
@@ -101,6 +101,11 @@ class Py3dpAxxel(CdcSerial):
     def _send_frame(self, frame: TxFrame) -> None:
         self.write_bytes(frame.pack())
 
+    def get_firmware_version(self) -> FirmwareVersion:
+        payload = self._send_frame_then_receive(TxGetFirmwareVersion(), RxFirmwareVersion.LEN)
+        response: RxFirmwareVersion = RxFrameFromHeaderId(payload).unpack()
+        return response.version
+
     def get_output_data_rate(self) -> OutputDataRate:
         payload = self._send_frame_then_receive(TxGetOutputDataRate(), RxOutputDataRate.LEN)
         response: RxOutputDataRate = RxFrameFromHeaderId(payload).unpack()
@@ -165,6 +170,7 @@ class Py3dpAxxel(CdcSerial):
         :param do_stop_flag: aborts decoder loop if set
         :return: None
         """
+        firmware_version = FirmwareVersion(0, 0, 0)
         data: bytearray = bytearray()
         sequence: int = 0
         sample_count: int = 0
@@ -201,6 +207,10 @@ class Py3dpAxxel(CdcSerial):
                         sample_count = 0
                         start_time = time.time()
 
+                    if isinstance(package, RxFirmwareVersion):
+                        firmware_version = package.version
+                        logging.info(f"rx: {package}")
+
                     if isinstance(package, RxAcceleration):
                         acceleration = f"{sequence:02} {package}"
                         assert sample_count == package.index
@@ -210,7 +220,8 @@ class Py3dpAxxel(CdcSerial):
                         out_file.write(acceleration + "\n") if out_file is not None else logging.info(f"rx: {acceleration}")
 
                     if isinstance(package, RxDeviceSetup):
-                        parameters = eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))
+                        parameters: Dict[str, str] = eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))
+                        parameters["firmware_version"] = firmware_version.string
                         out_file.write("# " + str(parameters).replace("'", '"') + "\n") if out_file is not None else logging.info("rx: Device Setup: " + str(parameters))
 
                     if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):

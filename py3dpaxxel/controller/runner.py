@@ -17,6 +17,7 @@ class ControllerRunner:
             sensor_set_output_data_rate: Optional[OutputDataRate],
             sensor_set_scale: Optional[Scale],
             sensor_set_range: Optional[Range],
+            sensor_get_firmware_version: bool,
             sensor_get_output_data_rate: bool,
             sensor_get_scale: bool,
             sensor_get_range: bool,
@@ -36,6 +37,7 @@ class ControllerRunner:
         self.sensor_set_output_data_rate: Optional[OutputDataRate] = sensor_set_output_data_rate
         self.sensor_set_scale: Optional[Scale] = sensor_set_scale
         self.sensor_set_range: Optional[Range] = sensor_set_range
+        self.sensor_get_firmware_version: bool = sensor_get_firmware_version
         self.sensor_get_output_data_rate: bool = sensor_get_output_data_rate
         self.sensor_get_scale: bool = sensor_get_scale
         self.sensor_get_range: bool = sensor_get_range
@@ -84,7 +86,11 @@ class ControllerRunner:
                 return 1
 
         elif self.command == "get":
-            if self.sensor_get_output_data_rate:
+            if self.sensor_get_firmware_version:
+                logging.debug("request firmware version")
+                with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
+                    logging.info("version=%s", sensor.get_firmware_version().string)
+            elif self.sensor_get_output_data_rate:
                 logging.debug("request odr")
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
                     logging.info("odr=%s", sensor.get_output_data_rate().name)
@@ -98,6 +104,7 @@ class ControllerRunner:
                     logging.info("range=%s", sensor.get_range().name)
             elif self.sensor_get_all_settings:
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
+                    logging.info("version=%s", sensor.get_firmware_version().string)
                     logging.info("odr=%s", sensor.get_output_data_rate().name)
                     logging.info("scale=%s", sensor.get_scale().name)
                     logging.info("range=%s", sensor.get_range().name)
@@ -124,7 +131,7 @@ class ControllerRunner:
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
                     sensor.decode(return_on_stop=not self.stream_wait,
                                   message_timeout_s=self.stream_decode_timeout_s)
-            if self.output_file:
+            elif self.output_file:
                 logging.info(f"decode stream to file {self.output_file}")
                 with open(self.output_file, "w") as file:
                     with Py3dpAxxel(self.controller_serial_dev_name) as sensor:

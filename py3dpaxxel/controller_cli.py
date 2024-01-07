@@ -75,6 +75,10 @@ class Args:
             description="Reads device parameters.")
         grp = sup.add_mutually_exclusive_group()
         grp.add_argument(
+            "-v", "--version",
+            help="Read firmware version from device.",
+            action="store_true")
+        grp.add_argument(
             "-o", "--outputdatarate",
             help="Read sampling rate.",
             action="store_true")
@@ -175,6 +179,7 @@ class Runner:
                                                                                                                          "outputdatarate") and self.args.outputdatarate is not None else None
         sensor_set_scale = Scale[self.args.scale] if self.args.command == "set" and hasattr(self.args, "scale") and self.args.scale is not None else None
         sensor_set_range = Range[self.args.range] if self.args.command == "set" and hasattr(self.args, "range") and self.args.range is not None else None
+        sensor_get_firmware_version = self.args.version if self.args.command == "get" and hasattr(self.args, "version") else None
         sensor_get_output_data_rate = self.args.outputdatarate if self.args.command == "get" and hasattr(self.args, "outputdatarate") else None
         sensor_get_scale = self.args.scale if self.args.command == "get" and hasattr(self.args, "scale") else None
         sensor_get_range = self.args.range if self.args.command == "get" and hasattr(self.args, "range") else None
@@ -197,6 +202,7 @@ class Runner:
             sensor_set_output_data_rate=sensor_set_output_data_rate,
             sensor_set_scale=sensor_set_scale,
             sensor_set_range=sensor_set_range,
+            sensor_get_firmware_version=sensor_get_firmware_version,
             sensor_get_output_data_rate=sensor_get_output_data_rate,
             sensor_get_scale=sensor_get_scale,
             sensor_get_range=sensor_get_range,

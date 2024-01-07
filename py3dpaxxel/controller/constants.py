@@ -80,6 +80,7 @@ class TransportHeaderId(Enum):
     TX_SET_SCALE = 5
     TX_GET_SCALE = 6
     TX_GET_DEVICE_SETUP = 7
+    TX_GET_FIRMWARE_VERSION = 8
 
     # sampling (tx)
     TX_DEVICE_REBOOT = 17
@@ -91,6 +92,7 @@ class TransportHeaderId(Enum):
     RX_RANGE = 26
     RX_SCALE = 27
     RX_DEVICE_SETUP = 28
+    RX_FIRMWARE_VERSION = 29
 
     # sampling (rx)
     RX_SAMPLING_FIFO_OVERFLOW = 33

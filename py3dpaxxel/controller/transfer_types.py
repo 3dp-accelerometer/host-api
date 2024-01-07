@@ -31,6 +31,15 @@ class TxFrame(Frame):
         return bytes(values)
 
 
+class TxGetFirmwareVersion(TxFrame):
+    """
+    Request package to retrieve the firmware version from device.
+    """
+
+    def __init__(self) -> None:
+        super().__init__(TransportHeaderId.TX_GET_FIRMWARE_VERSION)
+
+
 class TxSetOutputDataRate(TxFrame):
     """
     Request package to configure the device ODR.
@@ -123,6 +132,44 @@ class RxFrame:
     def consume_all(self, payload: bytearray):
         for i in range(0, self.LEN):
             payload.pop(0)
+
+
+class FirmwareVersion:
+    """
+    The device firmware information.
+    """
+
+    def __init__(self, major: int, minor: int, patch: int):
+        self.major: int = major
+        self.minor: int = minor
+        self.patch: int = patch
+        self.string: str = f"{major}.{minor}.{patch}"
+
+    def __str__(self) -> str:
+        return self.string
+
+    @staticmethod
+    def from_string(version: str) -> "FirmwareVersion":
+        major, minor, patch = version.split(".")
+        return FirmwareVersion(major, minor, patch)
+
+
+class RxFirmwareVersion(RxFrame):
+    """
+    Response from controller transporting the firmware version.
+    """
+
+    LEN = 4
+
+    def __init__(self, payload: bytearray) -> None:
+        major: int = int.from_bytes([payload[1]], byteorder="little", signed=False)
+        minor: int = int.from_bytes([payload[2]], byteorder="little", signed=False)
+        patch: int = int.from_bytes([payload[3]], byteorder="little", signed=False)
+        self.version: FirmwareVersion = FirmwareVersion(major, minor, patch)
+        self.consume_all(payload)
+
+    def __str__(self) -> str:
+        return f"Firmware Version v={self.version}"
 
 
 class RxOutputDataRate(RxFrame):
@@ -256,7 +303,7 @@ class RxSamplingFinished(RxFrame):
 
 class RxSamplingAborted(RxFrame):
     """
-    Response from controller indicating that the sampling has been aborted (for whatever reason: HW error, user interaction, ...).
+    Response from controller indicating that the sampling has been aborted upon user request.
     """
 
     LEN = 1
@@ -318,6 +365,7 @@ class RxFrameFromHeaderId:
         TransportHeaderId.RX_SAMPLING_STOPPED: RxSamplingStopped,
         TransportHeaderId.RX_SAMPLING_FINISHED: RxSamplingFinished,
         TransportHeaderId.RX_SAMPLING_ABORTED: RxSamplingAborted,
+        TransportHeaderId.RX_FIRMWARE_VERSION: RxFirmwareVersion,
         TransportHeaderId.RX_ACCELERATION: RxAcceleration,
     }
 
@@ -334,6 +382,7 @@ class RxFrameFromHeaderId:
         RxSamplingStopped,
         RxSamplingFinished,
         RxSamplingAborted,
+        RxFirmwareVersion,
         RxUnknownResponse,
         None
     ]:
