@@ -45,7 +45,7 @@ The stream from the controller also contains all required metadata for data inte
 |                                  | INFO:root:00 00002 -0397.800 +0218.400 -1021.800                                        |
 |                                  | INFO:root:00 00003 -0405.600 +0210.600 -1014.000                                        |
 |                                  | INFO:root:00 00004 -0397.800 +0187.200 -1014.000                                        |
-|                                  | INFO:root:00 00005 -0390.000 +0226.200 -1021.800```                                     |
+|                                  | INFO:root:00 00005 -0390.000 +0226.200 -1021.800                                        |
 |                                  | INFO:root:00 00006 -0390.000 +0210.600 -1021.800- WIP: many features not working yet    |
 |                                  | INFO:root:Sampling Finished at sample 7                                                 |
 |                                  | INFO:root:Device Setup: {'rate': 'ODR3200', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB'} |
