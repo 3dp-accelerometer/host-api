@@ -5,12 +5,12 @@ on:
   push:
     paths:
       - "**/*"
-      - "!.github/workflows/**"
+      - "!.github/workflows/**/*"
       - ".github/workflows/pack-builddocs.yaml"
   pull_request:
     paths:
       - "**/*"
-      - "!.github/workflows/**"
+      - "!.github/workflows/**/*"
       - ".github/workflows/pack-builddocs.yaml"
 
 jobs:
@@ -36,8 +36,8 @@ jobs:
           pip uninstall --yes py3dpaxxel
 
   docs-build-deploy:
-    needs: [ poetry-build ]
     name: Generate docs on ${{ matrix.os }}
+    needs: [ poetry-build ]
     runs-on: ${{ matrix.os }}
 
     permissions:
@@ -69,3 +69,59 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/_build/html
           force_orphan: true
+
+  codeql-check:
+    name: Analyze with CodeQL on ${{ matrix.os }}
+    needs: [ poetry-build ]
+    if: ${{ github.event_name == 'pull_request' || github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    # Runner size impacts CodeQL analysis time. To learn more, please see:
+    #   - https://gh.io/recommended-hardware-resources-for-running-codeql
+    #   - https://gh.io/supported-runners-and-hardware-resources
+    #   - https://gh.io/using-larger-runners
+    # Consider using larger runners for possible analysis time improvements.
+    timeout-minutes: 15
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        language: [ 'python' ]
+        # CodeQL supports [ 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift' ]
+        # Use only 'java-kotlin' to analyze code written in Java, Kotlin or both
+        # Use only 'javascript-typescript' to analyze code written in JavaScript, TypeScript or both
+        # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prerequisites
+        uses: ./.github/actions/checkout-python-poetry
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+          # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+          # queries: security-extended,security-and-quality
+
+      - name: Poetry build
+        run: |
+          source .venv/bin/activate
+          poetry build
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"

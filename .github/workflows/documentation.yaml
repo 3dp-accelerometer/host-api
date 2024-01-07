@@ -5,12 +5,12 @@ on:
   #push:
   #  paths:
   #    - "**/*"
-  #    - "!.github/workflows/*"
+  #    - "!.github/workflows/**/*"
   #    - ".github/workflows/documentation.yaml"
   #pull_request:
   #  paths:
   #    - "**/*"
-  #    - "!.github/workflows/*"
+  #    - "!.github/workflows/**/*"
   #    - ".github/workflows/documentation.yaml"
 
 jobs:
