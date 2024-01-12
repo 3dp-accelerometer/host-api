@@ -103,7 +103,7 @@ class TransportHeaderId(Enum):
     RX_SAMPLING_STOPPED = 36
     RX_SAMPLING_ABORTED = 37
     RX_ACCELERATION = 38
-    RX_ERROR = 38
+    RX_ERROR = 39
 
 
 class ErrorCode(Enum):
