@@ -81,6 +81,7 @@ class TransportHeaderId(Enum):
     TX_GET_SCALE = 6
     TX_GET_DEVICE_SETUP = 7
     TX_GET_FIRMWARE_VERSION = 8
+    TX_GET_UPTIME = 9
 
     # sampling (tx)
     TX_DEVICE_REBOOT = 17
@@ -93,6 +94,7 @@ class TransportHeaderId(Enum):
     RX_SCALE = 27
     RX_DEVICE_SETUP = 28
     RX_FIRMWARE_VERSION = 29
+    RX_UPTIME = 30
 
     # sampling (rx)
     RX_SAMPLING_FIFO_OVERFLOW = 33
@@ -101,3 +103,13 @@ class TransportHeaderId(Enum):
     RX_SAMPLING_STOPPED = 36
     RX_SAMPLING_ABORTED = 37
     RX_ACCELERATION = 38
+    RX_ERROR = 38
+
+
+class ErrorCode(Enum):
+    UNDEFINED = 0
+    USB_ERROR = 1
+    USAGE_FAULT_HANDLER = 2
+    BUS_FAULT_HANDLER = 3
+    HARD_FAULT_HANDLER = 4
+    ERROR_HANDLER = 5

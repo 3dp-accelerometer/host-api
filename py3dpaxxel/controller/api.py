@@ -6,13 +6,13 @@ from typing import TextIO, Dict, List, Optional
 
 from serial.tools.list_ports import comports
 
-from .constants import Range, Scale, OutputDataRate
+from .constants import Range, Scale, OutputDataRate, ErrorCode
 from .serial import CdcSerial
 from .transfer_types import (TxFrame, RxUnknownResponse, RxOutputDataRate,
                              RxScale, RxRange, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted,
                              RxAcceleration, RxSamplingStarted, RxFifoOverflow, RxDeviceSetup, TxGetOutputDataRate, TxSetOutputDataRate, TxGetScale, TxSetScale, TxGetRange, TxSetRange,
                              TxReboot,
-                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId, TxGetFirmwareVersion, RxFirmwareVersion, FirmwareVersion)
+                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId, TxGetFirmwareVersion, RxFirmwareVersion, FirmwareVersion, RxError, RxUptime, TxGetUptime)
 
 
 class ErrorFifoOverflow(IOError):
@@ -20,6 +20,13 @@ class ErrorFifoOverflow(IOError):
 
     def __init__(self):
         super().__init__("controller detected FiFo overrun in the accelerometer sensor")
+
+
+class ErrorControllerError(IOError):
+    """controller fault"""
+
+    def __init__(self, code: ErrorCode):
+        super().__init__(f"controller fault code={code.name}")
 
 
 class ErrorUnknownResponse(IOError):
@@ -140,6 +147,11 @@ class Py3dpAxxel(CdcSerial):
     def stop_sampling(self) -> None:
         self._send_frame(TxSamplingStop())
 
+    def get_uptime(self) -> int:
+        payload = self._send_frame_then_receive(TxGetUptime(), RxUptime.LEN)
+        response: RxUptime = RxFrameFromHeaderId(payload).unpack()
+        return response.elapsed_ms
+
     def decode(self, return_on_stop: bool = False,
                message_timeout_s: float = 10.0,
                out_file: Optional[TextIO] = None,
@@ -198,6 +210,11 @@ class Py3dpAxxel(CdcSerial):
 
                     if isinstance(package, RxFifoOverflow):
                         e = ErrorFifoOverflow()
+                        logging.fatal(f"rx: {str(e)}")
+                        raise e
+
+                    if isinstance(package, RxError):
+                        e = ErrorControllerError(package.code)
                         logging.fatal(f"rx: {str(e)}")
                         raise e
 

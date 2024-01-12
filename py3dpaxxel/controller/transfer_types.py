@@ -1,6 +1,6 @@
 from typing import Dict, Type, Union, Optional
 
-from .constants import TransportHeaderId, OutputDataRate, Scale, Range
+from .constants import TransportHeaderId, OutputDataRate, Scale, Range, ErrorCode
 
 
 class Frame:
@@ -120,6 +120,15 @@ class TxSamplingStop(TxFrame):
 
     def __init__(self) -> None:
         super().__init__(TransportHeaderId.TX_SAMPLING_STOP)
+
+
+class TxGetUptime(TxFrame):
+    """
+    Request package to retrieve the device uptime [ms] since boot.
+    """
+
+    def __init__(self) -> None:
+        super().__init__(TransportHeaderId.TX_GET_UPTIME)
 
 
 class RxFrame:
@@ -350,6 +359,36 @@ class RxAcceleration(RxFrame):
         return f"{self.index:05} {self.x:+09.3f} {self.y:+09.3f} {self.z:+09.3f}"
 
 
+class RxUptime(RxFrame):
+    """
+    Response to get uptime transporting the elapsed milliseconds since last boot.
+    """
+
+    LEN = 5
+
+    def __init__(self, payload: bytearray) -> None:
+        self.elapsed_ms: int = int.from_bytes(payload[1:4], "little", signed=False)
+        self.consume_all(payload)
+
+    def __str__(self) -> str:
+        return f"Uptime ms={self.elapsed_ms}"
+
+
+class RxError(RxFrame):
+    """
+    Response is issued whenever a controller fault occurred but the controller was still capable to transmit this message.
+    """
+
+    LEN = 2
+
+    def __init__(self, payload: bytearray) -> None:
+        self.code: ErrorCode = ErrorCode(int.from_bytes(payload[1:2], "little", signed=False))
+        self.consume_all(payload)
+
+    def __str__(self) -> str:
+        return f"Error code={self.code.name}"
+
+
 class RxFrameFromHeaderId:
     """
     Parse response from bytes.
@@ -367,6 +406,8 @@ class RxFrameFromHeaderId:
         TransportHeaderId.RX_SAMPLING_ABORTED: RxSamplingAborted,
         TransportHeaderId.RX_FIRMWARE_VERSION: RxFirmwareVersion,
         TransportHeaderId.RX_ACCELERATION: RxAcceleration,
+        TransportHeaderId.RX_UPTIME: RxUptime,
+        TransportHeaderId.RX_ERROR: RxError,
     }
 
     def __init__(self, payload: bytearray) -> None:
@@ -384,6 +425,8 @@ class RxFrameFromHeaderId:
         RxSamplingAborted,
         RxFirmwareVersion,
         RxUnknownResponse,
+        RxUptime,
+        RxError,
         None
     ]:
         header_id_int: int = int.from_bytes([self.payload[0]], "little", signed=False)

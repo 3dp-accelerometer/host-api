@@ -104,10 +104,11 @@ class ControllerRunner:
                     logging.info("range=%s", sensor.get_range().name)
             elif self.sensor_get_all_settings:
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info("version=%s", sensor.get_firmware_version().string)
-                    logging.info("odr=%s", sensor.get_output_data_rate().name)
-                    logging.info("scale=%s", sensor.get_scale().name)
-                    logging.info("range=%s", sensor.get_range().name)
+                    logging.info(f"version={sensor.get_firmware_version().string}")
+                    logging.info(f"odr={sensor.get_output_data_rate().name}")
+                    logging.info(f"scale={sensor.get_scale().name}")
+                    logging.info(f"range={sensor.get_range().name}")
+                    logging.info(f"uptime_s={sensor.get_uptime() / 1000:0.3f}")
             else:
                 logging.warning("noting to do")
                 return 1
