@@ -6,13 +6,13 @@ from typing import TextIO, Dict, List, Optional, Union
 
 from serial.tools.list_ports import comports
 
-from .constants import Range, Scale, OutputDataRate, ErrorCode
+from .constants import Range, Scale, OutputDataRate, FaultCode
 from .serial import CdcSerial
 from .transfer_types import (TxFrame, RxUnknownResponse, RxOutputDataRate,
                              RxScale, RxRange, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted,
                              RxAcceleration, RxSamplingStarted, RxFifoOverflow, RxDeviceSetup, TxGetOutputDataRate, TxSetOutputDataRate, TxGetScale, TxSetScale, TxGetRange, TxSetRange,
                              TxReboot,
-                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId, TxGetFirmwareVersion, RxFirmwareVersion, FirmwareVersion, RxError, RxUptime, TxGetUptime, TxGetBufferStatus,
+                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId, TxGetFirmwareVersion, RxFirmwareVersion, FirmwareVersion, RxFault, RxUptime, TxGetUptime, TxGetBufferStatus,
                              RxBufferStatus, BufferStatus)
 
 
@@ -23,10 +23,10 @@ class ErrorFifoOverflow(IOError):
         super().__init__("controller detected FiFo overrun in the accelerometer sensor")
 
 
-class ErrorControllerError(IOError):
+class ErrorControllerFault(IOError):
     """controller fault"""
 
-    def __init__(self, code: ErrorCode):
+    def __init__(self, code: FaultCode):
         super().__init__(f"controller fault code={code.name}")
 
 
@@ -34,7 +34,7 @@ class ErrorUnknownResponse(IOError):
     """received unknown response from controller"""
 
     def __init__(self, response):
-        super().__init__(f"received unknown response from controller :{response}")
+        super().__init__(f"unknown response received :{response}")
 
 
 class ErrorReadTimeout(IOError):
@@ -219,8 +219,8 @@ class Py3dpAxxel(CdcSerial):
                         logging.fatal(f"rx: {str(e)}")
                         raise e
 
-                    if isinstance(package, RxError):
-                        e = ErrorControllerError(package.code)
+                    if isinstance(package, RxFault):
+                        e = ErrorControllerFault(package.code)
                         logging.fatal(f"rx: {str(e)}")
                         raise e
 

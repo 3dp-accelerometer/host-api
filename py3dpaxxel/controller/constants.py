@@ -105,12 +105,12 @@ class TransportHeaderId(Enum):
     RX_SAMPLING_STOPPED = 36
     RX_SAMPLING_ABORTED = 37
     RX_ACCELERATION = 38
-    RX_ERROR = 39
+    RX_FAULT = 39
 
 
-class ErrorCode(Enum):
+class FaultCode(Enum):
     UNDEFINED = 0
-    USB_ERROR = 1
+    NMI_ERROR = 1
     USAGE_FAULT_HANDLER = 2
     BUS_FAULT_HANDLER = 3
     HARD_FAULT_HANDLER = 4

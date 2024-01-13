@@ -1,6 +1,6 @@
 from typing import Dict, Type, Union, Optional
 
-from .constants import TransportHeaderId, OutputDataRate, Scale, Range, ErrorCode
+from .constants import TransportHeaderId, OutputDataRate, Scale, Range, FaultCode
 
 
 class Frame:
@@ -411,19 +411,19 @@ class BufferStatus:
         self.max_items_count: int = max_items_count
 
 
-class RxError(RxFrame):
+class RxFault(RxFrame):
     """
     Response is issued whenever a controller fault occurred but the controller was still capable to transmit this message.
     """
 
-    LEN = 2
+    LEN = 1 + 1
 
     def __init__(self, payload: bytearray) -> None:
-        self.code: ErrorCode = ErrorCode(int.from_bytes(payload[1:2], "little", signed=False))
+        self.code: FaultCode = FaultCode(int.from_bytes(payload[1:2], "little", signed=False))
         self.consume_all(payload)
 
     def __str__(self) -> str:
-        return f"Error code={self.code.name}"
+        return f"Fault code={self.code.name}"
 
 
 class RxFrameFromHeaderId:
@@ -445,7 +445,7 @@ class RxFrameFromHeaderId:
         TransportHeaderId.RX_ACCELERATION: RxAcceleration,
         TransportHeaderId.RX_UPTIME: RxUptime,
         TransportHeaderId.RX_BUFFER_STATUS: RxBufferStatus,
-        TransportHeaderId.RX_ERROR: RxError,
+        TransportHeaderId.RX_FAULT: RxFault,
     }
 
     def __init__(self, payload: bytearray) -> None:
@@ -465,7 +465,7 @@ class RxFrameFromHeaderId:
         RxUnknownResponse,
         RxUptime,
         RxBufferStatus,
-        RxError,
+        RxFault,
         None
     ]:
         header_id_int: int = int.from_bytes([self.payload[0]], "little", signed=False)
