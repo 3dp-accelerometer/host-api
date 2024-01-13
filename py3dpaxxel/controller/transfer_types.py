@@ -131,6 +131,15 @@ class TxGetUptime(TxFrame):
         super().__init__(TransportHeaderId.TX_GET_UPTIME)
 
 
+class TxGetBufferStatus(TxFrame):
+    """
+    Request package to retrieve the buffer status since last sampling-start.
+    """
+
+    def __init__(self) -> None:
+        super().__init__(TransportHeaderId.TX_GET_BUFFER_STATUS)
+
+
 class RxFrame:
     """
     Response base class.
@@ -148,7 +157,7 @@ class FirmwareVersion:
     The device firmware information.
     """
 
-    def __init__(self, major: int, minor: int, patch: int):
+    def __init__(self, major: int = 0, minor: int = 0, patch: int = 0):
         self.major: int = major
         self.minor: int = minor
         self.patch: int = patch
@@ -374,6 +383,34 @@ class RxUptime(RxFrame):
         return f"Uptime ms={self.elapsed_ms}"
 
 
+class RxBufferStatus(RxFrame):
+    """
+    Response to get buffer status transporting buffer information since last sampling-start.
+    """
+
+    LEN = (1 + 2 + 2 + 2)
+
+    def __init__(self, payload: bytearray) -> None:
+        self.size_bytes: int = int.from_bytes(payload[1:3], "little", signed=False)
+        self.capacity: int = int.from_bytes(payload[3:5], "little", signed=False)
+        self.max_items_count: int = int.from_bytes(payload[5:7], "little", signed=False)
+        self.consume_all(payload)
+
+    def __str__(self) -> str:
+        return f"BufferStatus size_bytes={self.size_bytes} capacity={self.capacity} max_items_count={self.max_items_count}"
+
+
+class BufferStatus:
+    """
+    Buffer status as received by RxBufferStatus.
+    """
+
+    def __init__(self, size_bytes: int = 0, capacity: int = 0, max_items_count: int = 0):
+        self.size_bytes: int = size_bytes
+        self.capacity: int = capacity
+        self.max_items_count: int = max_items_count
+
+
 class RxError(RxFrame):
     """
     Response is issued whenever a controller fault occurred but the controller was still capable to transmit this message.
@@ -407,6 +444,7 @@ class RxFrameFromHeaderId:
         TransportHeaderId.RX_FIRMWARE_VERSION: RxFirmwareVersion,
         TransportHeaderId.RX_ACCELERATION: RxAcceleration,
         TransportHeaderId.RX_UPTIME: RxUptime,
+        TransportHeaderId.RX_BUFFER_STATUS: RxBufferStatus,
         TransportHeaderId.RX_ERROR: RxError,
     }
 
@@ -426,6 +464,7 @@ class RxFrameFromHeaderId:
         RxFirmwareVersion,
         RxUnknownResponse,
         RxUptime,
+        RxBufferStatus,
         RxError,
         None
     ]:

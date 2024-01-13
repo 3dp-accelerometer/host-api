@@ -82,6 +82,7 @@ class TransportHeaderId(Enum):
     TX_GET_DEVICE_SETUP = 7
     TX_GET_FIRMWARE_VERSION = 8
     TX_GET_UPTIME = 9
+    TX_GET_BUFFER_STATUS = 10
 
     # sampling (tx)
     TX_DEVICE_REBOOT = 17
@@ -95,6 +96,7 @@ class TransportHeaderId(Enum):
     RX_DEVICE_SETUP = 28
     RX_FIRMWARE_VERSION = 29
     RX_UPTIME = 30
+    RX_BUFFER_STATUS = 31
 
     # sampling (rx)
     RX_SAMPLING_FIFO_OVERFLOW = 33

@@ -28,10 +28,10 @@ class SamplesLoader:
             for line in reversed(f.readlines()):
                 if line[0] == "#":
                     sampling_args = eval(re.search("^# .*({.*})$", line).group(1))
-                    samples.rate = OutputDataRate[sampling_args["rate"]]
-                    samples.range = Range[sampling_args["range"]]
-                    samples.scale = Scale[sampling_args["scale"]]
-                    samples.firmware_version = FirmwareVersion.from_string(sampling_args["version"])
+                    samples.rate = OutputDataRate[sampling_args["sensor"]["rate"]]
+                    samples.range = Range[sampling_args["sensor"]["range"]]
+                    samples.scale = Scale[sampling_args["sensor"]["scale"]]
+                    samples.firmware_version = FirmwareVersion.from_string(sampling_args["firmware"]["version"])
                     samples.separation_s = OutputDataRateDelay[samples.rate]
                     found_meta = True
                     break
@@ -43,7 +43,7 @@ class SamplesLoader:
 
         - ignores 1.st line which shall be the header (column names, i.e. `run sample x y z`)
         - interprets sample data, i.e.: `00 06399 +0538.200 +0187.200 +0600.600`
-        - interpret last line (metadata), i.e.: `# {'rate': 'ODR3200', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB', 'version': '0.1.1'}`
+        - interpret last line (metadata), i.e.: `# { ..., sensor: {'rate': 'ODR3200', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB', 'version': '0.1.1'}}`
 
         :return: Samples
         """

@@ -21,6 +21,10 @@ class ControllerRunner:
             sensor_get_output_data_rate: bool,
             sensor_get_scale: bool,
             sensor_get_range: bool,
+            sensor_get_uptime: bool,
+            sensor_get_buffer_size: bool,
+            sensor_get_buffer_capacity: bool,
+            sensor_get_buffer_max_utilization: bool,
             sensor_get_all_settings: bool,
             stream_start: Optional[int],
             stream_stop: Optional[bool],
@@ -41,6 +45,10 @@ class ControllerRunner:
         self.sensor_get_output_data_rate: bool = sensor_get_output_data_rate
         self.sensor_get_scale: bool = sensor_get_scale
         self.sensor_get_range: bool = sensor_get_range
+        self.sensor_get_uptime: bool = sensor_get_uptime
+        self.sensor_get_buffer_size: bool = sensor_get_buffer_size
+        self.sensor_get_buffer_capacity: bool = sensor_get_buffer_capacity
+        self.sensor_get_buffer_max_utilization: bool = sensor_get_buffer_max_utilization
         self.sensor_get_all_settings: bool = sensor_get_all_settings
         self.stream_start: Optional[int] = stream_start
         self.stream_stop: Optional[bool] = stream_stop
@@ -89,26 +97,47 @@ class ControllerRunner:
             if self.sensor_get_firmware_version:
                 logging.debug("request firmware version")
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info("version=%s", sensor.get_firmware_version().string)
+                    logging.info("firmware.version=%s", sensor.get_firmware_version().string)
             elif self.sensor_get_output_data_rate:
                 logging.debug("request odr")
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info("odr=%s", sensor.get_output_data_rate().name)
+                    logging.info("sensor.odr=%s", sensor.get_output_data_rate().name)
             elif self.sensor_get_scale:
                 logging.debug("request scale")
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info("scale=%s", sensor.get_scale().name)
+                    logging.info("sensor.scale=%s", sensor.get_scale().name)
             elif self.sensor_get_range:
                 logging.debug("request range")
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info("range=%s", sensor.get_range().name)
+                    logging.info("sensor.range=%s", sensor.get_range().name)
+            elif self.sensor_get_uptime:
+                logging.debug("request uptime")
+                with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
+                    logging.info(f"device.uptime={sensor.get_uptime()}")
+            elif self.sensor_get_buffer_size:
+                logging.debug("request buffer size")
+                with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
+                    logging.info(f"device.buffer.size_bytes={sensor.get_buffer_status().size_bytes}")
+            elif self.sensor_get_buffer_capacity:
+                logging.debug("request buffer capacity")
+                with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
+                    logging.info(f"device.buffer.capacity={sensor.get_buffer_status().capacity}")
+            elif self.sensor_get_buffer_max_utilization:
+                logging.debug("request buffer maximum utilization")
+                with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
+                    logging.info(f"device.buffer.size_bytes={sensor.get_buffer_status().max_items_count}")
             elif self.sensor_get_all_settings:
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info(f"version={sensor.get_firmware_version().string}")
-                    logging.info(f"odr={sensor.get_output_data_rate().name}")
-                    logging.info(f"scale={sensor.get_scale().name}")
-                    logging.info(f"range={sensor.get_range().name}")
-                    logging.info(f"uptime_s={sensor.get_uptime() / 1000:0.3f}")
+                    logging.info(f"firmware.version={sensor.get_firmware_version().string}")
+                    logging.info(f"sensor.odr={sensor.get_output_data_rate().name}")
+                    logging.info(f"sensor.scale={sensor.get_scale().name}")
+                    logging.info(f"sensor.range={sensor.get_range().name}")
+                    logging.info(f"device.uptime_s={sensor.get_uptime() / 1000:0.3f}")
+                    status = sensor.get_buffer_status()
+                    logging.info(f"device.buffer.size_bytes={status.size_bytes}")
+                    logging.info(f"device.buffer.capacity={status.capacity}")
+                    logging.info(f"device.buffer.max_items_count={status.max_items_count}")
+
             else:
                 logging.warning("noting to do")
                 return 1

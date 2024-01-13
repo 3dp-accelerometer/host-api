@@ -2,7 +2,7 @@ import logging
 import re
 import threading
 import time
-from typing import TextIO, Dict, List, Optional
+from typing import TextIO, Dict, List, Optional, Union
 
 from serial.tools.list_ports import comports
 
@@ -12,7 +12,8 @@ from .transfer_types import (TxFrame, RxUnknownResponse, RxOutputDataRate,
                              RxScale, RxRange, RxSamplingStopped, RxSamplingFinished, RxSamplingAborted,
                              RxAcceleration, RxSamplingStarted, RxFifoOverflow, RxDeviceSetup, TxGetOutputDataRate, TxSetOutputDataRate, TxGetScale, TxSetScale, TxGetRange, TxSetRange,
                              TxReboot,
-                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId, TxGetFirmwareVersion, RxFirmwareVersion, FirmwareVersion, RxError, RxUptime, TxGetUptime)
+                             TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId, TxGetFirmwareVersion, RxFirmwareVersion, FirmwareVersion, RxError, RxUptime, TxGetUptime, TxGetBufferStatus,
+                             RxBufferStatus, BufferStatus)
 
 
 class ErrorFifoOverflow(IOError):
@@ -152,6 +153,11 @@ class Py3dpAxxel(CdcSerial):
         response: RxUptime = RxFrameFromHeaderId(payload).unpack()
         return response.elapsed_ms
 
+    def get_buffer_status(self) -> BufferStatus:
+        payload = self._send_frame_then_receive(TxGetBufferStatus(), RxBufferStatus.LEN)
+        response: RxBufferStatus = RxFrameFromHeaderId(payload).unpack()
+        return BufferStatus(response.size_bytes, response.capacity, response.max_items_count)
+
     def decode(self, return_on_stop: bool = False,
                message_timeout_s: float = 10.0,
                out_file: Optional[TextIO] = None,
@@ -182,7 +188,7 @@ class Py3dpAxxel(CdcSerial):
         :param do_stop_flag: aborts decoder loop if set
         :return: None
         """
-        firmware_version = FirmwareVersion(0, 0, 0)
+        stream_meta_data: Dict[str, Union[str, any]] = {}
         data: bytearray = bytearray()
         sequence: int = 0
         sample_count: int = 0
@@ -225,7 +231,15 @@ class Py3dpAxxel(CdcSerial):
                         start_time = time.time()
 
                     if isinstance(package, RxFirmwareVersion):
-                        firmware_version = package.version
+                        stream_meta_data.update({"firmware": {"version": package.version.string}})
+                        logging.info(f"rx: {package}")
+
+                    if isinstance(package, RxBufferStatus):
+                        stream_meta_data.update({"buffer": {
+                            "size_bytes": f"{package.size_bytes}",
+                            "capacity": f"{package.capacity}",
+                            "max_items_count": f"{package.max_items_count}"
+                        }})
                         logging.info(f"rx: {package}")
 
                     if isinstance(package, RxAcceleration):
@@ -237,9 +251,8 @@ class Py3dpAxxel(CdcSerial):
                         out_file.write(acceleration + "\n") if out_file is not None else logging.info(f"rx: {acceleration}")
 
                     if isinstance(package, RxDeviceSetup):
-                        parameters: Dict[str, str] = eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))
-                        parameters["firmware_version"] = firmware_version.string
-                        out_file.write("# " + str(parameters).replace("'", '"') + "\n") if out_file is not None else logging.info("rx: Device Setup: " + str(parameters))
+                        stream_meta_data.update({"sensor": eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))})
+                        out_file.write("# " + str(stream_meta_data).replace("'", '"') + "\n") if out_file is not None else logging.info("rx: Device Setup: " + str(stream_meta_data))
 
                     if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):
                         elapsed_time = time.time() - start_time
