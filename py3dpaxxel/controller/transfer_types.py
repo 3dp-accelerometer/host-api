@@ -177,7 +177,7 @@ class RxFirmwareVersion(RxFrame):
     Response from controller transporting the firmware version.
     """
 
-    LEN = 4
+    LEN = 1 + 1 + 1 + 1
 
     def __init__(self, payload: bytearray) -> None:
         major: int = int.from_bytes([payload[1]], byteorder="little", signed=False)
@@ -195,7 +195,7 @@ class RxOutputDataRate(RxFrame):
     Response from controller transporting the currently used ODR.
     """
 
-    LEN = 2
+    LEN = 1 + 1
 
     def __init__(self, payload: bytearray) -> None:
         self.outputDataRate: OutputDataRate = OutputDataRate(payload[1])
@@ -210,7 +210,7 @@ class RxRange(RxFrame):
     Response from controller transporting the currently used range (min/max g).
     """
 
-    LEN = 2
+    LEN = 1 + 1
 
     def __init__(self, payload: bytearray) -> None:
         self.range: Range = Range(payload[1])
@@ -225,7 +225,7 @@ class RxScale(RxFrame):
     Response from controller transporting the currently used scale (g scale of MSB).
     """
 
-    LEN = 2
+    LEN = 1 + 1
 
     def __init__(self, payload: bytearray) -> None:
         self.scale: Scale = Scale(int.from_bytes([payload[1]], byteorder="little", signed=False))
@@ -241,7 +241,7 @@ class RxDeviceSetup(RxFrame):
     This package is received at the end of stream.
     """
 
-    LEN = 2
+    LEN = 1 + 1
     REPR_FILTER_REGEX: str = '^Device Setup.*({.*})$'
 
     def __init__(self, payload: bytearray) -> None:
@@ -268,6 +268,34 @@ class RxFifoOverflow(RxFrame):
 
     def __str__(self) -> str:
         return "Fifo Overflow"
+
+
+class RxBufferOverflow(RxFrame):
+    """
+    Response from controller indicating that the circular buffer overflowed.
+    """
+
+    LEN = 1
+
+    def __init__(self, payload: bytearray) -> None:
+        self.consume_all(payload)
+
+    def __str__(self) -> str:
+        return "Buffer Overflow"
+
+
+class RxTransmissionError(RxFrame):
+    """
+    Response from controller indicating that the transmission to the host was erroneous (while sampling).
+    """
+
+    LEN = 1
+
+    def __init__(self, payload: bytearray) -> None:
+        self.consume_all(payload)
+
+    def __str__(self) -> str:
+        return "Transmission Error"
 
 
 class RxSamplingStarted(RxFrame):
@@ -437,6 +465,7 @@ class RxFrameFromHeaderId:
         TransportHeaderId.RX_SCALE: RxScale,
         TransportHeaderId.RX_DEVICE_SETUP: RxDeviceSetup,
         TransportHeaderId.RX_SAMPLING_FIFO_OVERFLOW: RxFifoOverflow,
+        TransportHeaderId.RX_SAMPLING_BUFFER_OVERFLOW: RxBufferOverflow,
         TransportHeaderId.RX_SAMPLING_STARTED: RxSamplingStarted,
         TransportHeaderId.RX_SAMPLING_STOPPED: RxSamplingStopped,
         TransportHeaderId.RX_SAMPLING_FINISHED: RxSamplingFinished,
@@ -446,6 +475,7 @@ class RxFrameFromHeaderId:
         TransportHeaderId.RX_UPTIME: RxUptime,
         TransportHeaderId.RX_BUFFER_STATUS: RxBufferStatus,
         TransportHeaderId.RX_FAULT: RxFault,
+        TransportHeaderId.RX_TRANSMISSION_ERROR: RxTransmissionError,
     }
 
     def __init__(self, payload: bytearray) -> None:
@@ -457,6 +487,7 @@ class RxFrameFromHeaderId:
         RxScale,
         RxDeviceSetup,
         RxFifoOverflow,
+        RxBufferOverflow,
         RxSamplingStarted,
         RxSamplingStopped,
         RxSamplingFinished,
@@ -466,6 +497,7 @@ class RxFrameFromHeaderId:
         RxUptime,
         RxBufferStatus,
         RxFault,
+        RxTransmissionError,
         None
     ]:
         header_id_int: int = int.from_bytes([self.payload[0]], "little", signed=False)

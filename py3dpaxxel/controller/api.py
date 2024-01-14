@@ -13,7 +13,7 @@ from .transfer_types import (TxFrame, RxUnknownResponse, RxOutputDataRate,
                              RxAcceleration, RxSamplingStarted, RxFifoOverflow, RxDeviceSetup, TxGetOutputDataRate, TxSetOutputDataRate, TxGetScale, TxSetScale, TxGetRange, TxSetRange,
                              TxReboot,
                              TxSamplingStart, TxSamplingStop, RxFrameFromHeaderId, TxGetFirmwareVersion, RxFirmwareVersion, FirmwareVersion, RxFault, RxUptime, TxGetUptime, TxGetBufferStatus,
-                             RxBufferStatus, BufferStatus)
+                             RxBufferStatus, BufferStatus, RxBufferOverflow, RxTransmissionError)
 
 
 class ErrorFifoOverflow(IOError):
@@ -23,8 +23,22 @@ class ErrorFifoOverflow(IOError):
         super().__init__("controller detected FiFo overrun in the accelerometer sensor")
 
 
+class ErrorBufferOverflow(IOError):
+    """circular buffer overrun while sampling"""
+
+    def __init__(self):
+        super().__init__("ringbuffer overflow while sampling stream")
+
+
+class ErrorTransmissionError(IOError):
+    """transmission error to host occurred"""
+
+    def __init__(self):
+        super().__init__("transmission to host error occurred while sampling stream")
+
+
 class ErrorControllerFault(IOError):
-    """controller fault"""
+    """controller went to fault handler most likely remaining in endless loop; device reboot recommended"""
 
     def __init__(self, code: FaultCode):
         super().__init__(f"controller fault code={code.name}")
@@ -142,7 +156,7 @@ class Py3dpAxxel(CdcSerial):
         self._send_frame(TxReboot())
 
     def start_sampling(self, num_samples: int = 0) -> None:
-        assert (0 <= num_samples) and (num_samples <= 65535)
+        assert (0 <= num_samples) and (num_samples <= 65535), f"samples count out of bounds: 0 < {num_samples} < 65535"
         self._send_frame(TxSamplingStart(num_samples))
 
     def stop_sampling(self) -> None:
@@ -191,7 +205,8 @@ class Py3dpAxxel(CdcSerial):
         stream_meta_data: Dict[str, Union[str, any]] = {}
         data: bytearray = bytearray()
         sequence: int = 0
-        sample_count: int = 0
+        num_samples_requested = 0
+        num_samples_received: int = 0
         start_time = Optional[float]
         elapsed_time = Optional[float]
         timestamp_last_message_seen: float = time.time()
@@ -219,6 +234,16 @@ class Py3dpAxxel(CdcSerial):
                         logging.fatal(f"rx: {str(e)}")
                         raise e
 
+                    if isinstance(package, RxBufferOverflow):
+                        e = ErrorBufferOverflow()
+                        logging.fatal(f"rx: {str(e)}")
+                        raise e
+
+                    if isinstance(package, RxTransmissionError):
+                        e = ErrorTransmissionError()
+                        logging.fatal(f"rx: {str(e)}")
+                        raise e
+
                     if isinstance(package, RxFault):
                         e = ErrorControllerFault(package.code)
                         logging.fatal(f"rx: {str(e)}")
@@ -227,8 +252,9 @@ class Py3dpAxxel(CdcSerial):
                     if isinstance(package, RxSamplingStarted):
                         logging.info(f"rx: {package}")
                         out_file.write("seq sample x y z\n") if out_file is not None else logging.info("#seq #sample x[mg] y[mg] z[mg]")
-                        sample_count = 0
+                        num_samples_received = 0
                         start_time = time.time()
+                        num_samples_requested = package.maxSamples
 
                     if isinstance(package, RxFirmwareVersion):
                         stream_meta_data.update({"firmware": {"version": package.version.string}})
@@ -244,29 +270,33 @@ class Py3dpAxxel(CdcSerial):
 
                     if isinstance(package, RxAcceleration):
                         acceleration = f"{sequence:02} {package}"
-                        assert sample_count == package.index
-                        sample_count += 1
-                        if sample_count > 65535:
-                            sample_count = 0
+                        assert num_samples_received == package.index, f"sequence error: expected={num_samples_received} vs current={package.index}"
+                        num_samples_received += 1
+                        if num_samples_received > 65535:
+                            num_samples_received = 0
                         out_file.write(acceleration + "\n") if out_file is not None else logging.info(f"rx: {acceleration}")
 
                     if isinstance(package, RxDeviceSetup):
                         stream_meta_data.update({"sensor": eval(re.search(RxDeviceSetup.REPR_FILTER_REGEX, str(package)).group(1))})
+                        stream_meta_data.update({"samples": {
+                            "requested": f"{num_samples_requested}",
+                            "received": f"{num_samples_received}",
+                        }})
                         out_file.write("# " + str(stream_meta_data).replace("'", '"') + "\n") if out_file is not None else logging.info("rx: Device Setup: " + str(stream_meta_data))
 
                     if isinstance(package, (RxSamplingStopped, RxSamplingFinished, RxSamplingAborted)):
                         elapsed_time = time.time() - start_time
                         if isinstance(package, RxSamplingFinished):
-                            logging.info(f"rx: {str(package)} at sample {sample_count}")
+                            logging.info(f"rx: {str(package)} at sample {num_samples_received}")
 
                     if isinstance(package, RxSamplingStopped):
                         logging.info(f"rx: {package}")
-                        logging.info(f"sequence {sequence:02}: processed {sample_count} samples in {elapsed_time:.6f} s "
-                                     f"({(sample_count / elapsed_time):.1f} samples/s; "
-                                     f"{((sample_count * RxAcceleration.LEN * 8) / elapsed_time):.1f} baud)")
+                        logging.info(f"sequence {sequence:02}: processed {num_samples_received} samples in {elapsed_time:.6f} s "
+                                     f"({(num_samples_received / elapsed_time):.1f} samples/s; "
+                                     f"{((num_samples_received * RxAcceleration.LEN * 8) / elapsed_time):.1f} baud)")
                         sequence += 1
 
                         if return_on_stop or out_file is not None:
                             return
 
-        logging.warning(f"decoder stops ahead of time after {sample_count} samples because stop flag was set")
+        logging.warning(f"decoder stops ahead of time after {num_samples_received} samples because stop flag was set")

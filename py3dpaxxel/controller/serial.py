@@ -14,7 +14,7 @@ class CdcSerial:
         self.write_timeout: float = write_timeout
 
     def write_byte(self, tx_byte: int) -> None:
-        assert tx_byte < 255
+        assert tx_byte < 255, "value does not fit in 1 Byte"
         self.dev.write(bytes([tx_byte]))
 
     def write_bytes(self, tx_bytes: bytes, timeout: Optional[float] = None) -> int:

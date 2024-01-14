@@ -106,6 +106,8 @@ class TransportHeaderId(Enum):
     RX_SAMPLING_ABORTED = 37
     RX_ACCELERATION = 38
     RX_FAULT = 39
+    RX_SAMPLING_BUFFER_OVERFLOW = 40
+    RX_TRANSMISSION_ERROR = 41
 
 
 class FaultCode(Enum):

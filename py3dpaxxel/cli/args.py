@@ -12,13 +12,13 @@ def convert_xyz_pos_from_str(pos: str) -> Tuple[int, int, int]:
 
 def assert_uint_0_100(f: str) -> int:
     value = int(f)
-    assert 0 <= value <= 100
+    assert 0 <= value <= 100, f"value out of range: 0 < {value} < 100"
     return value
 
 
 def assert_uint16(n: str) -> int:
     value = int(n)
-    assert 0 <= value <= 65536
+    assert 0 <= value <= 65535, f"value out of range: 0 < {value} < 65535"
     return value
 
 
