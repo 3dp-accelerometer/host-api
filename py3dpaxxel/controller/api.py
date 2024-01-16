@@ -65,6 +65,10 @@ class Py3dpAxxel(CdcSerial):
     The implementation establishes the communication with the controller (tx/rx) and encoding + decoding of data packets.
     Since the controller communicates in CDC mode, the data packets are very naive and consist only of header ID and payload.
     No CRC, dynamic data length packet or escape sequence is considered.
+    The generic package structure is can be seen as follows:
+      - [ header | payload ]
+      - with header being 1 byte long, and
+      - payload 0-N bytes long.
     """
 
     DEVICE_VID = 0x1209
@@ -72,7 +76,7 @@ class Py3dpAxxel(CdcSerial):
     DEVICE_PID = 0xE11A
     "see https://pid.codes/1209/411A/"
 
-    def __init__(self, ser_dev_name: str, serial_read_timeout_s: float = 0.1, serial_write_timeout_s: float = 1) -> None:
+    def __init__(self, ser_dev_name: str, serial_read_timeout_s: float = 1, serial_write_timeout_s: float = 1) -> None:
         """
 
         :param ser_dev_name: i.e. "/dev/ttyACM0"
@@ -170,7 +174,7 @@ class Py3dpAxxel(CdcSerial):
     def get_buffer_status(self) -> BufferStatus:
         payload = self._send_frame_then_receive(TxGetBufferStatus(), RxBufferStatus.LEN)
         response: RxBufferStatus = RxFrameFromHeaderId(payload).unpack()
-        return BufferStatus(response.size_bytes, response.capacity, response.max_items_count)
+        return BufferStatus(response.size_bytes, response.capacity_total, response.capacity_used_max, response.put_count, response.take_count, response.largest_tx_chunk_bytes)
 
     def decode(self, return_on_stop: bool = False,
                message_timeout_s: float = 10.0,
@@ -189,7 +193,10 @@ class Py3dpAxxel(CdcSerial):
             ...
             00 06398 +0546.000 +0187.200 +0616.200
             00 06399 +0530.400 +0187.200 +0639.600
-            # {'rate': 'ODR3200', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB'}
+            # {'firmware': {'version': '0.1.9'}, \\
+            'buffer': {'size_bytes': '57600', 'capacity_total': '6400', 'capacity_used_max': '1758', 'put_count': '5000', 'take_count': '5000', 'largest_tx_chunk_bytes': '2043'}, \\
+            'sensor': {'rate': 'ODR1600', 'range': 'G4', 'scale': 'FULL_RES_4MG_LSB'}, \\
+            'samples': {'requested': '6400', 'received': '6400'}} \\
 
         In the above example `6400` samples were received with sequence/stream number `0`.
         The sensor had an output data rate of ODR3200 (`3,2kSamples/s`),
@@ -263,8 +270,11 @@ class Py3dpAxxel(CdcSerial):
                     if isinstance(package, RxBufferStatus):
                         stream_meta_data.update({"buffer": {
                             "size_bytes": f"{package.size_bytes}",
-                            "capacity": f"{package.capacity}",
-                            "max_items_count": f"{package.max_items_count}"
+                            "capacity_total": f"{package.capacity_total}",
+                            "capacity_used_max": f"{package.capacity_used_max}",
+                            "put_count": f"{package.put_count}",
+                            "take_count": f"{package.take_count}",
+                            "largest_tx_chunk_bytes": f"{package.largest_tx_chunk_bytes}"
                         }})
                         logging.info(f"rx: {package}")
 

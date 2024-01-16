@@ -416,16 +416,25 @@ class RxBufferStatus(RxFrame):
     Response to get buffer status transporting buffer information since last sampling-start.
     """
 
-    LEN = (1 + 2 + 2 + 2)
+    LEN = (1 + 2 + 2 + 2 + 2 + 2 + 2)
 
     def __init__(self, payload: bytearray) -> None:
         self.size_bytes: int = int.from_bytes(payload[1:3], "little", signed=False)
-        self.capacity: int = int.from_bytes(payload[3:5], "little", signed=False)
-        self.max_items_count: int = int.from_bytes(payload[5:7], "little", signed=False)
+        self.capacity_total: int = int.from_bytes(payload[3:5], "little", signed=False)
+        self.capacity_used_max: int = int.from_bytes(payload[5:7], "little", signed=False)
+        self.put_count: int = int.from_bytes(payload[7:9], "little", signed=False)
+        self.take_count: int = int.from_bytes(payload[9:11], "little", signed=False)
+        self.largest_tx_chunk_bytes: int = int.from_bytes(payload[11:13], "little", signed=False)
         self.consume_all(payload)
 
     def __str__(self) -> str:
-        return f"BufferStatus size_bytes={self.size_bytes} capacity={self.capacity} max_items_count={self.max_items_count}"
+        return (f"BufferStatus "
+                f"size_bytes={self.size_bytes} "
+                f"capacity_total={self.capacity_total} "
+                f"capacity_used_max={self.capacity_used_max} "
+                f"put_count={self.put_count} "
+                f"take_count={self.take_count} "
+                f"largest_tx_chunk_bytes={self.largest_tx_chunk_bytes}")
 
 
 class BufferStatus:
@@ -433,10 +442,18 @@ class BufferStatus:
     Buffer status as received by RxBufferStatus.
     """
 
-    def __init__(self, size_bytes: int = 0, capacity: int = 0, max_items_count: int = 0):
+    def __init__(self, size_bytes: int = 0,
+                 capacity_total: int = 0,
+                 capacity_used_max: int = 0,
+                 put_count: int = 0,
+                 take_count: int = 0,
+                 largest_tx_chunk_bytes: int = 0):
         self.size_bytes: int = size_bytes
-        self.capacity: int = capacity
-        self.max_items_count: int = max_items_count
+        self.capacity_total: int = capacity_total
+        self.capacity_used_max: int = capacity_used_max
+        self.put_count: int = put_count
+        self.take_count: int = take_count
+        self.largest_tx_chunk_bytes: int = largest_tx_chunk_bytes
 
 
 class RxFault(RxFrame):

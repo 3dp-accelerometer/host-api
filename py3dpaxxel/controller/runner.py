@@ -22,9 +22,7 @@ class ControllerRunner:
             sensor_get_scale: bool,
             sensor_get_range: bool,
             sensor_get_uptime: bool,
-            sensor_get_buffer_size: bool,
-            sensor_get_buffer_capacity: bool,
-            sensor_get_buffer_max_utilization: bool,
+            sensor_get_buffer_statistic: bool,
             sensor_get_all_settings: bool,
             stream_start: Optional[int],
             stream_stop: Optional[bool],
@@ -46,9 +44,7 @@ class ControllerRunner:
         self.sensor_get_scale: bool = sensor_get_scale
         self.sensor_get_range: bool = sensor_get_range
         self.sensor_get_uptime: bool = sensor_get_uptime
-        self.sensor_get_buffer_size: bool = sensor_get_buffer_size
-        self.sensor_get_buffer_capacity: bool = sensor_get_buffer_capacity
-        self.sensor_get_buffer_max_utilization: bool = sensor_get_buffer_max_utilization
+        self.sensor_get_buffer_statistic: bool = sensor_get_buffer_statistic
         self.sensor_get_all_settings: bool = sensor_get_all_settings
         self.stream_start: Optional[int] = stream_start
         self.stream_stop: Optional[bool] = stream_stop
@@ -114,18 +110,16 @@ class ControllerRunner:
                 logging.debug("request uptime")
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
                     logging.info(f"device.uptime={sensor.get_uptime()}")
-            elif self.sensor_get_buffer_size:
-                logging.debug("request buffer size")
+            elif self.sensor_get_buffer_statistic:
+                logging.debug("request buffer statistic")
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info(f"device.buffer.size_bytes={sensor.get_buffer_status().size_bytes}")
-            elif self.sensor_get_buffer_capacity:
-                logging.debug("request buffer capacity")
-                with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info(f"device.buffer.capacity={sensor.get_buffer_status().capacity}")
-            elif self.sensor_get_buffer_max_utilization:
-                logging.debug("request buffer maximum utilization")
-                with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
-                    logging.info(f"device.buffer.size_bytes={sensor.get_buffer_status().max_items_count}")
+                    status = sensor.get_buffer_status()
+                    logging.info(f"device.buffer.size_bytes={status.size_bytes}")
+                    logging.info(f"device.buffer.capacity_total={status.capacity_total}")
+                    logging.info(f"device.buffer.capacity_used_max={status.capacity_used_max}")
+                    logging.info(f"device.buffer.put_count={status.put_count}")
+                    logging.info(f"device.buffer.take_count={status.take_count}")
+                    logging.info(f"device.buffer.largest_tx_chunk_bytes={status.largest_tx_chunk_bytes}")
             elif self.sensor_get_all_settings:
                 with Py3dpAxxel(self.controller_serial_dev_name) as sensor:
                     logging.info(f"firmware.version={sensor.get_firmware_version().string}")
@@ -135,8 +129,11 @@ class ControllerRunner:
                     logging.info(f"device.uptime_s={sensor.get_uptime() / 1000:0.3f}")
                     status = sensor.get_buffer_status()
                     logging.info(f"device.buffer.size_bytes={status.size_bytes}")
-                    logging.info(f"device.buffer.capacity={status.capacity}")
-                    logging.info(f"device.buffer.max_items_count={status.max_items_count}")
+                    logging.info(f"device.buffer.capacity_total={status.capacity_total}")
+                    logging.info(f"device.buffer.capacity_used_max={status.capacity_used_max}")
+                    logging.info(f"device.buffer.put_count={status.put_count}")
+                    logging.info(f"device.buffer.take_count={status.take_count}")
+                    logging.info(f"device.buffer.largest_tx_chunk_bytes={status.largest_tx_chunk_bytes}")
 
             else:
                 logging.warning("noting to do")

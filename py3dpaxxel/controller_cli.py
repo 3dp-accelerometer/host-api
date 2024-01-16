@@ -95,16 +95,8 @@ class Args:
             help="Read device uptime in ms.",
             action="store_true")
         grp.add_argument(
-            "-b", "--buffersize",
-            help="Read ring buffer sice in bytes.",
-            action="store_true")
-        grp.add_argument(
-            "-c", "--capacity",
-            help="Read maximum buffer capacity.",
-            action="store_true")
-        grp.add_argument(
-            "-m", "--maxcount",
-            help="Read the maximum buffer utilization (maximum items count) since last sampling-start command.",
+            "-b", "--buffer",
+            help="Read ring buffer statistic since last sampling-start.",
             action="store_true")
         grp.add_argument(
             "-a", "--all",
@@ -200,9 +192,7 @@ class Runner:
         sensor_get_scale = self.args.scale if self.args.command == "get" and hasattr(self.args, "scale") else None
         sensor_get_range = self.args.range if self.args.command == "get" and hasattr(self.args, "range") else None
         sensor_get_uptime = self.args.uptime if self.args.command == "get" and hasattr(self.args, "uptime") else None
-        sensor_get_buffer_size = self.args.buffersize if self.args.command == "get" and hasattr(self.args, "buffersize") else None
-        sensor_get_buffer_capacity = self.args.capacity if self.args.command == "get" and hasattr(self.args, "capacity") else None
-        sensor_get_buffer_max_utilization = self.args.maxcount if self.args.command == "get" and hasattr(self.args, "maxcount") else None
+        sensor_get_buffer_statistic = self.args.buffer if self.args.command == "get" and hasattr(self.args, "buffer") else None
         sensor_get_all_settings = self.args.all if self.args.command == "get" and hasattr(self.args, "all") else None
 
         stream_start = self.args.start if hasattr(self.args, "start") else None
@@ -227,9 +217,7 @@ class Runner:
             sensor_get_scale=sensor_get_scale,
             sensor_get_range=sensor_get_range,
             sensor_get_uptime=sensor_get_uptime,
-            sensor_get_buffer_size=sensor_get_buffer_size,
-            sensor_get_buffer_capacity=sensor_get_buffer_capacity,
-            sensor_get_buffer_max_utilization=sensor_get_buffer_max_utilization,
+            sensor_get_buffer_statistic=sensor_get_buffer_statistic,
             sensor_get_all_settings=sensor_get_all_settings,
             stream_start=stream_start,
             stream_stop=stream_stop,
