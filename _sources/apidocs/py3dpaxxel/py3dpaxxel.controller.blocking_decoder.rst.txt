@@ -1,0 +1,45 @@
+:py:mod:`py3dpaxxel.controller.blocking_decoder`
+================================================
+
+.. py:module:: py3dpaxxel.controller.blocking_decoder
+
+.. autodoc2-docstring:: py3dpaxxel.controller.blocking_decoder
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`BlockingDecoder <py3dpaxxel.controller.blocking_decoder.BlockingDecoder>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.blocking_decoder.BlockingDecoder
+          :summary:
+
+API
+~~~
+
+.. py:class:: BlockingDecoder(controller_serial: str, timelapse_s: float, record_timeout_s: float, sensor_output_data_rate: py3dpaxxel.controller.constants.OutputDataRate, out_filename: typing.Optional[str], do_dry_run: bool = False, do_abort_flag: threading.Event = threading.Event())
+   :canonical: py3dpaxxel.controller.blocking_decoder.BlockingDecoder
+
+   Bases: :py:obj:`collections.abc.Callable`\ [\ [\ ]\ , :py:obj:`None`\ ]
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.blocking_decoder.BlockingDecoder
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.blocking_decoder.BlockingDecoder.__init__
+
+   .. py:method:: start_sampling() -> None
+      :canonical: py3dpaxxel.controller.blocking_decoder.BlockingDecoder.start_sampling
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.blocking_decoder.BlockingDecoder.start_sampling
+
+   .. py:method:: __call__() -> None
+      :canonical: py3dpaxxel.controller.blocking_decoder.BlockingDecoder.__call__
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.blocking_decoder.BlockingDecoder.__call__

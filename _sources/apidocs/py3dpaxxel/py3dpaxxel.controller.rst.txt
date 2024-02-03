@@ -1,0 +1,21 @@
+:py:mod:`py3dpaxxel.controller`
+===============================
+
+.. py:module:: py3dpaxxel.controller
+
+.. autodoc2-docstring:: py3dpaxxel.controller
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.controller.api
+   py3dpaxxel.controller.serial
+   py3dpaxxel.controller.runner
+   py3dpaxxel.controller.blocking_decoder
+   py3dpaxxel.controller.transfer_types
+   py3dpaxxel.controller.constants

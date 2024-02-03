@@ -1,0 +1,81 @@
+:py:mod:`py3dpaxxel.datavis`
+============================
+
+.. py:module:: py3dpaxxel.datavis
+
+.. autodoc2-docstring:: py3dpaxxel.datavis
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`Args <py3dpaxxel.datavis.Args>`
+     - .. autodoc2-docstring:: py3dpaxxel.datavis.Args
+          :summary:
+   * - :py:obj:`Runner <py3dpaxxel.datavis.Runner>`
+     - .. autodoc2-docstring:: py3dpaxxel.datavis.Runner
+          :summary:
+
+Functions
+~~~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`args_for_sphinx <py3dpaxxel.datavis.args_for_sphinx>`
+     - .. autodoc2-docstring:: py3dpaxxel.datavis.args_for_sphinx
+          :summary:
+
+API
+~~~
+
+.. py:function:: args_for_sphinx()
+   :canonical: py3dpaxxel.datavis.args_for_sphinx
+
+   .. autodoc2-docstring:: py3dpaxxel.datavis.args_for_sphinx
+
+.. py:class:: Args()
+   :canonical: py3dpaxxel.datavis.Args
+
+   .. autodoc2-docstring:: py3dpaxxel.datavis.Args
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.datavis.Args.__init__
+
+   .. py:method:: parse() -> py3dpaxxel.datavis.Args
+      :canonical: py3dpaxxel.datavis.Args.parse
+
+      .. autodoc2-docstring:: py3dpaxxel.datavis.Args.parse
+
+.. py:class:: Runner()
+   :canonical: py3dpaxxel.datavis.Runner
+
+   .. autodoc2-docstring:: py3dpaxxel.datavis.Runner
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.datavis.Runner.__init__
+
+   .. py:property:: args
+      :canonical: py3dpaxxel.datavis.Runner.args
+
+      .. autodoc2-docstring:: py3dpaxxel.datavis.Runner.args
+
+   .. py:property:: parser
+      :canonical: py3dpaxxel.datavis.Runner.parser
+
+      .. autodoc2-docstring:: py3dpaxxel.datavis.Runner.parser
+
+   .. py:method:: run() -> int
+      :canonical: py3dpaxxel.datavis.Runner.run
+
+      .. autodoc2-docstring:: py3dpaxxel.datavis.Runner.run

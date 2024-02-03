@@ -1,0 +1,55 @@
+:py:mod:`py3dpaxxel.samples.loader`
+===================================
+
+.. py:module:: py3dpaxxel.samples.loader
+
+.. autodoc2-docstring:: py3dpaxxel.samples.loader
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`SamplesLoader <py3dpaxxel.samples.loader.SamplesLoader>`
+     - .. autodoc2-docstring:: py3dpaxxel.samples.loader.SamplesLoader
+          :summary:
+
+API
+~~~
+
+.. py:class:: SamplesLoader(in_filename: str)
+   :canonical: py3dpaxxel.samples.loader.SamplesLoader
+
+   .. autodoc2-docstring:: py3dpaxxel.samples.loader.SamplesLoader
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.samples.loader.SamplesLoader.__init__
+
+   .. py:attribute:: TABULAR_DELIMITER_CHARACTER
+      :canonical: py3dpaxxel.samples.loader.SamplesLoader.TABULAR_DELIMITER_CHARACTER
+      :value: ' '
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.loader.SamplesLoader.TABULAR_DELIMITER_CHARACTER
+
+   .. py:attribute:: LINE_COMMENT_CHARACTER
+      :canonical: py3dpaxxel.samples.loader.SamplesLoader.LINE_COMMENT_CHARACTER
+      :value: '#'
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.loader.SamplesLoader.LINE_COMMENT_CHARACTER
+
+   .. py:method:: _try_read_metadata_if_any(samples: py3dpaxxel.samples.samples.Samples) -> bool
+      :canonical: py3dpaxxel.samples.loader.SamplesLoader._try_read_metadata_if_any
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.loader.SamplesLoader._try_read_metadata_if_any
+
+   .. py:method:: load() -> py3dpaxxel.samples.samples.Samples
+      :canonical: py3dpaxxel.samples.loader.SamplesLoader.load
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.loader.SamplesLoader.load

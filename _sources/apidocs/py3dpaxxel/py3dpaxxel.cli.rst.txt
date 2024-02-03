@@ -1,0 +1,16 @@
+:py:mod:`py3dpaxxel.cli`
+========================
+
+.. py:module:: py3dpaxxel.cli
+
+.. autodoc2-docstring:: py3dpaxxel.cli
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.cli.args

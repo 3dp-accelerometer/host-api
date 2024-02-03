@@ -1,0 +1,17 @@
+:py:mod:`py3dpaxxel.samples`
+============================
+
+.. py:module:: py3dpaxxel.samples
+
+.. autodoc2-docstring:: py3dpaxxel.samples
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.samples.samples
+   py3dpaxxel.samples.loader

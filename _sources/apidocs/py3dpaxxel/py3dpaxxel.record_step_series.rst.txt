@@ -1,0 +1,81 @@
+:py:mod:`py3dpaxxel.record_step_series`
+=======================================
+
+.. py:module:: py3dpaxxel.record_step_series
+
+.. autodoc2-docstring:: py3dpaxxel.record_step_series
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`Args <py3dpaxxel.record_step_series.Args>`
+     - .. autodoc2-docstring:: py3dpaxxel.record_step_series.Args
+          :summary:
+   * - :py:obj:`Runner <py3dpaxxel.record_step_series.Runner>`
+     - .. autodoc2-docstring:: py3dpaxxel.record_step_series.Runner
+          :summary:
+
+Functions
+~~~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`args_for_sphinx <py3dpaxxel.record_step_series.args_for_sphinx>`
+     - .. autodoc2-docstring:: py3dpaxxel.record_step_series.args_for_sphinx
+          :summary:
+
+API
+~~~
+
+.. py:function:: args_for_sphinx()
+   :canonical: py3dpaxxel.record_step_series.args_for_sphinx
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step_series.args_for_sphinx
+
+.. py:class:: Args()
+   :canonical: py3dpaxxel.record_step_series.Args
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step_series.Args
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step_series.Args.__init__
+
+   .. py:method:: parse() -> py3dpaxxel.record_step_series.Args
+      :canonical: py3dpaxxel.record_step_series.Args.parse
+
+      .. autodoc2-docstring:: py3dpaxxel.record_step_series.Args.parse
+
+.. py:class:: Runner()
+   :canonical: py3dpaxxel.record_step_series.Runner
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step_series.Runner
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step_series.Runner.__init__
+
+   .. py:property:: args
+      :canonical: py3dpaxxel.record_step_series.Runner.args
+
+      .. autodoc2-docstring:: py3dpaxxel.record_step_series.Runner.args
+
+   .. py:property:: parser
+      :canonical: py3dpaxxel.record_step_series.Runner.parser
+
+      .. autodoc2-docstring:: py3dpaxxel.record_step_series.Runner.parser
+
+   .. py:method:: run() -> int
+      :canonical: py3dpaxxel.record_step_series.Runner.run
+
+      .. autodoc2-docstring:: py3dpaxxel.record_step_series.Runner.run

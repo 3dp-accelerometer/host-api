@@ -1,0 +1,19 @@
+:py:mod:`py3dpaxxel.sampling_tasks`
+===================================
+
+.. py:module:: py3dpaxxel.sampling_tasks
+
+.. autodoc2-docstring:: py3dpaxxel.sampling_tasks
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.sampling_tasks.exception_task_wrapper
+   py3dpaxxel.sampling_tasks.series_argument_generator
+   py3dpaxxel.sampling_tasks.steps_runner
+   py3dpaxxel.sampling_tasks.steps_series_runner

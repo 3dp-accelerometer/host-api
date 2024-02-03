@@ -1,0 +1,37 @@
+:py:mod:`py3dpaxxel`
+====================
+
+.. py:module:: py3dpaxxel
+
+.. autodoc2-docstring:: py3dpaxxel
+   :allowtitles:
+
+Subpackages
+-----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   py3dpaxxel.storage
+   py3dpaxxel.data_decomposition
+   py3dpaxxel.controller
+   py3dpaxxel.samples
+   py3dpaxxel.gcode
+   py3dpaxxel.cli
+   py3dpaxxel.log
+   py3dpaxxel.sampling_tasks
+   py3dpaxxel.octoprint
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.datavis
+   py3dpaxxel.record_step
+   py3dpaxxel.record_step_series
+   py3dpaxxel.decompose
+   py3dpaxxel.controller_cli

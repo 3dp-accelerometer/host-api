@@ -1,0 +1,29 @@
+:py:mod:`py3dpaxxel.log.setup`
+==============================
+
+.. py:module:: py3dpaxxel.log.setup
+
+.. autodoc2-docstring:: py3dpaxxel.log.setup
+   :allowtitles:
+
+Module Contents
+---------------
+
+Functions
+~~~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`configure_logging <py3dpaxxel.log.setup.configure_logging>`
+     - .. autodoc2-docstring:: py3dpaxxel.log.setup.configure_logging
+          :summary:
+
+API
+~~~
+
+.. py:function:: configure_logging() -> None
+   :canonical: py3dpaxxel.log.setup.configure_logging
+
+   .. autodoc2-docstring:: py3dpaxxel.log.setup.configure_logging

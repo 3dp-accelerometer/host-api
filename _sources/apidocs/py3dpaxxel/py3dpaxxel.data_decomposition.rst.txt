@@ -1,0 +1,19 @@
+:py:mod:`py3dpaxxel.data_decomposition`
+=======================================
+
+.. py:module:: py3dpaxxel.data_decomposition
+
+.. autodoc2-docstring:: py3dpaxxel.data_decomposition
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.data_decomposition.decompose_algorithms
+   py3dpaxxel.data_decomposition.decompose_runner
+   py3dpaxxel.data_decomposition.datavis_algorithms
+   py3dpaxxel.data_decomposition.datavis_runner

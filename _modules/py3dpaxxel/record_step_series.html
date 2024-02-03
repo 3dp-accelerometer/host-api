@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3dpaxxel.record_step_series &mdash; py3dpaxxel 0.1.16 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-toolbox-code.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sphinx-toolbox.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx_toolbox_installation.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d50bcae4"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/tabs.js?v=3030b3cb"></script>
+        <script src="../../_static/sphinx_toolbox_installation.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py3dpaxxel
+          </a>
+              <div class="version">
+                0.1.16
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#getting-started">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Commandline Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#recording">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#recording-sequences">Recording Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#data-visualization">Data Visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/index.html">API Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/3dp-accelerometer/py3dpaxxel">GitHub</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py3dpaxxel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">py3dpaxxel.record_step_series</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for py3dpaxxel.record_step_series</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">py3dpaxxel.cli</span> <span class="kn">import</span> <span class="n">args</span>
+<span class="kn">from</span> <span class="nn">py3dpaxxel.controller.constants</span> <span class="kn">import</span> <span class="n">OutputDataRate</span>
+<span class="kn">from</span> <span class="nn">py3dpaxxel.log.setup</span> <span class="kn">import</span> <span class="n">configure_logging</span>
+<span class="kn">from</span> <span class="nn">py3dpaxxel.octoprint.remote_api</span> <span class="kn">import</span> <span class="n">OctoRemoteApi</span>
+<span class="kn">from</span> <span class="nn">py3dpaxxel.sampling_tasks.steps_series_runner</span> <span class="kn">import</span> <span class="n">SamplingStepsSeriesRunner</span>
+
+<span class="n">configure_logging</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="args_for_sphinx">
+<a class="viewcode-back" href="../../apidocs/py3dpaxxel/py3dpaxxel.record_step_series.html#py3dpaxxel.record_step_series.args_for_sphinx">[docs]</a>
+<span class="k">def</span> <span class="nf">args_for_sphinx</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Args</span><span class="p">()</span><span class="o">.</span><span class="n">parser</span></div>
+
+
+
+<div class="viewcode-block" id="Args">
+<a class="viewcode-back" href="../../apidocs/py3dpaxxel/py3dpaxxel.record_step_series.html#py3dpaxxel.record_step_series.Args">[docs]</a>
+<span class="k">class</span> <span class="nc">Args</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+            <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Records a series of recording-steps samples while sending G-Code to the printer.&quot;</span><span class="p">)</span>
+
+        <span class="n">sub_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span>
+            <span class="s2">&quot;REST API&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Octoprint arguments.&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--address&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;OctoPrint address&quot;</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--port&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;OctoPrint port (default 80)&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--key&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;OctoPrint API key.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+
+        <span class="n">sub_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span>
+            <span class="s2">&quot;Trajectory&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Trajectory settings&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--axis&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Axis to move.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;xy&quot;</span><span class="p">,</span> <span class="s2">&quot;xz&quot;</span><span class="p">,</span> <span class="s2">&quot;yz&quot;</span><span class="p">,</span> <span class="s2">&quot;xyz&quot;</span><span class="p">],</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--start&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start pont in mm to begin trajectory at.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">convert_xyz_pos_from_str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">200,140,20</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--distance&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Distance in mm to travel back and forth.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--stepcount&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Repeat travel back and forth (steps) stepcount-times.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">sub_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span>
+            <span class="s2">&quot;Task&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Capturing task repetitions with different parameters&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--sequencecount&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Repeats steps sequencecount-times.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--fxstart&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start frequency in Hz. See https://marlinfw.org/docs/gcode/M593.html&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">assert_uint16</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--fxstop&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start frequency in Hz.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">assert_uint16</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;80&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--fxstep&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Frequency increment in Hz.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">assert_uint16</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--zetastart&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Zeta damping factor (times 100). See https://marlinfw.org/docs/gcode/M593.html&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">assert_uint_0_100</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--zetastop&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Zeta damping factor (times 100).&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">assert_uint_0_100</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--zetastep&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Zeta damping factor increment (times 100).&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">assert_uint_0_100</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="n">sub_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span>
+            <span class="s2">&quot;Controller&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Acceleration microcontroller arguments.&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--device&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Controllers serial device node to communicate with.&quot;</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;/dev/ttyACM0&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--outputdatarate&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set specified sampling rate before sending G-Code.&quot;</span><span class="p">,</span>
+            <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">OutputDataRate</span><span class="p">],</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">OutputDataRate</span><span class="o">.</span><span class="n">ODR3200</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--timelapse&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Timespan to record captured samples in seconds.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="n">sub_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span>
+            <span class="s2">&quot;Output&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Output arguments.&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--timeout&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Duration in seconds the script waits until data is received (left unset or 0.0 waits forever). Raises exception otherwise.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--dryrun&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Pretends to run but does not invoke either Octoprint nor controller.&quot;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--fileprefix&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Specify prefix of output file (&lt;prefix&gt;-&lt;run&gt;-&lt;timestamp&gt;.tsv)&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;octo-capture&quot;</span><span class="p">)</span>
+        <span class="n">sub_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--directory&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output path.&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">path_exists_and_is_dir</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="s2">&quot;./test_data/&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Args.parse">
+<a class="viewcode-back" href="../../apidocs/py3dpaxxel/py3dpaxxel.record_step_series.html#py3dpaxxel.record_step_series.Args.parse">[docs]</a>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Args&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Runner">
+<a class="viewcode-back" href="../../apidocs/py3dpaxxel/py3dpaxxel.record_step_series.html#py3dpaxxel.record_step_series.Runner">[docs]</a>
+<span class="k">class</span> <span class="nc">Runner</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cli_args</span><span class="p">:</span> <span class="n">Args</span> <span class="o">=</span> <span class="n">Args</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cli_args</span><span class="o">.</span><span class="n">args</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cli_args</span><span class="o">.</span><span class="n">parser</span>
+
+<div class="viewcode-block" id="Runner.run">
+<a class="viewcode-back" href="../../apidocs/py3dpaxxel/py3dpaxxel.record_step_series.html#py3dpaxxel.record_step_series.Runner.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">octo_api</span> <span class="o">=</span> <span class="n">OctoRemoteApi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">dryrun</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">SamplingStepsSeriesRunner</span><span class="p">(</span>
+            <span class="n">octoprint_api</span><span class="o">=</span><span class="n">octo_api</span><span class="p">,</span>
+            <span class="n">controller_serial_device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">controller_record_timelapse_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">timelapse</span><span class="p">,</span>
+            <span class="n">controller_decode_timeout_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">sensor_odr</span><span class="o">=</span><span class="n">OutputDataRate</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">outputdatarate</span><span class="p">],</span>
+            <span class="n">gcode_start_point_mm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">start</span><span class="p">,</span>
+            <span class="n">gcode_axis</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">convert_axis_from_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">axis</span><span class="p">),</span>
+            <span class="n">gcode_distance_mm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">distance</span><span class="p">,</span>
+            <span class="n">gcode_step_repeat_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">stepcount</span><span class="p">,</span>
+            <span class="n">gcode_sequence_repeat_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">sequencecount</span><span class="p">,</span>
+            <span class="n">fx_start_hz</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">fxstart</span><span class="p">,</span>
+            <span class="n">fx_stop_hz</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">fxstop</span><span class="p">,</span>
+            <span class="n">fx_step_hz</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">fxstep</span><span class="p">,</span>
+            <span class="n">zeta_start_em2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">zetastart</span><span class="p">,</span>
+            <span class="n">zeta_stop_em2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">zetastop</span><span class="p">,</span>
+            <span class="n">zeta_step_em2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">zetastep</span><span class="p">,</span>
+            <span class="n">output_file_prefix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">fileprefix</span><span class="p">,</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span>
+            <span class="n">do_dry_run</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">dryrun</span><span class="p">)()</span>
+
+        <span class="k">if</span> <span class="n">ret</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">Runner</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Raoul Rubien.
+      <span class="lastupdated">Last updated on 03 Feb 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

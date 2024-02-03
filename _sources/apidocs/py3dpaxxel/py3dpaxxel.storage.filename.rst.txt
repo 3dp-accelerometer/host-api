@@ -1,0 +1,71 @@
+:py:mod:`py3dpaxxel.storage.filename`
+=====================================
+
+.. py:module:: py3dpaxxel.storage.filename
+
+.. autodoc2-docstring:: py3dpaxxel.storage.filename
+   :allowtitles:
+
+Module Contents
+---------------
+
+Functions
+~~~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`timestamp <py3dpaxxel.storage.filename.timestamp>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename.timestamp
+          :summary:
+   * - :py:obj:`timestamp_from_args <py3dpaxxel.storage.filename.timestamp_from_args>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename.timestamp_from_args
+          :summary:
+   * - :py:obj:`timestamp_regex <py3dpaxxel.storage.filename.timestamp_regex>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename.timestamp_regex
+          :summary:
+   * - :py:obj:`generate_filename <py3dpaxxel.storage.filename.generate_filename>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename.generate_filename
+          :summary:
+
+Data
+~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`filename_timestamp_pattern <py3dpaxxel.storage.filename.filename_timestamp_pattern>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename.filename_timestamp_pattern
+          :summary:
+
+API
+~~~
+
+.. py:data:: filename_timestamp_pattern
+   :canonical: py3dpaxxel.storage.filename.filename_timestamp_pattern
+   :type: str
+   :value: '%Y%m%d-%H%M%S%f'
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename.filename_timestamp_pattern
+
+.. py:function:: timestamp() -> str
+   :canonical: py3dpaxxel.storage.filename.timestamp
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename.timestamp
+
+.. py:function:: timestamp_from_args(year: int, month: int, day: int, hour: int, minute: int, second: int, milli_second: int) -> str
+   :canonical: py3dpaxxel.storage.filename.timestamp_from_args
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename.timestamp_from_args
+
+.. py:function:: timestamp_regex() -> str
+   :canonical: py3dpaxxel.storage.filename.timestamp_regex
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename.timestamp_regex
+
+.. py:function:: generate_filename(prefix: str = 'stream', ext: str = 'tsv') -> str
+   :canonical: py3dpaxxel.storage.filename.generate_filename
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename.generate_filename

@@ -1,0 +1,40 @@
+:py:mod:`py3dpaxxel.sampling_tasks.steps_runner`
+================================================
+
+.. py:module:: py3dpaxxel.sampling_tasks.steps_runner
+
+.. autodoc2-docstring:: py3dpaxxel.sampling_tasks.steps_runner
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`SamplingStepsRunner <py3dpaxxel.sampling_tasks.steps_runner.SamplingStepsRunner>`
+     - .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.steps_runner.SamplingStepsRunner
+          :summary:
+
+API
+~~~
+
+.. py:class:: SamplingStepsRunner(input_serial_device: str, intput_sensor_odr: py3dpaxxel.controller.constants.OutputDataRate, record_timelapse_s: float, record_timeout_s: float, output_filename: typing.Optional[str], octoprint_api: py3dpaxxel.octoprint.api.OctoApi, gcode_start_point_mm: typing.Tuple[int, int, int], gcode_extra_gcode: typing.Optional[str], gcode_axis: typing.Literal[x, y, z], gcode_distance_mm: int, gcode_step_repeat_count: int, gcode_go_start: bool, gcode_return_start: bool, gcode_auto_home: bool, do_dry_run: bool, do_abort_flag: threading.Event = threading.Event())
+   :canonical: py3dpaxxel.sampling_tasks.steps_runner.SamplingStepsRunner
+
+   Bases: :py:obj:`typing.Callable`\ [\ [\ ]\ , :py:obj:`int`\ ]
+
+   .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.steps_runner.SamplingStepsRunner
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.steps_runner.SamplingStepsRunner.__init__
+
+   .. py:method:: __call__() -> int
+      :canonical: py3dpaxxel.sampling_tasks.steps_runner.SamplingStepsRunner.__call__
+
+      .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.steps_runner.SamplingStepsRunner.__call__

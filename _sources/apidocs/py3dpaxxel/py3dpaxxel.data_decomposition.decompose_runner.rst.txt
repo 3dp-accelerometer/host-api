@@ -1,0 +1,51 @@
+:py:mod:`py3dpaxxel.data_decomposition.decompose_runner`
+========================================================
+
+.. py:module:: py3dpaxxel.data_decomposition.decompose_runner
+
+.. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_runner
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`DataDecomposeRunner <py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner>`
+     - .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner
+          :summary:
+
+API
+~~~
+
+.. py:class:: DataDecomposeRunner(command: typing.Optional[str], input_dir: str, input_file_prefix: str, algorithm_d1: typing.Optional[str], output_dir: str, output_file_prefix: str, output_overwrite: bool)
+   :canonical: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner
+
+   Bases: :py:obj:`typing.Callable`\ [\ [\ ]\ , :py:obj:`typing.Tuple`\ [\ :py:obj:`int`\ , :py:obj:`int`\ , :py:obj:`int`\ , :py:obj:`int`\ ]\ ]
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner.__init__
+
+   .. py:method:: _fft_1d(algorithm: str, samples: py3dpaxxel.samples.loader.Samples, in_file_meta: py3dpaxxel.storage.filename_meta.FilenameMetaStream, out_dir: str, out_file_prefix: str, overwrite_existing_file: bool) -> typing.Tuple[int, int, int]
+      :canonical: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner._fft_1d
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner._fft_1d
+
+   .. py:method:: __call__() -> typing.Tuple[int, int, int, int]
+      :canonical: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner.__call__
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner.__call__
+
+   .. py:method:: run() -> typing.Tuple[int, int, int, int]
+      :canonical: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner.run
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_runner.DataDecomposeRunner.run

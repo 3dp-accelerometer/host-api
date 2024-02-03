@@ -1,0 +1,20 @@
+:py:mod:`py3dpaxxel.storage`
+============================
+
+.. py:module:: py3dpaxxel.storage
+
+.. autodoc2-docstring:: py3dpaxxel.storage
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.storage.filename_fft
+   py3dpaxxel.storage.filename
+   py3dpaxxel.storage.filename_stream
+   py3dpaxxel.storage.file_filter
+   py3dpaxxel.storage.filename_meta

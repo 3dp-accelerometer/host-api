@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3dpaxxel.controller.transfer_types &mdash; py3dpaxxel 0.1.16 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-toolbox-code.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sphinx-toolbox.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx_toolbox_installation.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d50bcae4"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/sphinx_toolbox_installation.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="py3dpaxxel.controller.constants" href="py3dpaxxel.controller.constants.html" />
+    <link rel="prev" title="py3dpaxxel.controller.blocking_decoder" href="py3dpaxxel.controller.blocking_decoder.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py3dpaxxel
+          </a>
+              <div class="version">
+                0.1.16
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#getting-started">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Commandline Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#recording">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#recording-sequences">Recording Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#data-visualization">Data Visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="py3dpaxxel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="py3dpaxxel.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.storage.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.storage</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.data_decomposition.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.data_decomposition</span></code></a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="py3dpaxxel.controller.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.controller</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.samples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.samples</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.gcode.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.gcode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.cli</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.log.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.log</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.sampling_tasks.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.sampling_tasks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.octoprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.octoprint</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="py3dpaxxel.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/3dp-accelerometer/py3dpaxxel">GitHub</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py3dpaxxel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="py3dpaxxel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel</span></code></a></li>
+          <li class="breadcrumb-item"><a href="py3dpaxxel.controller.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.controller</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-py3dpaxxel.controller.transfer_types">
+<span id="py3dpaxxel-controller-transfer-types"></span><h1><a class="reference internal" href="#module-py3dpaxxel.controller.transfer_types" title="py3dpaxxel.controller.transfer_types"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types</span></code></a><a class="headerlink" href="#module-py3dpaxxel.controller.transfer_types" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.Frame" title="py3dpaxxel.controller.transfer_types.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Frame</span></code></a></p></td>
+<td><p>TxFrame base class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxFrame</span></code></a></p></td>
+<td><p>Request base class.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion" title="py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxGetFirmwareVersion</span></code></a></p></td>
+<td><p>Request package to retrieve the firmware version from device.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxSetOutputDataRate" title="py3dpaxxel.controller.transfer_types.TxSetOutputDataRate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxSetOutputDataRate</span></code></a></p></td>
+<td><p>Request package to configure the device ODR.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxGetOutputDataRate" title="py3dpaxxel.controller.transfer_types.TxGetOutputDataRate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxGetOutputDataRate</span></code></a></p></td>
+<td><p>Request package to receive the current device ODR.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxSetRange" title="py3dpaxxel.controller.transfer_types.TxSetRange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxSetRange</span></code></a></p></td>
+<td><p>Request package to configure the device range (min/max g).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxGetRange" title="py3dpaxxel.controller.transfer_types.TxGetRange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxGetRange</span></code></a></p></td>
+<td><p>Request package to receive the device range (min/max g).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxSetScale" title="py3dpaxxel.controller.transfer_types.TxSetScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxSetScale</span></code></a></p></td>
+<td><p>Request package to configure the device scale (g scale of LSB).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxGetScale" title="py3dpaxxel.controller.transfer_types.TxGetScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxGetScale</span></code></a></p></td>
+<td><p>Request package to receive the device scale (g scale of LSB).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxReboot" title="py3dpaxxel.controller.transfer_types.TxReboot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxReboot</span></code></a></p></td>
+<td><p>Request package to perform a device reboot.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxSamplingStart" title="py3dpaxxel.controller.transfer_types.TxSamplingStart"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxSamplingStart</span></code></a></p></td>
+<td><p>Request package to start sampling stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxSamplingStop" title="py3dpaxxel.controller.transfer_types.TxSamplingStop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxSamplingStop</span></code></a></p></td>
+<td><p>Request package to stop a running stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxGetUptime" title="py3dpaxxel.controller.transfer_types.TxGetUptime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxGetUptime</span></code></a></p></td>
+<td><p>Request package to retrieve the device uptime [ms] since boot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxGetBufferStatus" title="py3dpaxxel.controller.transfer_types.TxGetBufferStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TxGetBufferStatus</span></code></a></p></td>
+<td><p>Request package to retrieve the buffer status since last sampling-start.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxFrame</span></code></a></p></td>
+<td><p>Response base class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.FirmwareVersion" title="py3dpaxxel.controller.transfer_types.FirmwareVersion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FirmwareVersion</span></code></a></p></td>
+<td><p>The device firmware information.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFirmwareVersion" title="py3dpaxxel.controller.transfer_types.RxFirmwareVersion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxFirmwareVersion</span></code></a></p></td>
+<td><p>Response from controller transporting the firmware version.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxOutputDataRate" title="py3dpaxxel.controller.transfer_types.RxOutputDataRate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxOutputDataRate</span></code></a></p></td>
+<td><p>Response from controller transporting the currently used ODR.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxRange" title="py3dpaxxel.controller.transfer_types.RxRange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxRange</span></code></a></p></td>
+<td><p>Response from controller transporting the currently used range (min/max g).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxScale" title="py3dpaxxel.controller.transfer_types.RxScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxScale</span></code></a></p></td>
+<td><p>Response from controller transporting the currently used scale (g scale of MSB).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxDeviceSetup" title="py3dpaxxel.controller.transfer_types.RxDeviceSetup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxDeviceSetup</span></code></a></p></td>
+<td><p>Response from controller transporting the currently used configuration: ODR, Range and Scale.
+This package is received at the end of stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFifoOverflow" title="py3dpaxxel.controller.transfer_types.RxFifoOverflow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxFifoOverflow</span></code></a></p></td>
+<td><p>Response from controller indicating that the acceleration sensor’s Fifo could not be consumed/read in time, thus an overrun occurred.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxBufferOverflow" title="py3dpaxxel.controller.transfer_types.RxBufferOverflow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxBufferOverflow</span></code></a></p></td>
+<td><p>Response from controller indicating that the circular buffer overflowed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxTransmissionError" title="py3dpaxxel.controller.transfer_types.RxTransmissionError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxTransmissionError</span></code></a></p></td>
+<td><p>Response from controller indicating that the transmission to the host was erroneous (while sampling).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingStarted" title="py3dpaxxel.controller.transfer_types.RxSamplingStarted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxSamplingStarted</span></code></a></p></td>
+<td><p>Response from controller indicating that sampling has been started just before this response was issued.
+This package is received at the start of stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingStopped" title="py3dpaxxel.controller.transfer_types.RxSamplingStopped"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxSamplingStopped</span></code></a></p></td>
+<td><p>Response from controller indicating that the sampling has been stopped (for whatever reason).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingFinished" title="py3dpaxxel.controller.transfer_types.RxSamplingFinished"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxSamplingFinished</span></code></a></p></td>
+<td><p>Response from controller indicating that sampling has been finished successfully.
+This package is received at the end of stream.
+When this response is received, the sampling stream has been successfully transferred:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingAborted" title="py3dpaxxel.controller.transfer_types.RxSamplingAborted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxSamplingAborted</span></code></a></p></td>
+<td><p>Response from controller indicating that the sampling has been aborted upon user request.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxUnknownResponse" title="py3dpaxxel.controller.transfer_types.RxUnknownResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxUnknownResponse</span></code></a></p></td>
+<td><p>Response is issued whenever a controller message could not be parsed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxAcceleration" title="py3dpaxxel.controller.transfer_types.RxAcceleration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxAcceleration</span></code></a></p></td>
+<td><p>Response from controller transporting the currently measured acceleration data.
+It contains</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxUptime" title="py3dpaxxel.controller.transfer_types.RxUptime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxUptime</span></code></a></p></td>
+<td><p>Response to get uptime transporting the elapsed milliseconds since last boot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxBufferStatus" title="py3dpaxxel.controller.transfer_types.RxBufferStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxBufferStatus</span></code></a></p></td>
+<td><p>Response to get buffer status transporting buffer information since last sampling-start.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.BufferStatus" title="py3dpaxxel.controller.transfer_types.BufferStatus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BufferStatus</span></code></a></p></td>
+<td><p>Buffer status as received by RxBufferStatus.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFault" title="py3dpaxxel.controller.transfer_types.RxFault"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxFault</span></code></a></p></td>
+<td><p>Response is issued whenever a controller fault occurred but the controller was still capable to transmit this message.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId" title="py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RxFrameFromHeaderId</span></code></a></p></td>
+<td><p>Parse response from bytes.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.Frame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3dpaxxel.controller.constants.html#py3dpaxxel.controller.constants.TransportHeaderId" title="py3dpaxxel.controller.constants.TransportHeaderId"><span class="pre">py3dpaxxel.controller.constants.TransportHeaderId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#Frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.Frame" title="Link to this definition"></a></dt>
+<dd><p>TxFrame base class.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3dpaxxel.controller.constants.html#py3dpaxxel.controller.constants.TransportHeaderId" title="py3dpaxxel.controller.constants.TransportHeaderId"><span class="pre">py3dpaxxel.controller.constants.TransportHeaderId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">bytearray()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.Frame" title="py3dpaxxel.controller.transfer_types.Frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.Frame</span></code></a></p>
+<p>Request base class.</p>
+<p class="rubric">Initialization</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxFrame.pack">
+<span class="sig-name descname"><span class="pre">pack</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxFrame.pack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxFrame.pack" title="Link to this definition"></a></dt>
+<dd><p>Packs header_id + payload into bytes: [header_id, byte1, byte2, …]
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxGetFirmwareVersion</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxGetFirmwareVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to retrieve the firmware version from device.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxSetOutputDataRate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxSetOutputDataRate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3dpaxxel.controller.constants.html#py3dpaxxel.controller.constants.OutputDataRate" title="py3dpaxxel.controller.constants.OutputDataRate"><span class="pre">py3dpaxxel.controller.constants.OutputDataRate</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxSetOutputDataRate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxSetOutputDataRate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to configure the device ODR.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxGetOutputDataRate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxGetOutputDataRate</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxGetOutputDataRate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxGetOutputDataRate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to receive the current device ODR.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxSetRange">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxSetRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3dpaxxel.controller.constants.html#py3dpaxxel.controller.constants.Range" title="py3dpaxxel.controller.constants.Range"><span class="pre">py3dpaxxel.controller.constants.Range</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxSetRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxSetRange" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to configure the device range (min/max g).</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxGetRange">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxGetRange</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxGetRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxGetRange" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to receive the device range (min/max g).</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxSetScale">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxSetScale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3dpaxxel.controller.constants.html#py3dpaxxel.controller.constants.Scale" title="py3dpaxxel.controller.constants.Scale"><span class="pre">py3dpaxxel.controller.constants.Scale</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxSetScale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxSetScale" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to configure the device scale (g scale of LSB).</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxGetScale">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxGetScale</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxGetScale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxGetScale" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to receive the device scale (g scale of LSB).</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxReboot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxReboot</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxReboot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxReboot" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to perform a device reboot.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxSamplingStart">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxSamplingStart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxSamplingStart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxSamplingStart" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to start sampling stream.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxSamplingStop">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxSamplingStop</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxSamplingStop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxSamplingStop" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to stop a running stream.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxGetUptime">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxGetUptime</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxGetUptime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxGetUptime" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to retrieve the device uptime [ms] since boot.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.TxGetBufferStatus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TxGetBufferStatus</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#TxGetBufferStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.TxGetBufferStatus" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.TxFrame" title="py3dpaxxel.controller.transfer_types.TxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.TxFrame</span></code></a></p>
+<p>Request package to retrieve the buffer status since last sampling-start.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxFrame</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="Link to this definition"></a></dt>
+<dd><p>Response base class.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFrame.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFrame.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFrame.consume_all">
+<span class="sig-name descname"><span class="pre">consume_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFrame.consume_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFrame.consume_all" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.FirmwareVersion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FirmwareVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">major</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#FirmwareVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.FirmwareVersion" title="Link to this definition"></a></dt>
+<dd><p>The device firmware information.</p>
+<p class="rubric">Initialization</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.FirmwareVersion.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#FirmwareVersion.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.FirmwareVersion.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.FirmwareVersion.from_string">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.FirmwareVersion" title="py3dpaxxel.controller.transfer_types.FirmwareVersion"><span class="pre">py3dpaxxel.controller.transfer_types.FirmwareVersion</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#FirmwareVersion.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.FirmwareVersion.from_string" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFirmwareVersion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxFirmwareVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFirmwareVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFirmwareVersion" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller transporting the firmware version.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFirmwareVersion.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFirmwareVersion.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFirmwareVersion.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFirmwareVersion.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFirmwareVersion.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxOutputDataRate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxOutputDataRate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxOutputDataRate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxOutputDataRate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller transporting the currently used ODR.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxOutputDataRate.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxOutputDataRate.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxOutputDataRate.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxOutputDataRate.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxOutputDataRate.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxRange">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxRange"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxRange" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller transporting the currently used range (min/max g).</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxRange.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxRange.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxRange.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxRange.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxRange.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxScale">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxScale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxScale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxScale" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller transporting the currently used scale (g scale of MSB).</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxScale.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxScale.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxScale.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxScale.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxScale.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxDeviceSetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxDeviceSetup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxDeviceSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxDeviceSetup" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller transporting the currently used configuration: ODR, Range and Scale.
+This package is received at the end of stream.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxDeviceSetup.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxDeviceSetup.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxDeviceSetup.REPR_FILTER_REGEX">
+<span class="sig-name descname"><span class="pre">REPR_FILTER_REGEX</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'^Device</span> <span class="pre">Setup.*({.*})$'</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxDeviceSetup.REPR_FILTER_REGEX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxDeviceSetup.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxDeviceSetup.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxDeviceSetup.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFifoOverflow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxFifoOverflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFifoOverflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFifoOverflow" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller indicating that the acceleration sensor’s Fifo could not be consumed/read in time, thus an overrun occurred.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFifoOverflow.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFifoOverflow.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFifoOverflow.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFifoOverflow.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFifoOverflow.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxBufferOverflow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxBufferOverflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxBufferOverflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxBufferOverflow" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller indicating that the circular buffer overflowed.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxBufferOverflow.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxBufferOverflow.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxBufferOverflow.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxBufferOverflow.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxBufferOverflow.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxTransmissionError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxTransmissionError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxTransmissionError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxTransmissionError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller indicating that the transmission to the host was erroneous (while sampling).</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxTransmissionError.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxTransmissionError.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxTransmissionError.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxTransmissionError.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxTransmissionError.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingStarted">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxSamplingStarted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxSamplingStarted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingStarted" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller indicating that sampling has been started just before this response was issued.
+This package is received at the start of stream.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingStarted.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingStarted.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingStarted.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxSamplingStarted.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingStarted.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingStopped">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxSamplingStopped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxSamplingStopped"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingStopped" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller indicating that the sampling has been stopped (for whatever reason).</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingStopped.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingStopped.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingStopped.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxSamplingStopped.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingStopped.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingFinished">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxSamplingFinished</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxSamplingFinished"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingFinished" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller indicating that sampling has been finished successfully.
+This package is received at the end of stream.
+When this response is received, the sampling stream has been successfully transferred:</p>
+<ul class="simple">
+<li><p>stream is complete and</p></li>
+<li><p>without HW errors.</p></li>
+</ul>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingFinished.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingFinished.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingFinished.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxSamplingFinished.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingFinished.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingAborted">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxSamplingAborted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxSamplingAborted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingAborted" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller indicating that the sampling has been aborted upon user request.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingAborted.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingAborted.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxSamplingAborted.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxSamplingAborted.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxSamplingAborted.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxUnknownResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxUnknownResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unknown_header_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxUnknownResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxUnknownResponse" title="Link to this definition"></a></dt>
+<dd><p>Response is issued whenever a controller message could not be parsed successfully.</p>
+<p class="rubric">Initialization</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxUnknownResponse.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxUnknownResponse.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxUnknownResponse.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxAcceleration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxAcceleration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxAcceleration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxAcceleration" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response from controller transporting the currently measured acceleration data.
+It contains</p>
+<ul class="simple">
+<li><p>the sample counter (which shall always be +1 larger than previous counter) and</p></li>
+<li><p>the scaled acceleration data (controller must be in <code class="xref py py-class docutils literal notranslate"><span class="pre">py3dpaxxel.controller.constant.Scale.FULL_RES_4MG_LSB</span></code> scale mode)</p></li>
+</ul>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxAcceleration.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxAcceleration.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxAcceleration.FULL_RESOLUTION_LSB_SCALE">
+<span class="sig-name descname"><span class="pre">FULL_RESOLUTION_LSB_SCALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3.9</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxAcceleration.FULL_RESOLUTION_LSB_SCALE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxAcceleration.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxAcceleration.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxAcceleration.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxUptime">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxUptime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxUptime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxUptime" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response to get uptime transporting the elapsed milliseconds since last boot.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxUptime.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxUptime.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxUptime.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxUptime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxUptime.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxBufferStatus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxBufferStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxBufferStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxBufferStatus" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response to get buffer status transporting buffer information since last sampling-start.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxBufferStatus.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxBufferStatus.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxBufferStatus.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxBufferStatus.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxBufferStatus.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.BufferStatus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BufferStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size_bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_total</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_used_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">put_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">largest_tx_chunk_bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#BufferStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.BufferStatus" title="Link to this definition"></a></dt>
+<dd><p>Buffer status as received by RxBufferStatus.</p>
+<p class="rubric">Initialization</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFault">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxFault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFault"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFault" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFrame" title="py3dpaxxel.controller.transfer_types.RxFrame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.controller.transfer_types.RxFrame</span></code></a></p>
+<p>Response is issued whenever a controller fault occurred but the controller was still capable to transmit this message.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFault.LEN">
+<span class="sig-name descname"><span class="pre">LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFault.LEN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFault.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFault.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFault.__str__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RxFrameFromHeaderId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.12)"><span class="pre">bytearray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFrameFromHeaderId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId" title="Link to this definition"></a></dt>
+<dd><p>Parse response from bytes.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.MAPPING">
+<span class="sig-name descname"><span class="pre">MAPPING</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="py3dpaxxel.controller.constants.html#py3dpaxxel.controller.constants.TransportHeaderId" title="py3dpaxxel.controller.constants.TransportHeaderId"><span class="pre">py3dpaxxel.controller.constants.TransportHeaderId</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.12)"><span class="pre">Type</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxOutputDataRate" title="py3dpaxxel.controller.transfer_types.RxOutputDataRate"><span class="pre">py3dpaxxel.controller.transfer_types.RxOutputDataRate</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxRange" title="py3dpaxxel.controller.transfer_types.RxRange"><span class="pre">py3dpaxxel.controller.transfer_types.RxRange</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxScale" title="py3dpaxxel.controller.transfer_types.RxScale"><span class="pre">py3dpaxxel.controller.transfer_types.RxScale</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingStarted" title="py3dpaxxel.controller.transfer_types.RxSamplingStarted"><span class="pre">py3dpaxxel.controller.transfer_types.RxSamplingStarted</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingStopped" title="py3dpaxxel.controller.transfer_types.RxSamplingStopped"><span class="pre">py3dpaxxel.controller.transfer_types.RxSamplingStopped</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingFinished" title="py3dpaxxel.controller.transfer_types.RxSamplingFinished"><span class="pre">py3dpaxxel.controller.transfer_types.RxSamplingFinished</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingAborted" title="py3dpaxxel.controller.transfer_types.RxSamplingAborted"><span class="pre">py3dpaxxel.controller.transfer_types.RxSamplingAborted</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxUnknownResponse" title="py3dpaxxel.controller.transfer_types.RxUnknownResponse"><span class="pre">py3dpaxxel.controller.transfer_types.RxUnknownResponse</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.MAPPING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.unpack">
+<span class="sig-name descname"><span class="pre">unpack</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxOutputDataRate" title="py3dpaxxel.controller.transfer_types.RxOutputDataRate"><span class="pre">py3dpaxxel.controller.transfer_types.RxOutputDataRate</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxRange" title="py3dpaxxel.controller.transfer_types.RxRange"><span class="pre">py3dpaxxel.controller.transfer_types.RxRange</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxScale" title="py3dpaxxel.controller.transfer_types.RxScale"><span class="pre">py3dpaxxel.controller.transfer_types.RxScale</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxDeviceSetup" title="py3dpaxxel.controller.transfer_types.RxDeviceSetup"><span class="pre">py3dpaxxel.controller.transfer_types.RxDeviceSetup</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFifoOverflow" title="py3dpaxxel.controller.transfer_types.RxFifoOverflow"><span class="pre">py3dpaxxel.controller.transfer_types.RxFifoOverflow</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxBufferOverflow" title="py3dpaxxel.controller.transfer_types.RxBufferOverflow"><span class="pre">py3dpaxxel.controller.transfer_types.RxBufferOverflow</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingStarted" title="py3dpaxxel.controller.transfer_types.RxSamplingStarted"><span class="pre">py3dpaxxel.controller.transfer_types.RxSamplingStarted</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingStopped" title="py3dpaxxel.controller.transfer_types.RxSamplingStopped"><span class="pre">py3dpaxxel.controller.transfer_types.RxSamplingStopped</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingFinished" title="py3dpaxxel.controller.transfer_types.RxSamplingFinished"><span class="pre">py3dpaxxel.controller.transfer_types.RxSamplingFinished</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxSamplingAborted" title="py3dpaxxel.controller.transfer_types.RxSamplingAborted"><span class="pre">py3dpaxxel.controller.transfer_types.RxSamplingAborted</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFirmwareVersion" title="py3dpaxxel.controller.transfer_types.RxFirmwareVersion"><span class="pre">py3dpaxxel.controller.transfer_types.RxFirmwareVersion</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxUnknownResponse" title="py3dpaxxel.controller.transfer_types.RxUnknownResponse"><span class="pre">py3dpaxxel.controller.transfer_types.RxUnknownResponse</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxUptime" title="py3dpaxxel.controller.transfer_types.RxUptime"><span class="pre">py3dpaxxel.controller.transfer_types.RxUptime</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxBufferStatus" title="py3dpaxxel.controller.transfer_types.RxBufferStatus"><span class="pre">py3dpaxxel.controller.transfer_types.RxBufferStatus</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxFault" title="py3dpaxxel.controller.transfer_types.RxFault"><span class="pre">py3dpaxxel.controller.transfer_types.RxFault</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#py3dpaxxel.controller.transfer_types.RxTransmissionError" title="py3dpaxxel.controller.transfer_types.RxTransmissionError"><span class="pre">py3dpaxxel.controller.transfer_types.RxTransmissionError</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/controller/transfer_types.html#RxFrameFromHeaderId.unpack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.unpack" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Raoul Rubien.
+      <span class="lastupdated">Last updated on 03 Feb 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

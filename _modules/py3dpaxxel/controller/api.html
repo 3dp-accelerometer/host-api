@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3dpaxxel.controller.api &mdash; py3dpaxxel 0.1.16 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sphinx-toolbox-code.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx-toolbox.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sphinx_toolbox_installation.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d50bcae4"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../../_static/tabs.js?v=3030b3cb"></script>
+        <script src="../../../_static/sphinx_toolbox_installation.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            py3dpaxxel
+          </a>
+              <div class="version">
+                0.1.16
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html#getting-started">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Commandline Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#recording">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#recording-sequences">Recording Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#data-visualization">Data Visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidocs/index.html">API Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/3dp-accelerometer/py3dpaxxel">GitHub</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">py3dpaxxel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">py3dpaxxel.controller.api</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for py3dpaxxel.controller.api</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TextIO</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">serial.tools.list_ports</span> <span class="kn">import</span> <span class="n">comports</span>
+
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">OutputDataRate</span><span class="p">,</span> <span class="n">FaultCode</span>
+<span class="kn">from</span> <span class="nn">.serial</span> <span class="kn">import</span> <span class="n">CdcSerial</span>
+<span class="kn">from</span> <span class="nn">.transfer_types</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TxFrame</span><span class="p">,</span> <span class="n">RxUnknownResponse</span><span class="p">,</span> <span class="n">RxOutputDataRate</span><span class="p">,</span>
+                             <span class="n">RxScale</span><span class="p">,</span> <span class="n">RxRange</span><span class="p">,</span> <span class="n">RxSamplingStopped</span><span class="p">,</span> <span class="n">RxSamplingFinished</span><span class="p">,</span> <span class="n">RxSamplingAborted</span><span class="p">,</span>
+                             <span class="n">RxAcceleration</span><span class="p">,</span> <span class="n">RxSamplingStarted</span><span class="p">,</span> <span class="n">RxFifoOverflow</span><span class="p">,</span> <span class="n">RxDeviceSetup</span><span class="p">,</span> <span class="n">TxGetOutputDataRate</span><span class="p">,</span> <span class="n">TxSetOutputDataRate</span><span class="p">,</span> <span class="n">TxGetScale</span><span class="p">,</span> <span class="n">TxSetScale</span><span class="p">,</span> <span class="n">TxGetRange</span><span class="p">,</span> <span class="n">TxSetRange</span><span class="p">,</span>
+                             <span class="n">TxReboot</span><span class="p">,</span>
+                             <span class="n">TxSamplingStart</span><span class="p">,</span> <span class="n">TxSamplingStop</span><span class="p">,</span> <span class="n">RxFrameFromHeaderId</span><span class="p">,</span> <span class="n">TxGetFirmwareVersion</span><span class="p">,</span> <span class="n">RxFirmwareVersion</span><span class="p">,</span> <span class="n">FirmwareVersion</span><span class="p">,</span> <span class="n">RxFault</span><span class="p">,</span> <span class="n">RxUptime</span><span class="p">,</span> <span class="n">TxGetUptime</span><span class="p">,</span> <span class="n">TxGetBufferStatus</span><span class="p">,</span>
+                             <span class="n">RxBufferStatus</span><span class="p">,</span> <span class="n">BufferStatus</span><span class="p">,</span> <span class="n">RxBufferOverflow</span><span class="p">,</span> <span class="n">RxTransmissionError</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ErrorFifoOverflow">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.ErrorFifoOverflow">[docs]</a>
+<span class="k">class</span> <span class="nc">ErrorFifoOverflow</span><span class="p">(</span><span class="ne">IOError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;controller detected accelerometer FiFo overrun&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;controller detected FiFo overrun in the accelerometer sensor&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ErrorBufferOverflow">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.ErrorBufferOverflow">[docs]</a>
+<span class="k">class</span> <span class="nc">ErrorBufferOverflow</span><span class="p">(</span><span class="ne">IOError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;circular buffer overrun while sampling&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;ringbuffer overflow while sampling stream&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ErrorTransmissionError">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.ErrorTransmissionError">[docs]</a>
+<span class="k">class</span> <span class="nc">ErrorTransmissionError</span><span class="p">(</span><span class="ne">IOError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;transmission error to host occurred&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;transmission to host error occurred while sampling stream&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ErrorControllerFault">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.ErrorControllerFault">[docs]</a>
+<span class="k">class</span> <span class="nc">ErrorControllerFault</span><span class="p">(</span><span class="ne">IOError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;controller went to fault handler most likely remaining in endless loop; device reboot recommended&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="n">FaultCode</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;controller fault code=</span><span class="si">{</span><span class="n">code</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ErrorUnknownResponse">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.ErrorUnknownResponse">[docs]</a>
+<span class="k">class</span> <span class="nc">ErrorUnknownResponse</span><span class="p">(</span><span class="ne">IOError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;received unknown response from controller&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown response received :</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ErrorReadTimeout">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.ErrorReadTimeout">[docs]</a>
+<span class="k">class</span> <span class="nc">ErrorReadTimeout</span><span class="p">(</span><span class="ne">IOError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;timeout error: no message received since timeout-limit&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout_limit</span><span class="p">,</span> <span class="n">current_timeout_value</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;timeout occurred: no message received since timeout_limit_s=</span><span class="si">{</span><span class="n">timeout_limit</span><span class="si">}</span><span class="s2"> current_timeout_s=</span><span class="si">{</span><span class="n">current_timeout_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Py3dpAxxel">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel">[docs]</a>
+<span class="k">class</span> <span class="nc">Py3dpAxxel</span><span class="p">(</span><span class="n">CdcSerial</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation to manipulate the py3dpaxxel controller (firmware).</span>
+
+<span class="sd">    The implementation establishes the communication with the controller (tx/rx) and encoding + decoding of data packets.</span>
+<span class="sd">    Since the controller communicates in CDC mode, the data packets are very naive and consist only of header ID and payload.</span>
+<span class="sd">    No CRC, dynamic data length packet or escape sequence is considered.</span>
+<span class="sd">    The generic package structure is can be seen as follows:</span>
+<span class="sd">      - [ header | payload ]</span>
+<span class="sd">      - with header being 1 byte long, and</span>
+<span class="sd">      - payload 0-N bytes long.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DEVICE_VID</span> <span class="o">=</span> <span class="mh">0x1209</span>
+    <span class="s2">&quot;see https://pid.codes/1209/&quot;</span>
+    <span class="n">DEVICE_PID</span> <span class="o">=</span> <span class="mh">0xE11A</span>
+    <span class="s2">&quot;see https://pid.codes/1209/e11a/&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ser_dev_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">serial_read_timeout_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">serial_write_timeout_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param ser_dev_name: i.e. &quot;/dev/ttyACM0&quot;</span>
+<span class="sd">        :param serial_read_timeout_s: how long to wait for incoming bytes until next decoding attempt</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ser_dev_name</span><span class="p">,</span> <span class="n">serial_read_timeout_s</span><span class="p">,</span> <span class="n">serial_write_timeout_s</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Py3dpAxxel.get_devices_list_human_readable">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.get_devices_list_human_readable">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_devices_list_human_readable</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :return: list of devices, i.e. [&quot;/dev/ttyACM0&quot;, ...]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">devices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="n">cp</span> <span class="k">for</span> <span class="n">cp</span> <span class="ow">in</span> <span class="n">comports</span><span class="p">()</span> <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">vid</span> <span class="o">==</span> <span class="n">Py3dpAxxel</span><span class="o">.</span><span class="n">DEVICE_VID</span> <span class="ow">and</span> <span class="n">cp</span><span class="o">.</span><span class="n">pid</span> <span class="o">==</span> <span class="n">Py3dpAxxel</span><span class="o">.</span><span class="n">DEVICE_PID</span><span class="p">]:</span>
+            <span class="n">devices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">devices</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.get_devices_dict">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.get_devices_dict">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_devices_dict</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            dict of devices:</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;/dev/ttyACM0&quot;: {</span>
+<span class="sd">                         &quot;manufacturer&quot;: &quot;3DP Accelerometer&quot;,</span>
+<span class="sd">                         &quot;product&quot;: &quot;3dpaxxel&quot;,</span>
+<span class="sd">                         &quot;vendor_id&quot;: 4617,</span>
+<span class="sd">                         &quot;product_id&quot;: 57626,</span>
+<span class="sd">                         &quot;serial&quot;: &quot;3472348C3334&quot;</span>
+<span class="sd">                    }, ...</span>
+<span class="sd">                }</span>
+
+<span class="sd">        :return: dict of devices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">devices</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="n">cp</span> <span class="k">for</span> <span class="n">cp</span> <span class="ow">in</span> <span class="n">comports</span><span class="p">()</span> <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">vid</span> <span class="o">==</span> <span class="n">Py3dpAxxel</span><span class="o">.</span><span class="n">DEVICE_VID</span> <span class="ow">and</span> <span class="n">cp</span><span class="o">.</span><span class="n">pid</span> <span class="o">==</span> <span class="n">Py3dpAxxel</span><span class="o">.</span><span class="n">DEVICE_PID</span><span class="p">]:</span>
+            <span class="n">devices</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;manufacturer&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">manufacturer</span><span class="p">,</span> <span class="s2">&quot;product&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">product</span><span class="p">,</span> <span class="s2">&quot;vendor_id&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">vid</span><span class="p">,</span> <span class="s2">&quot;product_id&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="s2">&quot;serial&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">serial_number</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">devices</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel._send_frame_then_receive">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel._send_frame_then_receive">[docs]</a>
+    <span class="k">def</span> <span class="nf">_send_frame_then_receive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">TxFrame</span><span class="p">,</span> <span class="n">rx_bytes_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">bytearray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="n">rx_bytes_count</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel._send_frame">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel._send_frame">[docs]</a>
+    <span class="k">def</span> <span class="nf">_send_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">TxFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.get_firmware_version">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.get_firmware_version">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_firmware_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FirmwareVersion</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame_then_receive</span><span class="p">(</span><span class="n">TxGetFirmwareVersion</span><span class="p">(),</span> <span class="n">RxFirmwareVersion</span><span class="o">.</span><span class="n">LEN</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">:</span> <span class="n">RxFirmwareVersion</span> <span class="o">=</span> <span class="n">RxFrameFromHeaderId</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">unpack</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">version</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.get_output_data_rate">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.get_output_data_rate">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_output_data_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OutputDataRate</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame_then_receive</span><span class="p">(</span><span class="n">TxGetOutputDataRate</span><span class="p">(),</span> <span class="n">RxOutputDataRate</span><span class="o">.</span><span class="n">LEN</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">:</span> <span class="n">RxOutputDataRate</span> <span class="o">=</span> <span class="n">RxFrameFromHeaderId</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">unpack</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">outputDataRate</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.set_output_data_rate">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.set_output_data_rate">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_output_data_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">odr</span><span class="p">:</span> <span class="n">OutputDataRate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame</span><span class="p">(</span><span class="n">TxSetOutputDataRate</span><span class="p">(</span><span class="n">odr</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.get_scale">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.get_scale">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Scale</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame_then_receive</span><span class="p">(</span><span class="n">TxGetScale</span><span class="p">(),</span> <span class="n">RxScale</span><span class="o">.</span><span class="n">LEN</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">:</span> <span class="n">RxScale</span> <span class="o">=</span> <span class="n">RxFrameFromHeaderId</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">unpack</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">scale</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.set_scale">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.set_scale">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Scale</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame</span><span class="p">(</span><span class="n">TxSetScale</span><span class="p">(</span><span class="n">scale</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.get_range">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.get_range">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_range</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Range</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame_then_receive</span><span class="p">(</span><span class="n">TxGetRange</span><span class="p">(),</span> <span class="n">RxRange</span><span class="o">.</span><span class="n">LEN</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">:</span> <span class="n">RxRange</span> <span class="o">=</span> <span class="n">RxFrameFromHeaderId</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">unpack</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">range</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.set_range">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.set_range">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_range</span><span class="p">:</span> <span class="n">Range</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame</span><span class="p">(</span><span class="n">TxSetRange</span><span class="p">(</span><span class="n">data_range</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.reboot">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.reboot">[docs]</a>
+    <span class="k">def</span> <span class="nf">reboot</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame</span><span class="p">(</span><span class="n">TxReboot</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.start_sampling">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.start_sampling">[docs]</a>
+    <span class="k">def</span> <span class="nf">start_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">num_samples</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">num_samples</span> <span class="o">&lt;=</span> <span class="mi">65535</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;samples count out of bounds: 0 &lt; </span><span class="si">{</span><span class="n">num_samples</span><span class="si">}</span><span class="s2"> &lt; 65535&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame</span><span class="p">(</span><span class="n">TxSamplingStart</span><span class="p">(</span><span class="n">num_samples</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.stop_sampling">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.stop_sampling">[docs]</a>
+    <span class="k">def</span> <span class="nf">stop_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame</span><span class="p">(</span><span class="n">TxSamplingStop</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.get_uptime">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.get_uptime">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_uptime</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame_then_receive</span><span class="p">(</span><span class="n">TxGetUptime</span><span class="p">(),</span> <span class="n">RxUptime</span><span class="o">.</span><span class="n">LEN</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">:</span> <span class="n">RxUptime</span> <span class="o">=</span> <span class="n">RxFrameFromHeaderId</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">unpack</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">elapsed_ms</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.get_buffer_status">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.get_buffer_status">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_buffer_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BufferStatus</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_frame_then_receive</span><span class="p">(</span><span class="n">TxGetBufferStatus</span><span class="p">(),</span> <span class="n">RxBufferStatus</span><span class="o">.</span><span class="n">LEN</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">:</span> <span class="n">RxBufferStatus</span> <span class="o">=</span> <span class="n">RxFrameFromHeaderId</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">unpack</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">BufferStatus</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">size_bytes</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">capacity_total</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">capacity_used_max</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">put_count</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">take_count</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">largest_tx_chunk_bytes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Py3dpAxxel.decode">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.api.html#py3dpaxxel.controller.api.Py3dpAxxel.decode">[docs]</a>
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_on_stop</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+               <span class="n">message_timeout_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+               <span class="n">out_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+               <span class="n">do_stop_flag</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Decodes incoming stream from controller.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            run sample x y z</span>
+<span class="sd">            00 00000 +0553.800 +0179.400 +0616.200</span>
+<span class="sd">            00 00001 +0538.200 +0179.400 +0592.800</span>
+<span class="sd">            ...</span>
+<span class="sd">            00 06398 +0546.000 +0187.200 +0616.200</span>
+<span class="sd">            00 06399 +0530.400 +0187.200 +0639.600</span>
+<span class="sd">            # {&#39;firmware&#39;: {&#39;version&#39;: &#39;0.1.9&#39;}, \\</span>
+<span class="sd">            &#39;buffer&#39;: {&#39;size_bytes&#39;: &#39;57600&#39;, &#39;capacity_total&#39;: &#39;6400&#39;, &#39;capacity_used_max&#39;: &#39;1758&#39;, &#39;put_count&#39;: &#39;5000&#39;, &#39;take_count&#39;: &#39;5000&#39;, &#39;largest_tx_chunk_bytes&#39;: &#39;2043&#39;}, \\</span>
+<span class="sd">            &#39;sensor&#39;: {&#39;rate&#39;: &#39;ODR1600&#39;, &#39;range&#39;: &#39;G4&#39;, &#39;scale&#39;: &#39;FULL_RES_4MG_LSB&#39;}, \\</span>
+<span class="sd">            &#39;samples&#39;: {&#39;requested&#39;: &#39;6400&#39;, &#39;received&#39;: &#39;6400&#39;}} \\</span>
+
+<span class="sd">        In the above example `6400` samples were received with sequence/stream number `0`.</span>
+<span class="sd">        The sensor had an output data rate of ODR3200 (`3,2kSamples/s`),</span>
+<span class="sd">        range of `4g` and the scale was set at full resolution (`1LSB=3.9mg`).</span>
+
+<span class="sd">        :param return_on_stop: Whether to return when first :class:`.RxSamplingStopped` package was seen or not.</span>
+<span class="sd">            If false, the sequence counter `seq` increases with each stream.</span>
+<span class="sd">        :param message_timeout_s: how long to wait until next message, :class:`.ErrorReadTimeout` is thrown, set to 0.0 to disable</span>
+<span class="sd">        :param out_file: where to save the decoded stream, set to None to disable</span>
+<span class="sd">        :param do_stop_flag: aborts decoder loop if set</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stream_meta_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+        <span class="n">sequence</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">num_samples_requested</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">num_samples_received</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+        <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+        <span class="n">timestamp_last_message_seen</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">do_stop_flag</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+            <span class="n">received_bytes</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">received_bytes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">timestamp_last_message_seen</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">message_timeout_s</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="n">current_delay_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">timestamp_last_message_seen</span>
+                <span class="k">if</span> <span class="n">current_delay_s</span> <span class="o">&gt;</span> <span class="n">message_timeout_s</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ErrorReadTimeout</span><span class="p">(</span><span class="n">message_timeout_s</span><span class="p">,</span> <span class="n">current_delay_s</span><span class="p">)</span>
+
+            <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">received_bytes</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">package</span> <span class="o">=</span> <span class="n">RxFrameFromHeaderId</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">unpack</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">package</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxUnknownResponse</span><span class="p">):</span>
+                        <span class="n">e</span> <span class="o">=</span> <span class="n">ErrorUnknownResponse</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">unknown_header_id</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">e</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxFifoOverflow</span><span class="p">):</span>
+                        <span class="n">e</span> <span class="o">=</span> <span class="n">ErrorFifoOverflow</span><span class="p">()</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">e</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxBufferOverflow</span><span class="p">):</span>
+                        <span class="n">e</span> <span class="o">=</span> <span class="n">ErrorBufferOverflow</span><span class="p">()</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">e</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxTransmissionError</span><span class="p">):</span>
+                        <span class="n">e</span> <span class="o">=</span> <span class="n">ErrorTransmissionError</span><span class="p">()</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">e</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxFault</span><span class="p">):</span>
+                        <span class="n">e</span> <span class="o">=</span> <span class="n">ErrorControllerFault</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">e</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxSamplingStarted</span><span class="p">):</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;seq sample x y z</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;#seq #sample x[mg] y[mg] z[mg]&quot;</span><span class="p">)</span>
+                        <span class="n">num_samples_received</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                        <span class="n">num_samples_requested</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="n">maxSamples</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxFirmwareVersion</span><span class="p">):</span>
+                        <span class="n">stream_meta_data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;firmware&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">package</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">string</span><span class="p">}})</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxBufferStatus</span><span class="p">):</span>
+                        <span class="n">stream_meta_data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;buffer&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;size_bytes&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">package</span><span class="o">.</span><span class="n">size_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;capacity_total&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">package</span><span class="o">.</span><span class="n">capacity_total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;capacity_used_max&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">package</span><span class="o">.</span><span class="n">capacity_used_max</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;put_count&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">package</span><span class="o">.</span><span class="n">put_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;take_count&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">package</span><span class="o">.</span><span class="n">take_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;largest_tx_chunk_bytes&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">package</span><span class="o">.</span><span class="n">largest_tx_chunk_bytes</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">}})</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxAcceleration</span><span class="p">):</span>
+                        <span class="n">acceleration</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sequence</span><span class="si">:</span><span class="s2">02</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="k">assert</span> <span class="n">num_samples_received</span> <span class="o">==</span> <span class="n">package</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;sequence error: expected=</span><span class="si">{</span><span class="n">num_samples_received</span><span class="si">}</span><span class="s2"> vs current=</span><span class="si">{</span><span class="n">package</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="n">num_samples_received</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="k">if</span> <span class="n">num_samples_received</span> <span class="o">&gt;</span> <span class="mi">65535</span><span class="p">:</span>
+                            <span class="n">num_samples_received</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">acceleration</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="n">acceleration</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxDeviceSetup</span><span class="p">):</span>
+                        <span class="n">stream_meta_data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;sensor&quot;</span><span class="p">:</span> <span class="nb">eval</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">RxDeviceSetup</span><span class="o">.</span><span class="n">REPR_FILTER_REGEX</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">package</span><span class="p">))</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))})</span>
+                        <span class="n">stream_meta_data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;requested&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_samples_requested</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;received&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_samples_received</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="p">}})</span>
+                        <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;# &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">stream_meta_data</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;rx: Device Setup: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">stream_meta_data</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="p">(</span><span class="n">RxSamplingStopped</span><span class="p">,</span> <span class="n">RxSamplingFinished</span><span class="p">,</span> <span class="n">RxSamplingAborted</span><span class="p">)):</span>
+                        <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxSamplingFinished</span><span class="p">):</span>
+                            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">package</span><span class="p">)</span><span class="si">}</span><span class="s2"> at sample </span><span class="si">{</span><span class="n">num_samples_received</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">RxSamplingStopped</span><span class="p">):</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rx: </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sequence </span><span class="si">{</span><span class="n">sequence</span><span class="si">:</span><span class="s2">02</span><span class="si">}</span><span class="s2">: processed </span><span class="si">{</span><span class="n">num_samples_received</span><span class="si">}</span><span class="s2"> samples in </span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> s &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="p">(</span><span class="n">num_samples_received</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">elapsed_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> samples/s; &quot;</span>
+                                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">((</span><span class="n">num_samples_received</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">RxAcceleration</span><span class="o">.</span><span class="n">LEN</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">elapsed_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> baud)&quot;</span><span class="p">)</span>
+                        <span class="n">sequence</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                        <span class="k">if</span> <span class="n">return_on_stop</span> <span class="ow">or</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="k">return</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;decoder stops ahead of time after </span><span class="si">{</span><span class="n">num_samples_received</span><span class="si">}</span><span class="s2"> samples because stop flag was set&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Raoul Rubien.
+      <span class="lastupdated">Last updated on 03 Feb 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

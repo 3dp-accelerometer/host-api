@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3dpaxxel.controller.runner &mdash; py3dpaxxel 0.1.16 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sphinx-toolbox-code.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx-toolbox.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sphinx_toolbox_installation.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d50bcae4"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../../_static/tabs.js?v=3030b3cb"></script>
+        <script src="../../../_static/sphinx_toolbox_installation.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            py3dpaxxel
+          </a>
+              <div class="version">
+                0.1.16
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html#getting-started">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Commandline Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#recording">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#recording-sequences">Recording Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#data-visualization">Data Visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidocs/index.html">API Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/3dp-accelerometer/py3dpaxxel">GitHub</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">py3dpaxxel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">py3dpaxxel.controller.runner</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for py3dpaxxel.controller.runner</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">.api</span> <span class="kn">import</span> <span class="n">Py3dpAxxel</span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">OutputDataRate</span><span class="p">,</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Scale</span>
+
+
+<div class="viewcode-block" id="ControllerRunner">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.runner.html#py3dpaxxel.controller.runner.ControllerRunner">[docs]</a>
+<span class="k">class</span> <span class="nc">ControllerRunner</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+            <span class="n">controller_serial_dev_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+            <span class="n">controller_do_list_devices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="s2">&quot;j&quot;</span><span class="p">]],</span>
+            <span class="n">controller_do_reboot</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+            <span class="n">sensor_set_output_data_rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OutputDataRate</span><span class="p">],</span>
+            <span class="n">sensor_set_scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Scale</span><span class="p">],</span>
+            <span class="n">sensor_set_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Range</span><span class="p">],</span>
+            <span class="n">sensor_get_firmware_version</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">sensor_get_output_data_rate</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">sensor_get_scale</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">sensor_get_range</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">sensor_get_uptime</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">sensor_get_buffer_statistic</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">sensor_get_all_settings</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">stream_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+            <span class="n">stream_stop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+            <span class="n">stream_decode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+            <span class="n">stream_decode_timeout_s</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+            <span class="n">stream_wait</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">output_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+            <span class="n">output_stdout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">controller_serial_dev_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller_do_list_devices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="s2">&quot;j&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">controller_do_list_devices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller_do_reboot</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">controller_do_reboot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_output_data_rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OutputDataRate</span><span class="p">]</span> <span class="o">=</span> <span class="n">sensor_set_output_data_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_scale</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Scale</span><span class="p">]</span> <span class="o">=</span> <span class="n">sensor_set_scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_range</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Range</span><span class="p">]</span> <span class="o">=</span> <span class="n">sensor_set_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_firmware_version</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">sensor_get_firmware_version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_output_data_rate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">sensor_get_output_data_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_scale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">sensor_get_scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">sensor_get_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_uptime</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">sensor_get_uptime</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_buffer_statistic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">sensor_get_buffer_statistic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_all_settings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">sensor_get_all_settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_stop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_stop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_decode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_decode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_wait</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">stream_wait</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_stdout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_stdout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_decode_timeout_s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">stream_decode_timeout_s</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">stream_decode_timeout_s</span>
+
+<div class="viewcode-block" id="ControllerRunner.run">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.controller.runner.html#py3dpaxxel.controller.runner.ControllerRunner.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;device&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller_do_list_devices</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;j&quot;</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller_do_list_devices</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">Py3dpAxxel</span><span class="o">.</span><span class="n">get_devices_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="s2">&quot;h&quot;</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller_do_list_devices</span><span class="p">:</span>
+                    <span class="n">_x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">Py3dpAxxel</span><span class="o">.</span><span class="n">get_devices_list_human_readable</span><span class="p">()]</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller_do_reboot</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;device reboot&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">sensor</span><span class="o">.</span><span class="n">reboot</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;noting to do&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;set&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_output_data_rate</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;send outputdatarate=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_output_data_rate</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">sensor</span><span class="o">.</span><span class="n">set_output_data_rate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_output_data_rate</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_scale</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;send scale=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_scale</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">sensor</span><span class="o">.</span><span class="n">set_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_scale</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_range</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;send range=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_range</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">sensor</span><span class="o">.</span><span class="n">set_range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor_set_range</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;noting to do&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;get&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_firmware_version</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;request firmware version&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;firmware.version=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_firmware_version</span><span class="p">()</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_output_data_rate</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;request odr&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sensor.odr=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_output_data_rate</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_scale</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;request scale&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sensor.scale=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_scale</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_range</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;request range&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sensor.range=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_range</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_uptime</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;request uptime&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.uptime=</span><span class="si">{</span><span class="n">sensor</span><span class="o">.</span><span class="n">get_uptime</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_buffer_statistic</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;request buffer statistic&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">status</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_buffer_status</span><span class="p">()</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.size_bytes=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">size_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.capacity_total=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">capacity_total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.capacity_used_max=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">capacity_used_max</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.put_count=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">put_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.take_count=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">take_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.largest_tx_chunk_bytes=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">largest_tx_chunk_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_get_all_settings</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;firmware.version=</span><span class="si">{</span><span class="n">sensor</span><span class="o">.</span><span class="n">get_firmware_version</span><span class="p">()</span><span class="o">.</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sensor.odr=</span><span class="si">{</span><span class="n">sensor</span><span class="o">.</span><span class="n">get_output_data_rate</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sensor.scale=</span><span class="si">{</span><span class="n">sensor</span><span class="o">.</span><span class="n">get_scale</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sensor.range=</span><span class="si">{</span><span class="n">sensor</span><span class="o">.</span><span class="n">get_range</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.uptime_s=</span><span class="si">{</span><span class="n">sensor</span><span class="o">.</span><span class="n">get_uptime</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">status</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">get_buffer_status</span><span class="p">()</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.size_bytes=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">size_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.capacity_total=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">capacity_total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.capacity_used_max=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">capacity_used_max</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.put_count=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">put_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.take_count=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">take_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;device.buffer.largest_tx_chunk_bytes=</span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">largest_tx_chunk_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;noting to do&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;stream&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sampling start n=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_start</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">sensor</span><span class="o">.</span><span class="n">start_sampling</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_start</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_stop</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;sampling stop&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">sensor</span><span class="o">.</span><span class="n">stop_sampling</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;noting to do&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;decode&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_stdout</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;decode stream to stdout&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                    <span class="n">sensor</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">return_on_stop</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_wait</span><span class="p">,</span>
+                                  <span class="n">message_timeout_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_decode_timeout_s</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;decode stream to file </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="n">Py3dpAxxel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller_serial_dev_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">sensor</span><span class="p">:</span>
+                        <span class="n">sensor</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">return_on_stop</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_wait</span><span class="p">,</span>
+                                      <span class="n">message_timeout_s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_decode_timeout_s</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;noting to do&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="mi">0</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Raoul Rubien.
+      <span class="lastupdated">Last updated on 03 Feb 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

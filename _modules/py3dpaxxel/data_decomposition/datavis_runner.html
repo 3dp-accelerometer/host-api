@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3dpaxxel.data_decomposition.datavis_runner &mdash; py3dpaxxel 0.1.16 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sphinx-toolbox-code.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx-toolbox.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sphinx_toolbox_installation.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d50bcae4"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../../_static/tabs.js?v=3030b3cb"></script>
+        <script src="../../../_static/sphinx_toolbox_installation.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            py3dpaxxel
+          </a>
+              <div class="version">
+                0.1.16
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html#getting-started">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Commandline Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#recording">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#recording-sequences">Recording Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scripts.html#data-visualization">Data Visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidocs/index.html">API Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/3dp-accelerometer/py3dpaxxel">GitHub</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">py3dpaxxel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">py3dpaxxel.data_decomposition.datavis_runner</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for py3dpaxxel.data_decomposition.datavis_runner</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
+<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
+
+<span class="kn">from</span> <span class="nn">py3dpaxxel.data_decomposition.datavis_algorithms</span> <span class="kn">import</span> <span class="n">DataVisFftAlgorithms1D</span><span class="p">,</span> <span class="n">DataVisFftAlgorithms2D</span><span class="p">,</span> <span class="n">DataVisFftAlgorithms3D</span>
+<span class="kn">from</span> <span class="nn">py3dpaxxel.samples.loader</span> <span class="kn">import</span> <span class="n">Samples</span><span class="p">,</span> <span class="n">SamplesLoader</span>
+<span class="kn">from</span> <span class="nn">py3dpaxxel.storage.file_filter</span> <span class="kn">import</span> <span class="n">FileSelector</span>
+
+
+<div class="viewcode-block" id="DataVisualizerRunner">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.data_decomposition.datavis_runner.html#py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner">[docs]</a>
+<span class="k">class</span> <span class="nc">DataVisualizerRunner</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">input_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">algorithm_d1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">algorithm_d2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">algorithm_d3</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">output_save</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                 <span class="n">output_plot</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">input_filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">algorithm_d1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">algorithm_d2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d3</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">algorithm_d3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">do_save_to_file</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">output_save</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">do_plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">output_plot</span>
+
+<div class="viewcode-block" id="DataVisualizerRunner._fft_1d">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.data_decomposition.datavis_runner.html#py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._fft_1d">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_fft_1d</span><span class="p">(</span><span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">Samples</span><span class="p">,</span> <span class="n">window_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">save_filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+
+        <span class="n">fig_acc</span><span class="p">:</span> <span class="n">Figure</span>
+        <span class="n">axes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span>
+        <span class="n">num_fft_axes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">DataVisFftAlgorithms1D</span><span class="p">()</span><span class="o">.</span><span class="n">algorithms</span><span class="p">)</span> <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="n">fig_acc</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span> <span class="o">+</span> <span class="n">num_fft_axes</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">fig_acc</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Acceleration over Time / FFT&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">window_title</span><span class="p">)</span> <span class="k">if</span> <span class="n">window_title</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">window_title</span><span class="p">:</span>
+            <span class="n">fig_acc</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">set_window_title</span><span class="p">(</span><span class="n">window_title</span><span class="p">)</span>
+        <span class="c1"># fig_acc.canvas.manager. full_screen_toggle()</span>
+        <span class="n">fig_acc</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">60</span> <span class="o">/</span> <span class="mf">2.45</span><span class="p">,</span> <span class="mi">30</span> <span class="o">/</span> <span class="mf">2.45</span><span class="p">)</span>
+
+        <span class="n">xax</span><span class="p">,</span> <span class="n">yax</span><span class="p">,</span> <span class="n">zax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">xax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">timestamp_ms</span><span class="p">,</span> <span class="n">samples</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+        <span class="n">yax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">timestamp_ms</span><span class="p">,</span> <span class="n">samples</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+        <span class="n">zax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">timestamp_ms</span><span class="p">,</span> <span class="n">samples</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">xax</span><span class="p">,</span> <span class="n">yax</span><span class="p">,</span> <span class="n">zax</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;acc [mg]&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;time [ms]&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">])</span>
+
+        <span class="c1"># signal re-construction to verify loss: ifft(fft())</span>
+        <span class="c1"># FftAlgorithms1D.plot_ifft(samples, xax, yax, zax)</span>
+
+        <span class="c1"># fft</span>
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="n">fft_ax_nr</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">DataVisFftAlgorithms1D</span><span class="p">()</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">fftax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">fft_ax_nr</span><span class="p">]</span>
+                <span class="n">DataVisFftAlgorithms1D</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">fftax</span><span class="p">)</span>
+                <span class="n">fft_ax_nr</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fftax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">DataVisFftAlgorithms1D</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">fftax</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">save_filename</span><span class="p">:</span>
+            <span class="n">fig_acc</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="DataVisualizerRunner._fft_2d">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.data_decomposition.datavis_runner.html#py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._fft_2d">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_fft_2d</span><span class="p">(</span><span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">Samples</span><span class="p">,</span> <span class="n">_window_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">_save_filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">DataVisFftAlgorithms2D</span><span class="p">()</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">DataVisFftAlgorithms2D</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DataVisFftAlgorithms2D</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DataVisualizerRunner._trajectory_3d">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.data_decomposition.datavis_runner.html#py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._trajectory_3d">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_trajectory_3d</span><span class="p">(</span><span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">Samples</span><span class="p">,</span> <span class="n">_window_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">_save_filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">DataVisFftAlgorithms2D</span><span class="p">()</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">DataVisFftAlgorithms3D</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DataVisFftAlgorithms3D</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DataVisualizerRunner.run">
+<a class="viewcode-back" href="../../../apidocs/py3dpaxxel/py3dpaxxel.data_decomposition.datavis_runner.html#py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;algo&quot;</span><span class="p">:</span>
+
+            <span class="n">fs</span> <span class="o">=</span> <span class="p">(</span><span class="n">FileSelector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_filename</span><span class="p">))</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;selected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="si">}</span><span class="s2"> for plotting from </span><span class="si">{</span><span class="n">fs</span><span class="o">.</span><span class="n">directory</span><span class="si">}</span><span class="s2"> (filter: </span><span class="si">{</span><span class="n">fs</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;file </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">full_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)):</span>
+                <span class="n">file</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">loader</span> <span class="o">=</span> <span class="n">SamplesLoader</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">full_path</span><span class="p">)</span>
+                <span class="n">samples</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+                <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;found odd number of samples, FFT needs even length of sample&quot;</span>
+
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;processing input file </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">file</span><span class="o">.</span><span class="n">filename_ext</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+                <span class="n">window_title</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">filename_no_ext</span>
+                <span class="n">out_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">filename_no_ext</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_save_to_file</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">out_filename</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rendering image </span><span class="si">{</span><span class="n">file</span><span class="o">.</span><span class="n">filename_no_ext</span><span class="si">}</span><span class="s2"> upon user request&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_fft_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d1</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">window_title</span><span class="p">,</span> <span class="n">out_filename</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_fft_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d2</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">window_title</span><span class="p">,</span> <span class="n">out_filename</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d3</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_trajectory_3d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm_d3</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">window_title</span><span class="p">,</span> <span class="n">out_filename</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;nothing to do&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_plot</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;plotting data...&quot;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;plotting skipped upon user request&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;nothing to do&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Raoul Rubien.
+      <span class="lastupdated">Last updated on 03 Feb 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

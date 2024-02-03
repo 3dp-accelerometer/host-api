@@ -1,0 +1,58 @@
+:py:mod:`py3dpaxxel.sampling_tasks.series_argument_generator`
+=============================================================
+
+.. py:module:: py3dpaxxel.sampling_tasks.series_argument_generator
+
+.. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`RunArgs <py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs>`
+     - .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs
+          :summary:
+   * - :py:obj:`RunArgsGenerator <py3dpaxxel.sampling_tasks.series_argument_generator.RunArgsGenerator>`
+     - .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgsGenerator
+          :summary:
+
+API
+~~~
+
+.. py:class:: RunArgs(sequence: int, axis: typing.Literal[x, y, z], frequency_hz: int, zeta_em2: int, file_prefix_1: str, file_prefix_2: str, file_prefix_3: str)
+   :canonical: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs
+
+   .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs.__init__
+
+   .. py:property:: filename
+      :canonical: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs.filename
+
+      .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs.filename
+
+   .. py:method:: __str__()
+      :canonical: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs.__str__
+
+.. py:class:: RunArgsGenerator(sequence_repeat_count: int, fx_start_hz: int, fx_stop_hz: int, fx_step_hz: int, zeta_start_em2: int, zeta_stop_em2: int, zeta_step_em2: int, axis: typing.List[typing.Literal[x, y, z]], out_file_prefix_1: str, out_file_prefix_2: str)
+   :canonical: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgsGenerator
+
+   .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgsGenerator
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgsGenerator.__init__
+
+   .. py:method:: generate() -> typing.List[py3dpaxxel.sampling_tasks.series_argument_generator.RunArgs]
+      :canonical: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgsGenerator.generate
+
+      .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.series_argument_generator.RunArgsGenerator.generate

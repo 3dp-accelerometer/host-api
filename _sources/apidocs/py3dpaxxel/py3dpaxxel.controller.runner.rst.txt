@@ -1,0 +1,38 @@
+:py:mod:`py3dpaxxel.controller.runner`
+======================================
+
+.. py:module:: py3dpaxxel.controller.runner
+
+.. autodoc2-docstring:: py3dpaxxel.controller.runner
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`ControllerRunner <py3dpaxxel.controller.runner.ControllerRunner>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.runner.ControllerRunner
+          :summary:
+
+API
+~~~
+
+.. py:class:: ControllerRunner(command: typing.Optional[str], controller_serial_dev_name: typing.Optional[str], controller_do_list_devices: typing.Optional[typing.Literal[h, j]], controller_do_reboot: typing.Optional[bool], sensor_set_output_data_rate: typing.Optional[py3dpaxxel.controller.constants.OutputDataRate], sensor_set_scale: typing.Optional[py3dpaxxel.controller.constants.Scale], sensor_set_range: typing.Optional[py3dpaxxel.controller.constants.Range], sensor_get_firmware_version: bool, sensor_get_output_data_rate: bool, sensor_get_scale: bool, sensor_get_range: bool, sensor_get_uptime: bool, sensor_get_buffer_statistic: bool, sensor_get_all_settings: bool, stream_start: typing.Optional[int], stream_stop: typing.Optional[bool], stream_decode: typing.Optional[bool], stream_decode_timeout_s: typing.Optional[float], stream_wait: bool, output_file: typing.Optional[str], output_stdout: typing.Optional[bool])
+   :canonical: py3dpaxxel.controller.runner.ControllerRunner
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.runner.ControllerRunner
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.runner.ControllerRunner.__init__
+
+   .. py:method:: run() -> int
+      :canonical: py3dpaxxel.controller.runner.ControllerRunner.run
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.runner.ControllerRunner.run

@@ -1,0 +1,102 @@
+:py:mod:`py3dpaxxel.data_decomposition.datavis_algorithms`
+==========================================================
+
+.. py:module:: py3dpaxxel.data_decomposition.datavis_algorithms
+
+.. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`DataVisFftAlgorithms1D <py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D>`
+     - .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D
+          :summary:
+   * - :py:obj:`DataVisFftAlgorithms2D <py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D>`
+     - .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D
+          :summary:
+   * - :py:obj:`DataVisFftAlgorithms3D <py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D>`
+     - .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D
+          :summary:
+
+API
+~~~
+
+.. py:class:: DataVisFftAlgorithms1D()
+   :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D.__init__
+
+   .. py:method:: plot_ifft(samples: py3dpaxxel.samples.loader.Samples, xax: matplotlib.axes.Axes, yax: matplotlib.axes.Axes, zax: matplotlib.axes.Axes)
+      :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D.plot_ifft
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D.plot_ifft
+
+   .. py:method:: _compute_fft_1d_discrete(samples: py3dpaxxel.samples.loader.Samples, fftax: matplotlib.axes.Axes) -> int
+      :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D._compute_fft_1d_discrete
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D._compute_fft_1d_discrete
+
+   .. py:method:: _compute_fft_1d_discrete_blackman_window(samples: py3dpaxxel.samples.loader.Samples, fftax: matplotlib.axes.Axes) -> int
+      :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D._compute_fft_1d_discrete_blackman_window
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D._compute_fft_1d_discrete_blackman_window
+
+   .. py:method:: compute(algo: str, samples: py3dpaxxel.samples.loader.Samples, fftax: matplotlib.axes.Axes)
+      :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D.compute
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms1D.compute
+
+.. py:class:: DataVisFftAlgorithms2D()
+   :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D.__init__
+
+   .. py:method:: _compute_fft_2d_discrete(_samples: py3dpaxxel.samples.loader.Samples) -> int
+      :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D._compute_fft_2d_discrete
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D._compute_fft_2d_discrete
+
+   .. py:method:: compute(algo: str, samples: py3dpaxxel.samples.loader.Samples) -> int
+      :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D.compute
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms2D.compute
+
+.. py:class:: DataVisFftAlgorithms3D()
+   :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D.__init__
+
+   .. py:method:: _compute_trajectory_from_acceleration_stream(samples: py3dpaxxel.samples.loader.Samples) -> int
+      :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D._compute_trajectory_from_acceleration_stream
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D._compute_trajectory_from_acceleration_stream
+
+   .. py:method:: compute(algo: str, samples: py3dpaxxel.samples.loader.Samples)
+      :canonical: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D.compute
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_algorithms.DataVisFftAlgorithms3D.compute

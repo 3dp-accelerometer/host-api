@@ -1,0 +1,40 @@
+:py:mod:`py3dpaxxel.octoprint.remote_api`
+=========================================
+
+.. py:module:: py3dpaxxel.octoprint.remote_api
+
+.. autodoc2-docstring:: py3dpaxxel.octoprint.remote_api
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`OctoRemoteApi <py3dpaxxel.octoprint.remote_api.OctoRemoteApi>`
+     - .. autodoc2-docstring:: py3dpaxxel.octoprint.remote_api.OctoRemoteApi
+          :summary:
+
+API
+~~~
+
+.. py:class:: OctoRemoteApi(api_key: str, address: str, port: int, do_dry_run: bool)
+   :canonical: py3dpaxxel.octoprint.remote_api.OctoRemoteApi
+
+   Bases: :py:obj:`py3dpaxxel.octoprint.api.OctoApi`
+
+   .. autodoc2-docstring:: py3dpaxxel.octoprint.remote_api.OctoRemoteApi
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.octoprint.remote_api.OctoRemoteApi.__init__
+
+   .. py:method:: send_commands(commands: typing.List[str]) -> int
+      :canonical: py3dpaxxel.octoprint.remote_api.OctoRemoteApi.send_commands
+
+      .. autodoc2-docstring:: py3dpaxxel.octoprint.remote_api.OctoRemoteApi.send_commands

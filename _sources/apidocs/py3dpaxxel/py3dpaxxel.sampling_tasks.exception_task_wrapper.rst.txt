@@ -1,0 +1,40 @@
+:py:mod:`py3dpaxxel.sampling_tasks.exception_task_wrapper`
+==========================================================
+
+.. py:module:: py3dpaxxel.sampling_tasks.exception_task_wrapper
+
+.. autodoc2-docstring:: py3dpaxxel.sampling_tasks.exception_task_wrapper
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`ExceptionTaskWrapper <py3dpaxxel.sampling_tasks.exception_task_wrapper.ExceptionTaskWrapper>`
+     - .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.exception_task_wrapper.ExceptionTaskWrapper
+          :summary:
+
+API
+~~~
+
+.. py:class:: ExceptionTaskWrapper(target: typing.Callable[[], None])
+   :canonical: py3dpaxxel.sampling_tasks.exception_task_wrapper.ExceptionTaskWrapper
+
+   Bases: :py:obj:`typing.Callable`\ [\ [\ ]\ , :py:obj:`None`\ ]
+
+   .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.exception_task_wrapper.ExceptionTaskWrapper
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.exception_task_wrapper.ExceptionTaskWrapper.__init__
+
+   .. py:method:: __call__() -> None
+      :canonical: py3dpaxxel.sampling_tasks.exception_task_wrapper.ExceptionTaskWrapper.__call__
+
+      .. autodoc2-docstring:: py3dpaxxel.sampling_tasks.exception_task_wrapper.ExceptionTaskWrapper.__call__

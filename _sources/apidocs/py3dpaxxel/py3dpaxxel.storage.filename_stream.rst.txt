@@ -1,0 +1,45 @@
+:py:mod:`py3dpaxxel.storage.filename_stream`
+============================================
+
+.. py:module:: py3dpaxxel.storage.filename_stream
+
+.. autodoc2-docstring:: py3dpaxxel.storage.filename_stream
+   :allowtitles:
+
+Module Contents
+---------------
+
+Functions
+~~~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`generate_filename_regex <py3dpaxxel.storage.filename_stream.generate_filename_regex>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename_stream.generate_filename_regex
+          :summary:
+   * - :py:obj:`generate_filename_for_run <py3dpaxxel.storage.filename_stream.generate_filename_for_run>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename_stream.generate_filename_for_run
+          :summary:
+   * - :py:obj:`generate_filename_for_run_regex <py3dpaxxel.storage.filename_stream.generate_filename_for_run_regex>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename_stream.generate_filename_for_run_regex
+          :summary:
+
+API
+~~~
+
+.. py:function:: generate_filename_regex() -> str
+   :canonical: py3dpaxxel.storage.filename_stream.generate_filename_regex
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename_stream.generate_filename_regex
+
+.. py:function:: generate_filename_for_run(prefix_1: typing.Optional[str], prefix_2: typing.Optional[str], prefix_3: typing.Optional[str], sequence_nr: int, axis: typing.Literal[x, y, z], frequency: int, zeta: int, ext: str = 'tsv', force_timestamp: typing.Optional[str] = None) -> str
+   :canonical: py3dpaxxel.storage.filename_stream.generate_filename_for_run
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename_stream.generate_filename_for_run
+
+.. py:function:: generate_filename_for_run_regex(with_prefix_1: bool = True, with_prefix_2: bool = False, with_prefix_3: bool = False) -> str
+   :canonical: py3dpaxxel.storage.filename_stream.generate_filename_for_run_regex
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename_stream.generate_filename_for_run_regex

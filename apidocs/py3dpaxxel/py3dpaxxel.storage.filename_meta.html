@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3dpaxxel.storage.filename_meta &mdash; py3dpaxxel 0.1.16 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-toolbox-code.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sphinx-toolbox.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx_toolbox_installation.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d50bcae4"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/sphinx_toolbox_installation.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="py3dpaxxel.data_decomposition" href="py3dpaxxel.data_decomposition.html" />
+    <link rel="prev" title="py3dpaxxel.storage.file_filter" href="py3dpaxxel.storage.file_filter.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py3dpaxxel
+          </a>
+              <div class="version">
+                0.1.16
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#getting-started">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Commandline Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#recording">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#recording-sequences">Recording Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#data-visualization">Data Visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="py3dpaxxel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="py3dpaxxel.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="py3dpaxxel.storage.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.storage</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.data_decomposition.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.data_decomposition</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.controller.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.controller</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.samples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.samples</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.gcode.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.gcode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.cli</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.log.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.log</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.sampling_tasks.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.sampling_tasks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.octoprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.octoprint</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="py3dpaxxel.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/3dp-accelerometer/py3dpaxxel">GitHub</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py3dpaxxel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="py3dpaxxel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel</span></code></a></li>
+          <li class="breadcrumb-item"><a href="py3dpaxxel.storage.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.storage</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.storage.filename_meta</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-py3dpaxxel.storage.filename_meta">
+<span id="py3dpaxxel-storage-filename-meta"></span><h1><a class="reference internal" href="#module-py3dpaxxel.storage.filename_meta" title="py3dpaxxel.storage.filename_meta"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.storage.filename_meta</span></code></a><a class="headerlink" href="#module-py3dpaxxel.storage.filename_meta" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMeta" title="py3dpaxxel.storage.filename_meta.FilenameMeta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilenameMeta</span></code></a></p></td>
+<td><p>Helper for parsing metadata from file name.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream" title="py3dpaxxel.storage.filename_meta.FilenameMetaStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilenameMetaStream</span></code></a></p></td>
+<td><p>Helper for parsing metadata from stream file name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft" title="py3dpaxxel.storage.filename_meta.FilenameMetaFft"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilenameMetaFft</span></code></a></p></td>
+<td><p>Helper for parsing metadata from FFT file name.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FilenameMeta</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta" title="Link to this definition"></a></dt>
+<dd><p>Helper for parsing metadata from file name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.prefix">
+<span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.prefix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.run_hash">
+<span class="sig-name descname"><span class="pre">run_hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.run_hash" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.stream_hash">
+<span class="sig-name descname"><span class="pre">stream_hash</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.stream_hash" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.year">
+<span class="sig-name descname"><span class="pre">year</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.year" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.month">
+<span class="sig-name descname"><span class="pre">month</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.month" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.day">
+<span class="sig-name descname"><span class="pre">day</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.day" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.hour">
+<span class="sig-name descname"><span class="pre">hour</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.hour" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.minute">
+<span class="sig-name descname"><span class="pre">minute</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.minute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.second">
+<span class="sig-name descname"><span class="pre">second</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.second" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.milli_second">
+<span class="sig-name descname"><span class="pre">milli_second</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.milli_second" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_nr">
+<span class="sig-name descname"><span class="pre">sequence_nr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_nr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_axis">
+<span class="sig-name descname"><span class="pre">sequence_axis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="pre">x</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">y</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">z</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_axis" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_frequency_hz">
+<span class="sig-name descname"><span class="pre">sequence_frequency_hz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_frequency_hz" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_zeta_em2">
+<span class="sig-name descname"><span class="pre">sequence_zeta_em2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_zeta_em2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.from_filename_meta">
+<span class="sig-name descname"><span class="pre">from_filename_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMeta" title="py3dpaxxel.storage.filename_meta.FilenameMeta"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMeta</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMeta" title="py3dpaxxel.storage.filename_meta.FilenameMeta"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMeta</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMeta.from_filename_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.from_filename_meta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.regex_group_mapping">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">regex_group_mapping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMeta.regex_group_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.regex_group_mapping" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMeta.read_attr_from_meta">
+<span class="sig-name descname"><span class="pre">read_attr_from_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">re_group_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMeta.read_attr_from_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMeta.read_attr_from_meta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaStream">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FilenameMetaStream</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMetaStream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMeta" title="py3dpaxxel.storage.filename_meta.FilenameMeta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMeta</span></code></a></p>
+<p>Helper for parsing metadata from stream file name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaStream.file_extension">
+<span class="sig-name descname"><span class="pre">file_extension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream.file_extension" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaStream.from_filename">
+<span class="sig-name descname"><span class="pre">from_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream" title="py3dpaxxel.storage.filename_meta.FilenameMetaStream"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMetaStream</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMetaStream.from_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream.from_filename" title="Link to this definition"></a></dt>
+<dd><p>Matches file name pattern and interprets data contained in name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> – input string, i.e. “axxel-0815-20231110-182030456-s100-ax-f200-z300.tsv”</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaStream.from_filename_meta_fft">
+<span class="sig-name descname"><span class="pre">from_filename_meta_fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft" title="py3dpaxxel.storage.filename_meta.FilenameMetaFft"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMetaFft</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream" title="py3dpaxxel.storage.filename_meta.FilenameMetaStream"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMetaStream</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMetaStream.from_filename_meta_fft"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream.from_filename_meta_fft" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaStream.to_filename">
+<span class="sig-name descname"><span class="pre">to_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_current_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMetaStream.to_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream.to_filename" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaFft">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FilenameMetaFft</span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMetaFft"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMeta" title="py3dpaxxel.storage.filename_meta.FilenameMeta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMeta</span></code></a></p>
+<p>Helper for parsing metadata from FFT file name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaFft.fft_axis">
+<span class="sig-name descname"><span class="pre">fft_axis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft.fft_axis" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaFft.file_extension">
+<span class="sig-name descname"><span class="pre">file_extension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft.file_extension" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaFft.from_filename">
+<span class="sig-name descname"><span class="pre">from_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft" title="py3dpaxxel.storage.filename_meta.FilenameMetaFft"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMetaFft</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMetaFft.from_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft.from_filename" title="Link to this definition"></a></dt>
+<dd><p>Matches file name pattern and interprets data contained in name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> – input string, i.e. “fft-0815-20231110-182030456-s100-ax-f200-z300-z.tsv”</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaFft.from_filename_meta_stream">
+<span class="sig-name descname"><span class="pre">from_filename_meta_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMetaStream" title="py3dpaxxel.storage.filename_meta.FilenameMetaStream"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMetaStream</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft" title="py3dpaxxel.storage.filename_meta.FilenameMetaFft"><span class="pre">py3dpaxxel.storage.filename_meta.FilenameMetaFft</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMetaFft.from_filename_meta_stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft.from_filename_meta_stream" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.storage.filename_meta.FilenameMetaFft.to_filename">
+<span class="sig-name descname"><span class="pre">to_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_current_timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/storage/filename_meta.html#FilenameMetaFft.to_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.storage.filename_meta.FilenameMetaFft.to_filename" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Raoul Rubien.
+      <span class="lastupdated">Last updated on 03 Feb 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

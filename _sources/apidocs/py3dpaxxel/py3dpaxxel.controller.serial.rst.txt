@@ -1,0 +1,137 @@
+:py:mod:`py3dpaxxel.controller.serial`
+======================================
+
+.. py:module:: py3dpaxxel.controller.serial
+
+.. autodoc2-docstring:: py3dpaxxel.controller.serial
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`CdcPySerial <py3dpaxxel.controller.serial.CdcPySerial>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial
+          :summary:
+   * - :py:obj:`CdcOsSerial <py3dpaxxel.controller.serial.CdcOsSerial>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial
+          :summary:
+   * - :py:obj:`CdcSerial <py3dpaxxel.controller.serial.CdcSerial>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcSerial
+          :summary:
+
+Data
+~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`__dev_flag_no_pyserial <py3dpaxxel.controller.serial.__dev_flag_no_pyserial>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.serial.__dev_flag_no_pyserial
+          :summary:
+
+API
+~~~
+
+.. py:class:: CdcPySerial(ser_dev_name: str, read_timeout: float, write_timeout: float)
+   :canonical: py3dpaxxel.controller.serial.CdcPySerial
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial.__init__
+
+   .. py:method:: write_bytes(tx_bytes: bytes, timeout: typing.Optional[float] = None) -> int
+      :canonical: py3dpaxxel.controller.serial.CdcPySerial.write_bytes
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial.write_bytes
+
+   .. py:method:: read_bytes(num_bytes: int, timeout: typing.Optional[float] = None) -> bytes
+      :canonical: py3dpaxxel.controller.serial.CdcPySerial.read_bytes
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial.read_bytes
+
+   .. py:method:: open() -> None
+      :canonical: py3dpaxxel.controller.serial.CdcPySerial.open
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial.open
+
+   .. py:method:: close() -> None
+      :canonical: py3dpaxxel.controller.serial.CdcPySerial.close
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial.close
+
+   .. py:method:: __enter__()
+      :canonical: py3dpaxxel.controller.serial.CdcPySerial.__enter__
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial.__enter__
+
+   .. py:method:: __exit__(exc_type, exc_val, exc_tb)
+      :canonical: py3dpaxxel.controller.serial.CdcPySerial.__exit__
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcPySerial.__exit__
+
+.. py:class:: CdcOsSerial(ser_dev_name: str, read_timeout: float, write_timeout: float)
+   :canonical: py3dpaxxel.controller.serial.CdcOsSerial
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial.__init__
+
+   .. py:method:: write_bytes(tx_bytes: bytes, _timeout: typing.Optional[float] = None) -> int
+      :canonical: py3dpaxxel.controller.serial.CdcOsSerial.write_bytes
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial.write_bytes
+
+   .. py:method:: read_bytes(num_bytes: int, timeout: typing.Optional[float] = None) -> bytes
+      :canonical: py3dpaxxel.controller.serial.CdcOsSerial.read_bytes
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial.read_bytes
+
+   .. py:method:: open() -> None
+      :canonical: py3dpaxxel.controller.serial.CdcOsSerial.open
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial.open
+
+   .. py:method:: close() -> None
+      :canonical: py3dpaxxel.controller.serial.CdcOsSerial.close
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial.close
+
+   .. py:method:: __enter__()
+      :canonical: py3dpaxxel.controller.serial.CdcOsSerial.__enter__
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial.__enter__
+
+   .. py:method:: __exit__(exc_type, exc_val, exc_tb)
+      :canonical: py3dpaxxel.controller.serial.CdcOsSerial.__exit__
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcOsSerial.__exit__
+
+.. py:data:: __dev_flag_no_pyserial
+   :canonical: py3dpaxxel.controller.serial.__dev_flag_no_pyserial
+   :type: bool
+   :value: False
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.serial.__dev_flag_no_pyserial
+
+.. py:class:: CdcSerial(ser_dev_name: str, read_timeout: float, write_timeout: float)
+   :canonical: py3dpaxxel.controller.serial.CdcSerial
+
+   Bases: :py:obj:`CdcOsSerial if __dev_flag_no_pyserial else CdcPySerial`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcSerial
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.serial.CdcSerial.__init__

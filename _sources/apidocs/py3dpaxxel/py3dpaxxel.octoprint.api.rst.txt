@@ -1,0 +1,35 @@
+:py:mod:`py3dpaxxel.octoprint.api`
+==================================
+
+.. py:module:: py3dpaxxel.octoprint.api
+
+.. autodoc2-docstring:: py3dpaxxel.octoprint.api
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`OctoApi <py3dpaxxel.octoprint.api.OctoApi>`
+     - .. autodoc2-docstring:: py3dpaxxel.octoprint.api.OctoApi
+          :summary:
+
+API
+~~~
+
+.. py:class:: OctoApi
+   :canonical: py3dpaxxel.octoprint.api.OctoApi
+
+   .. autodoc2-docstring:: py3dpaxxel.octoprint.api.OctoApi
+
+   .. py:method:: send_commands(commands: typing.List[str]) -> int
+      :canonical: py3dpaxxel.octoprint.api.OctoApi.send_commands
+      :abstractmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.octoprint.api.OctoApi.send_commands

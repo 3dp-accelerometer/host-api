@@ -1,0 +1,17 @@
+:py:mod:`py3dpaxxel.octoprint`
+==============================
+
+.. py:module:: py3dpaxxel.octoprint
+
+.. autodoc2-docstring:: py3dpaxxel.octoprint
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.octoprint.api
+   py3dpaxxel.octoprint.remote_api

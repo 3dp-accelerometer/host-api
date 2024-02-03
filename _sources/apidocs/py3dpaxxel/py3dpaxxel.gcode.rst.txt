@@ -1,0 +1,16 @@
+:py:mod:`py3dpaxxel.gcode`
+==========================
+
+.. py:module:: py3dpaxxel.gcode
+
+.. autodoc2-docstring:: py3dpaxxel.gcode
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.gcode.trajectory_generator

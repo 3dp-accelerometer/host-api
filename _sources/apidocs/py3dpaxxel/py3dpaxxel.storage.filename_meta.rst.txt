@@ -1,0 +1,214 @@
+:py:mod:`py3dpaxxel.storage.filename_meta`
+==========================================
+
+.. py:module:: py3dpaxxel.storage.filename_meta
+
+.. autodoc2-docstring:: py3dpaxxel.storage.filename_meta
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`FilenameMeta <py3dpaxxel.storage.filename_meta.FilenameMeta>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta
+          :summary:
+   * - :py:obj:`FilenameMetaStream <py3dpaxxel.storage.filename_meta.FilenameMetaStream>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaStream
+          :summary:
+   * - :py:obj:`FilenameMetaFft <py3dpaxxel.storage.filename_meta.FilenameMetaFft>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaFft
+          :summary:
+
+API
+~~~
+
+.. py:class:: FilenameMeta
+   :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta
+
+   .. py:attribute:: prefix
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.prefix
+      :type: typing.Optional[str]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.prefix
+
+   .. py:attribute:: run_hash
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.run_hash
+      :type: typing.Optional[str]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.run_hash
+
+   .. py:attribute:: stream_hash
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.stream_hash
+      :type: typing.Optional[str]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.stream_hash
+
+   .. py:attribute:: year
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.year
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.year
+
+   .. py:attribute:: month
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.month
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.month
+
+   .. py:attribute:: day
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.day
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.day
+
+   .. py:attribute:: hour
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.hour
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.hour
+
+   .. py:attribute:: minute
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.minute
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.minute
+
+   .. py:attribute:: second
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.second
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.second
+
+   .. py:attribute:: milli_second
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.milli_second
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.milli_second
+
+   .. py:attribute:: sequence_nr
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_nr
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_nr
+
+   .. py:attribute:: sequence_axis
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_axis
+      :type: typing.Optional[typing.Literal[x, y, z]]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_axis
+
+   .. py:attribute:: sequence_frequency_hz
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_frequency_hz
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_frequency_hz
+
+   .. py:attribute:: sequence_zeta_em2
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_zeta_em2
+      :type: typing.Optional[int]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.sequence_zeta_em2
+
+   .. py:method:: from_filename_meta(from_obj: py3dpaxxel.storage.filename_meta.FilenameMeta) -> py3dpaxxel.storage.filename_meta.FilenameMeta
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.from_filename_meta
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.from_filename_meta
+
+   .. py:method:: regex_group_mapping() -> typing.Dict[int, typing.Tuple[str, type]]
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.regex_group_mapping
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.regex_group_mapping
+
+   .. py:method:: read_attr_from_meta(filename: str, regex: str, re_group_mapping: typing.Dict[int, typing.Tuple[str, type]])
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMeta.read_attr_from_meta
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMeta.read_attr_from_meta
+
+.. py:class:: FilenameMetaStream
+   :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaStream
+
+   Bases: :py:obj:`py3dpaxxel.storage.filename_meta.FilenameMeta`
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaStream
+
+   .. py:attribute:: file_extension
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaStream.file_extension
+      :type: typing.Optional[str]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaStream.file_extension
+
+   .. py:method:: from_filename(filename: str) -> py3dpaxxel.storage.filename_meta.FilenameMetaStream
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaStream.from_filename
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaStream.from_filename
+
+   .. py:method:: from_filename_meta_fft(from_obj: py3dpaxxel.storage.filename_meta.FilenameMetaFft) -> py3dpaxxel.storage.filename_meta.FilenameMetaStream
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaStream.from_filename_meta_fft
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaStream.from_filename_meta_fft
+
+   .. py:method:: to_filename(with_current_timestamp: bool = True) -> str
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaStream.to_filename
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaStream.to_filename
+
+.. py:class:: FilenameMetaFft
+   :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaFft
+
+   Bases: :py:obj:`py3dpaxxel.storage.filename_meta.FilenameMeta`
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaFft
+
+   .. py:attribute:: fft_axis
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaFft.fft_axis
+      :type: typing.Optional[str]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaFft.fft_axis
+
+   .. py:attribute:: file_extension
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaFft.file_extension
+      :type: typing.Optional[str]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaFft.file_extension
+
+   .. py:method:: from_filename(filename: str) -> py3dpaxxel.storage.filename_meta.FilenameMetaFft
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaFft.from_filename
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaFft.from_filename
+
+   .. py:method:: from_filename_meta_stream(from_obj: py3dpaxxel.storage.filename_meta.FilenameMetaStream) -> py3dpaxxel.storage.filename_meta.FilenameMetaFft
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaFft.from_filename_meta_stream
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaFft.from_filename_meta_stream
+
+   .. py:method:: to_filename(with_current_timestamp: bool = True) -> str
+      :canonical: py3dpaxxel.storage.filename_meta.FilenameMetaFft.to_filename
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.filename_meta.FilenameMetaFft.to_filename

@@ -1,0 +1,200 @@
+:py:mod:`py3dpaxxel.controller.api`
+===================================
+
+.. py:module:: py3dpaxxel.controller.api
+
+.. autodoc2-docstring:: py3dpaxxel.controller.api
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`Py3dpAxxel <py3dpaxxel.controller.api.Py3dpAxxel>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel
+          :summary:
+
+API
+~~~
+
+.. py:exception:: ErrorFifoOverflow()
+   :canonical: py3dpaxxel.controller.api.ErrorFifoOverflow
+
+   Bases: :py:obj:`OSError`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorFifoOverflow
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorFifoOverflow.__init__
+
+.. py:exception:: ErrorBufferOverflow()
+   :canonical: py3dpaxxel.controller.api.ErrorBufferOverflow
+
+   Bases: :py:obj:`OSError`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorBufferOverflow
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorBufferOverflow.__init__
+
+.. py:exception:: ErrorTransmissionError()
+   :canonical: py3dpaxxel.controller.api.ErrorTransmissionError
+
+   Bases: :py:obj:`OSError`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorTransmissionError
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorTransmissionError.__init__
+
+.. py:exception:: ErrorControllerFault(code: py3dpaxxel.controller.constants.FaultCode)
+   :canonical: py3dpaxxel.controller.api.ErrorControllerFault
+
+   Bases: :py:obj:`OSError`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorControllerFault
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorControllerFault.__init__
+
+.. py:exception:: ErrorUnknownResponse(response)
+   :canonical: py3dpaxxel.controller.api.ErrorUnknownResponse
+
+   Bases: :py:obj:`OSError`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorUnknownResponse
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorUnknownResponse.__init__
+
+.. py:exception:: ErrorReadTimeout(timeout_limit, current_timeout_value)
+   :canonical: py3dpaxxel.controller.api.ErrorReadTimeout
+
+   Bases: :py:obj:`OSError`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorReadTimeout
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.ErrorReadTimeout.__init__
+
+.. py:class:: Py3dpAxxel(ser_dev_name: str, serial_read_timeout_s: float = 1, serial_write_timeout_s: float = 1)
+   :canonical: py3dpaxxel.controller.api.Py3dpAxxel
+
+   Bases: :py:obj:`py3dpaxxel.controller.serial.CdcSerial`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.__init__
+
+   .. py:attribute:: DEVICE_VID
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.DEVICE_VID
+      :value: 4617
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.DEVICE_VID
+
+   .. py:attribute:: DEVICE_PID
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.DEVICE_PID
+      :value: 57626
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.DEVICE_PID
+
+   .. py:method:: get_devices_list_human_readable() -> typing.List[str]
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.get_devices_list_human_readable
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.get_devices_list_human_readable
+
+   .. py:method:: get_devices_dict() -> typing.Dict[str, typing.Dict[str, str]]
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.get_devices_dict
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.get_devices_dict
+
+   .. py:method:: _send_frame_then_receive(frame: py3dpaxxel.controller.transfer_types.TxFrame, rx_bytes_count: int) -> bytearray
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel._send_frame_then_receive
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel._send_frame_then_receive
+
+   .. py:method:: _send_frame(frame: py3dpaxxel.controller.transfer_types.TxFrame) -> None
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel._send_frame
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel._send_frame
+
+   .. py:method:: get_firmware_version() -> py3dpaxxel.controller.transfer_types.FirmwareVersion
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.get_firmware_version
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.get_firmware_version
+
+   .. py:method:: get_output_data_rate() -> py3dpaxxel.controller.constants.OutputDataRate
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.get_output_data_rate
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.get_output_data_rate
+
+   .. py:method:: set_output_data_rate(odr: py3dpaxxel.controller.constants.OutputDataRate) -> None
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.set_output_data_rate
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.set_output_data_rate
+
+   .. py:method:: get_scale() -> py3dpaxxel.controller.constants.Scale
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.get_scale
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.get_scale
+
+   .. py:method:: set_scale(scale: py3dpaxxel.controller.constants.Scale) -> None
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.set_scale
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.set_scale
+
+   .. py:method:: get_range() -> py3dpaxxel.controller.constants.Range
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.get_range
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.get_range
+
+   .. py:method:: set_range(data_range: py3dpaxxel.controller.constants.Range) -> None
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.set_range
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.set_range
+
+   .. py:method:: reboot() -> None
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.reboot
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.reboot
+
+   .. py:method:: start_sampling(num_samples: int = 0) -> None
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.start_sampling
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.start_sampling
+
+   .. py:method:: stop_sampling() -> None
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.stop_sampling
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.stop_sampling
+
+   .. py:method:: get_uptime() -> int
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.get_uptime
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.get_uptime
+
+   .. py:method:: get_buffer_status() -> py3dpaxxel.controller.transfer_types.BufferStatus
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.get_buffer_status
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.get_buffer_status
+
+   .. py:method:: decode(return_on_stop: bool = False, message_timeout_s: float = 10.0, out_file: typing.Optional[typing.TextIO] = None, do_stop_flag: threading.Event = threading.Event()) -> None
+      :canonical: py3dpaxxel.controller.api.Py3dpAxxel.decode
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.api.Py3dpAxxel.decode

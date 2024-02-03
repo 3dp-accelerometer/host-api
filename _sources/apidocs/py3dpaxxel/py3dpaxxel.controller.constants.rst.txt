@@ -1,0 +1,424 @@
+:py:mod:`py3dpaxxel.controller.constants`
+=========================================
+
+.. py:module:: py3dpaxxel.controller.constants
+
+.. autodoc2-docstring:: py3dpaxxel.controller.constants
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`OutputDataRate <py3dpaxxel.controller.constants.OutputDataRate>`
+     -
+   * - :py:obj:`Range <py3dpaxxel.controller.constants.Range>`
+     -
+   * - :py:obj:`Scale <py3dpaxxel.controller.constants.Scale>`
+     -
+   * - :py:obj:`TransportHeaderId <py3dpaxxel.controller.constants.TransportHeaderId>`
+     -
+   * - :py:obj:`FaultCode <py3dpaxxel.controller.constants.FaultCode>`
+     -
+
+Data
+~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`OutputDataRateFromHz <py3dpaxxel.controller.constants.OutputDataRateFromHz>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRateFromHz
+          :summary:
+   * - :py:obj:`OutputDataRateDelay <py3dpaxxel.controller.constants.OutputDataRateDelay>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRateDelay
+          :summary:
+
+API
+~~~
+
+.. py:class:: OutputDataRate
+   :canonical: py3dpaxxel.controller.constants.OutputDataRate
+
+   Bases: :py:obj:`enum.Enum`
+
+   .. py:attribute:: ODR3200
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR3200
+      :value: 15
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR3200
+
+   .. py:attribute:: ODR1600
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR1600
+      :value: 14
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR1600
+
+   .. py:attribute:: ODR800
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR800
+      :value: 13
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR800
+
+   .. py:attribute:: ODR400
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR400
+      :value: 12
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR400
+
+   .. py:attribute:: ODR200
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR200
+      :value: 11
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR200
+
+   .. py:attribute:: ODR100
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR100
+      :value: 10
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR100
+
+   .. py:attribute:: ODR50
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR50
+      :value: 9
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR50
+
+   .. py:attribute:: ODR25
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR25
+      :value: 8
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR25
+
+   .. py:attribute:: ODR12_5
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR12_5
+      :value: 7
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR12_5
+
+   .. py:attribute:: ODR6_25
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR6_25
+      :value: 6
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR6_25
+
+   .. py:attribute:: ODR3_13
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR3_13
+      :value: 5
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR3_13
+
+   .. py:attribute:: ODR1_56
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR1_56
+      :value: 4
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR1_56
+
+   .. py:attribute:: ODR0_78
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR0_78
+      :value: 3
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR0_78
+
+   .. py:attribute:: ODR0_39
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR0_39
+      :value: 2
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR0_39
+
+   .. py:attribute:: ODR0_20
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR0_20
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR0_20
+
+   .. py:attribute:: ODR0_10
+      :canonical: py3dpaxxel.controller.constants.OutputDataRate.ODR0_10
+      :value: 0
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRate.ODR0_10
+
+.. py:data:: OutputDataRateFromHz
+   :canonical: py3dpaxxel.controller.constants.OutputDataRateFromHz
+   :value: None
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRateFromHz
+
+.. py:data:: OutputDataRateDelay
+   :canonical: py3dpaxxel.controller.constants.OutputDataRateDelay
+   :value: None
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.constants.OutputDataRateDelay
+
+.. py:class:: Range
+   :canonical: py3dpaxxel.controller.constants.Range
+
+   Bases: :py:obj:`enum.Enum`
+
+   .. py:attribute:: G2
+      :canonical: py3dpaxxel.controller.constants.Range.G2
+      :value: 0
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.Range.G2
+
+   .. py:attribute:: G4
+      :canonical: py3dpaxxel.controller.constants.Range.G4
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.Range.G4
+
+   .. py:attribute:: G8
+      :canonical: py3dpaxxel.controller.constants.Range.G8
+      :value: 2
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.Range.G8
+
+   .. py:attribute:: G16
+      :canonical: py3dpaxxel.controller.constants.Range.G16
+      :value: 3
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.Range.G16
+
+.. py:class:: Scale
+   :canonical: py3dpaxxel.controller.constants.Scale
+
+   Bases: :py:obj:`enum.Enum`
+
+   .. py:attribute:: FULL_RES_4MG_LSB
+      :canonical: py3dpaxxel.controller.constants.Scale.FULL_RES_4MG_LSB
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.Scale.FULL_RES_4MG_LSB
+
+   .. py:attribute:: SCALED_10BIT
+      :canonical: py3dpaxxel.controller.constants.Scale.SCALED_10BIT
+      :value: 0
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.Scale.SCALED_10BIT
+
+.. py:class:: TransportHeaderId
+   :canonical: py3dpaxxel.controller.constants.TransportHeaderId
+
+   Bases: :py:obj:`enum.Enum`
+
+   .. py:attribute:: TX_SET_OUTPUT_DATA_RATE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_SET_OUTPUT_DATA_RATE
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_SET_OUTPUT_DATA_RATE
+
+   .. py:attribute:: TX_GET_OUTPUT_DATA_RATE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_OUTPUT_DATA_RATE
+      :value: 2
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_OUTPUT_DATA_RATE
+
+   .. py:attribute:: TX_SET_RANGE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_SET_RANGE
+      :value: 3
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_SET_RANGE
+
+   .. py:attribute:: TX_GET_RANGE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_RANGE
+      :value: 4
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_RANGE
+
+   .. py:attribute:: TX_SET_SCALE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_SET_SCALE
+      :value: 5
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_SET_SCALE
+
+   .. py:attribute:: TX_GET_SCALE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_SCALE
+      :value: 6
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_SCALE
+
+   .. py:attribute:: TX_GET_DEVICE_SETUP
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_DEVICE_SETUP
+      :value: 7
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_DEVICE_SETUP
+
+   .. py:attribute:: TX_GET_FIRMWARE_VERSION
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_FIRMWARE_VERSION
+      :value: 8
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_FIRMWARE_VERSION
+
+   .. py:attribute:: TX_GET_UPTIME
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_UPTIME
+      :value: 9
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_UPTIME
+
+   .. py:attribute:: TX_GET_BUFFER_STATUS
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_BUFFER_STATUS
+      :value: 10
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_GET_BUFFER_STATUS
+
+   .. py:attribute:: TX_DEVICE_REBOOT
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_DEVICE_REBOOT
+      :value: 17
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_DEVICE_REBOOT
+
+   .. py:attribute:: TX_SAMPLING_START
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_SAMPLING_START
+      :value: 18
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_SAMPLING_START
+
+   .. py:attribute:: TX_SAMPLING_STOP
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.TX_SAMPLING_STOP
+      :value: 19
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.TX_SAMPLING_STOP
+
+   .. py:attribute:: RX_OUTPUT_DATA_RATE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_OUTPUT_DATA_RATE
+      :value: 25
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_OUTPUT_DATA_RATE
+
+   .. py:attribute:: RX_RANGE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_RANGE
+      :value: 26
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_RANGE
+
+   .. py:attribute:: RX_SCALE
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_SCALE
+      :value: 27
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_SCALE
+
+   .. py:attribute:: RX_DEVICE_SETUP
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_DEVICE_SETUP
+      :value: 28
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_DEVICE_SETUP
+
+   .. py:attribute:: RX_FIRMWARE_VERSION
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_FIRMWARE_VERSION
+      :value: 29
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_FIRMWARE_VERSION
+
+   .. py:attribute:: RX_UPTIME
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_UPTIME
+      :value: 30
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_UPTIME
+
+   .. py:attribute:: RX_BUFFER_STATUS
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_BUFFER_STATUS
+      :value: 31
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_BUFFER_STATUS
+
+   .. py:attribute:: RX_SAMPLING_FIFO_OVERFLOW
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_FIFO_OVERFLOW
+      :value: 33
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_FIFO_OVERFLOW
+
+   .. py:attribute:: RX_SAMPLING_STARTED
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_STARTED
+      :value: 34
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_STARTED
+
+   .. py:attribute:: RX_SAMPLING_FINISHED
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_FINISHED
+      :value: 35
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_FINISHED
+
+   .. py:attribute:: RX_SAMPLING_STOPPED
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_STOPPED
+      :value: 36
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_STOPPED
+
+   .. py:attribute:: RX_SAMPLING_ABORTED
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_ABORTED
+      :value: 37
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_ABORTED
+
+   .. py:attribute:: RX_ACCELERATION
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_ACCELERATION
+      :value: 38
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_ACCELERATION
+
+   .. py:attribute:: RX_FAULT
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_FAULT
+      :value: 39
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_FAULT
+
+   .. py:attribute:: RX_SAMPLING_BUFFER_OVERFLOW
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_BUFFER_OVERFLOW
+      :value: 40
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_SAMPLING_BUFFER_OVERFLOW
+
+   .. py:attribute:: RX_TRANSMISSION_ERROR
+      :canonical: py3dpaxxel.controller.constants.TransportHeaderId.RX_TRANSMISSION_ERROR
+      :value: 41
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.TransportHeaderId.RX_TRANSMISSION_ERROR
+
+.. py:class:: FaultCode
+   :canonical: py3dpaxxel.controller.constants.FaultCode
+
+   Bases: :py:obj:`enum.Enum`
+
+   .. py:attribute:: UNDEFINED
+      :canonical: py3dpaxxel.controller.constants.FaultCode.UNDEFINED
+      :value: 0
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.FaultCode.UNDEFINED
+
+   .. py:attribute:: NMI_ERROR
+      :canonical: py3dpaxxel.controller.constants.FaultCode.NMI_ERROR
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.FaultCode.NMI_ERROR
+
+   .. py:attribute:: USAGE_FAULT_HANDLER
+      :canonical: py3dpaxxel.controller.constants.FaultCode.USAGE_FAULT_HANDLER
+      :value: 2
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.FaultCode.USAGE_FAULT_HANDLER
+
+   .. py:attribute:: BUS_FAULT_HANDLER
+      :canonical: py3dpaxxel.controller.constants.FaultCode.BUS_FAULT_HANDLER
+      :value: 3
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.FaultCode.BUS_FAULT_HANDLER
+
+   .. py:attribute:: HARD_FAULT_HANDLER
+      :canonical: py3dpaxxel.controller.constants.FaultCode.HARD_FAULT_HANDLER
+      :value: 4
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.FaultCode.HARD_FAULT_HANDLER
+
+   .. py:attribute:: ERROR_HANDLER
+      :canonical: py3dpaxxel.controller.constants.FaultCode.ERROR_HANDLER
+      :value: 5
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.constants.FaultCode.ERROR_HANDLER

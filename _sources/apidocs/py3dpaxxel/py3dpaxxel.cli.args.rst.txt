@@ -1,0 +1,77 @@
+:py:mod:`py3dpaxxel.cli.args`
+=============================
+
+.. py:module:: py3dpaxxel.cli.args
+
+.. autodoc2-docstring:: py3dpaxxel.cli.args
+   :allowtitles:
+
+Module Contents
+---------------
+
+Functions
+~~~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`convert_xyz_pos_from_str <py3dpaxxel.cli.args.convert_xyz_pos_from_str>`
+     - .. autodoc2-docstring:: py3dpaxxel.cli.args.convert_xyz_pos_from_str
+          :summary:
+   * - :py:obj:`assert_uint_0_100 <py3dpaxxel.cli.args.assert_uint_0_100>`
+     - .. autodoc2-docstring:: py3dpaxxel.cli.args.assert_uint_0_100
+          :summary:
+   * - :py:obj:`assert_uint16 <py3dpaxxel.cli.args.assert_uint16>`
+     - .. autodoc2-docstring:: py3dpaxxel.cli.args.assert_uint16
+          :summary:
+   * - :py:obj:`convert_uint16_from_str <py3dpaxxel.cli.args.convert_uint16_from_str>`
+     - .. autodoc2-docstring:: py3dpaxxel.cli.args.convert_uint16_from_str
+          :summary:
+   * - :py:obj:`path_exists_and_is_file <py3dpaxxel.cli.args.path_exists_and_is_file>`
+     - .. autodoc2-docstring:: py3dpaxxel.cli.args.path_exists_and_is_file
+          :summary:
+   * - :py:obj:`path_exists_and_is_dir <py3dpaxxel.cli.args.path_exists_and_is_dir>`
+     - .. autodoc2-docstring:: py3dpaxxel.cli.args.path_exists_and_is_dir
+          :summary:
+   * - :py:obj:`convert_axis_from_str <py3dpaxxel.cli.args.convert_axis_from_str>`
+     - .. autodoc2-docstring:: py3dpaxxel.cli.args.convert_axis_from_str
+          :summary:
+
+API
+~~~
+
+.. py:function:: convert_xyz_pos_from_str(pos: str) -> typing.Tuple[int, int, int]
+   :canonical: py3dpaxxel.cli.args.convert_xyz_pos_from_str
+
+   .. autodoc2-docstring:: py3dpaxxel.cli.args.convert_xyz_pos_from_str
+
+.. py:function:: assert_uint_0_100(f: str) -> int
+   :canonical: py3dpaxxel.cli.args.assert_uint_0_100
+
+   .. autodoc2-docstring:: py3dpaxxel.cli.args.assert_uint_0_100
+
+.. py:function:: assert_uint16(n: str) -> int
+   :canonical: py3dpaxxel.cli.args.assert_uint16
+
+   .. autodoc2-docstring:: py3dpaxxel.cli.args.assert_uint16
+
+.. py:function:: convert_uint16_from_str(n: str) -> int
+   :canonical: py3dpaxxel.cli.args.convert_uint16_from_str
+
+   .. autodoc2-docstring:: py3dpaxxel.cli.args.convert_uint16_from_str
+
+.. py:function:: path_exists_and_is_file(file_path: str) -> str
+   :canonical: py3dpaxxel.cli.args.path_exists_and_is_file
+
+   .. autodoc2-docstring:: py3dpaxxel.cli.args.path_exists_and_is_file
+
+.. py:function:: path_exists_and_is_dir(file_path: str) -> str
+   :canonical: py3dpaxxel.cli.args.path_exists_and_is_dir
+
+   .. autodoc2-docstring:: py3dpaxxel.cli.args.path_exists_and_is_dir
+
+.. py:function:: convert_axis_from_str(axis_names: typing.Literal[py3dpaxxel.cli.args.convert_axis_from_str.x, py3dpaxxel.cli.args.convert_axis_from_str.y, py3dpaxxel.cli.args.convert_axis_from_str.z, xy, xz, yz, xyz]) -> typing.List[typing.Literal[py3dpaxxel.cli.args.convert_axis_from_str.x, py3dpaxxel.cli.args.convert_axis_from_str.y, py3dpaxxel.cli.args.convert_axis_from_str.z]]
+   :canonical: py3dpaxxel.cli.args.convert_axis_from_str
+
+   .. autodoc2-docstring:: py3dpaxxel.cli.args.convert_axis_from_str

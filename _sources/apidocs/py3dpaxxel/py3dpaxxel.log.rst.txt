@@ -1,0 +1,16 @@
+:py:mod:`py3dpaxxel.log`
+========================
+
+.. py:module:: py3dpaxxel.log
+
+.. autodoc2-docstring:: py3dpaxxel.log
+   :allowtitles:
+
+Submodules
+----------
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   py3dpaxxel.log.setup

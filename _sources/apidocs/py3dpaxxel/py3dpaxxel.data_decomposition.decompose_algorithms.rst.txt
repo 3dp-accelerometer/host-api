@@ -1,0 +1,62 @@
+:py:mod:`py3dpaxxel.data_decomposition.decompose_algorithms`
+============================================================
+
+.. py:module:: py3dpaxxel.data_decomposition.decompose_algorithms
+
+.. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`FftXYZ <py3dpaxxel.data_decomposition.decompose_algorithms.FftXYZ>`
+     - .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.FftXYZ
+          :summary:
+   * - :py:obj:`DecomposeFftAlgorithms1D <py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D>`
+     - .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D
+          :summary:
+
+API
+~~~
+
+.. py:class:: FftXYZ()
+   :canonical: py3dpaxxel.data_decomposition.decompose_algorithms.FftXYZ
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.FftXYZ
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.FftXYZ.__init__
+
+.. py:class:: DecomposeFftAlgorithms1D()
+   :canonical: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D.__init__
+
+   .. py:method:: _compute_fft_1d_discrete(samples: py3dpaxxel.samples.loader.Samples) -> py3dpaxxel.data_decomposition.decompose_algorithms.FftXYZ
+      :canonical: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D._compute_fft_1d_discrete
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D._compute_fft_1d_discrete
+
+   .. py:method:: _compute_fft_1d_discrete_blackman_window(samples: py3dpaxxel.samples.loader.Samples) -> py3dpaxxel.data_decomposition.decompose_algorithms.FftXYZ
+      :canonical: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D._compute_fft_1d_discrete_blackman_window
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D._compute_fft_1d_discrete_blackman_window
+
+   .. py:method:: compute(algo: str, samples: py3dpaxxel.samples.loader.Samples) -> py3dpaxxel.data_decomposition.decompose_algorithms.FftXYZ
+      :canonical: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D.compute
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.decompose_algorithms.DecomposeFftAlgorithms1D.compute

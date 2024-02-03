@@ -1,0 +1,119 @@
+:py:mod:`py3dpaxxel.samples.samples`
+====================================
+
+.. py:module:: py3dpaxxel.samples.samples
+
+.. autodoc2-docstring:: py3dpaxxel.samples.samples
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`Samples <py3dpaxxel.samples.samples.Samples>`
+     - .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples
+          :summary:
+
+API
+~~~
+
+.. py:class:: Samples()
+   :canonical: py3dpaxxel.samples.samples.Samples
+
+   .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.__init__
+
+   .. py:attribute:: separation_s
+      :canonical: py3dpaxxel.samples.samples.Samples.separation_s
+      :type: typing.Optional[float]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.separation_s
+
+   .. py:attribute:: rate
+      :canonical: py3dpaxxel.samples.samples.Samples.rate
+      :type: py3dpaxxel.controller.constants.OutputDataRate
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.rate
+
+   .. py:attribute:: range
+      :canonical: py3dpaxxel.samples.samples.Samples.range
+      :type: typing.Optional[py3dpaxxel.controller.constants.Range]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.range
+
+   .. py:attribute:: scale
+      :canonical: py3dpaxxel.samples.samples.Samples.scale
+      :type: typing.Optional[py3dpaxxel.controller.constants.Scale]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.scale
+
+   .. py:attribute:: firmware_version
+      :canonical: py3dpaxxel.samples.samples.Samples.firmware_version
+      :type: typing.Optional[py3dpaxxel.controller.transfer_types.FirmwareVersion]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.firmware_version
+
+   .. py:attribute:: run
+      :canonical: py3dpaxxel.samples.samples.Samples.run
+      :value: []
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.run
+
+   .. py:attribute:: index
+      :canonical: py3dpaxxel.samples.samples.Samples.index
+      :value: []
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.index
+
+   .. py:attribute:: timestamp_ms
+      :canonical: py3dpaxxel.samples.samples.Samples.timestamp_ms
+      :value: []
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.timestamp_ms
+
+   .. py:attribute:: x
+      :canonical: py3dpaxxel.samples.samples.Samples.x
+      :value: []
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.x
+
+   .. py:attribute:: y
+      :canonical: py3dpaxxel.samples.samples.Samples.y
+      :value: []
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.y
+
+   .. py:attribute:: z
+      :canonical: py3dpaxxel.samples.samples.Samples.z
+      :value: []
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.z
+
+   .. py:method:: __len__()
+      :canonical: py3dpaxxel.samples.samples.Samples.__len__
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.__len__
+
+   .. py:method:: is_empty() -> bool
+      :canonical: py3dpaxxel.samples.samples.Samples.is_empty
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.is_empty
+
+   .. py:method:: has_meta() -> bool
+      :canonical: py3dpaxxel.samples.samples.Samples.has_meta
+
+      .. autodoc2-docstring:: py3dpaxxel.samples.samples.Samples.has_meta

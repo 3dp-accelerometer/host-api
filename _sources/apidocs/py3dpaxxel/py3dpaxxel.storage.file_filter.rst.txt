@@ -1,0 +1,92 @@
+:py:mod:`py3dpaxxel.storage.file_filter`
+========================================
+
+.. py:module:: py3dpaxxel.storage.file_filter
+
+.. autodoc2-docstring:: py3dpaxxel.storage.file_filter
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`File <py3dpaxxel.storage.file_filter.File>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File
+          :summary:
+   * - :py:obj:`FileSelector <py3dpaxxel.storage.file_filter.FileSelector>`
+     - .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.FileSelector
+          :summary:
+
+API
+~~~
+
+.. py:class:: File(full_path: str = 'file-does-not.exist')
+   :canonical: py3dpaxxel.storage.file_filter.File
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File.__init__
+
+   .. py:attribute:: full_path
+      :canonical: py3dpaxxel.storage.file_filter.File.full_path
+      :type: str
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File.full_path
+
+   .. py:attribute:: _full_path
+      :canonical: py3dpaxxel.storage.file_filter.File._full_path
+      :type: str
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File._full_path
+
+   .. py:attribute:: filename_ext
+      :canonical: py3dpaxxel.storage.file_filter.File.filename_ext
+      :type: str
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File.filename_ext
+
+   .. py:attribute:: filename_no_ext
+      :canonical: py3dpaxxel.storage.file_filter.File.filename_no_ext
+      :type: str
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File.filename_no_ext
+
+   .. py:attribute:: directory
+      :canonical: py3dpaxxel.storage.file_filter.File.directory
+      :type: str
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File.directory
+
+   .. py:attribute:: extension
+      :canonical: py3dpaxxel.storage.file_filter.File.extension
+      :type: str
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.File.extension
+
+.. py:class:: FileSelector(file_name_regexp: str)
+   :canonical: py3dpaxxel.storage.file_filter.FileSelector
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.FileSelector
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.FileSelector.__init__
+
+   .. py:method:: filter() -> typing.List[py3dpaxxel.storage.file_filter.File]
+      :canonical: py3dpaxxel.storage.file_filter.FileSelector.filter
+
+      .. autodoc2-docstring:: py3dpaxxel.storage.file_filter.FileSelector.filter

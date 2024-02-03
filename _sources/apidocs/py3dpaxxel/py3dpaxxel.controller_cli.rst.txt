@@ -1,0 +1,87 @@
+:py:mod:`py3dpaxxel.controller_cli`
+===================================
+
+.. py:module:: py3dpaxxel.controller_cli
+
+.. autodoc2-docstring:: py3dpaxxel.controller_cli
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`Args <py3dpaxxel.controller_cli.Args>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller_cli.Args
+          :summary:
+   * - :py:obj:`Runner <py3dpaxxel.controller_cli.Runner>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller_cli.Runner
+          :summary:
+
+Functions
+~~~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`args_for_sphinx <py3dpaxxel.controller_cli.args_for_sphinx>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller_cli.args_for_sphinx
+          :summary:
+
+API
+~~~
+
+.. py:function:: args_for_sphinx()
+   :canonical: py3dpaxxel.controller_cli.args_for_sphinx
+
+   .. autodoc2-docstring:: py3dpaxxel.controller_cli.args_for_sphinx
+
+.. py:class:: Args()
+   :canonical: py3dpaxxel.controller_cli.Args
+
+   .. autodoc2-docstring:: py3dpaxxel.controller_cli.Args
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller_cli.Args.__init__
+
+   .. py:method:: default_filename() -> str
+      :canonical: py3dpaxxel.controller_cli.Args.default_filename
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.controller_cli.Args.default_filename
+
+   .. py:method:: parse() -> py3dpaxxel.controller_cli.Args
+      :canonical: py3dpaxxel.controller_cli.Args.parse
+
+      .. autodoc2-docstring:: py3dpaxxel.controller_cli.Args.parse
+
+.. py:class:: Runner()
+   :canonical: py3dpaxxel.controller_cli.Runner
+
+   .. autodoc2-docstring:: py3dpaxxel.controller_cli.Runner
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller_cli.Runner.__init__
+
+   .. py:property:: args
+      :canonical: py3dpaxxel.controller_cli.Runner.args
+
+      .. autodoc2-docstring:: py3dpaxxel.controller_cli.Runner.args
+
+   .. py:property:: parser
+      :canonical: py3dpaxxel.controller_cli.Runner.parser
+
+      .. autodoc2-docstring:: py3dpaxxel.controller_cli.Runner.parser
+
+   .. py:method:: run() -> int
+      :canonical: py3dpaxxel.controller_cli.Runner.run
+
+      .. autodoc2-docstring:: py3dpaxxel.controller_cli.Runner.run

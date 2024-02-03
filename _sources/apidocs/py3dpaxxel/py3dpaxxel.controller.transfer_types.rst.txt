@@ -1,0 +1,692 @@
+:py:mod:`py3dpaxxel.controller.transfer_types`
+==============================================
+
+.. py:module:: py3dpaxxel.controller.transfer_types
+
+.. autodoc2-docstring:: py3dpaxxel.controller.transfer_types
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`Frame <py3dpaxxel.controller.transfer_types.Frame>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.Frame
+          :summary:
+   * - :py:obj:`TxFrame <py3dpaxxel.controller.transfer_types.TxFrame>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxFrame
+          :summary:
+   * - :py:obj:`TxGetFirmwareVersion <py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion
+          :summary:
+   * - :py:obj:`TxSetOutputDataRate <py3dpaxxel.controller.transfer_types.TxSetOutputDataRate>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetOutputDataRate
+          :summary:
+   * - :py:obj:`TxGetOutputDataRate <py3dpaxxel.controller.transfer_types.TxGetOutputDataRate>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetOutputDataRate
+          :summary:
+   * - :py:obj:`TxSetRange <py3dpaxxel.controller.transfer_types.TxSetRange>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetRange
+          :summary:
+   * - :py:obj:`TxGetRange <py3dpaxxel.controller.transfer_types.TxGetRange>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetRange
+          :summary:
+   * - :py:obj:`TxSetScale <py3dpaxxel.controller.transfer_types.TxSetScale>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetScale
+          :summary:
+   * - :py:obj:`TxGetScale <py3dpaxxel.controller.transfer_types.TxGetScale>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetScale
+          :summary:
+   * - :py:obj:`TxReboot <py3dpaxxel.controller.transfer_types.TxReboot>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxReboot
+          :summary:
+   * - :py:obj:`TxSamplingStart <py3dpaxxel.controller.transfer_types.TxSamplingStart>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSamplingStart
+          :summary:
+   * - :py:obj:`TxSamplingStop <py3dpaxxel.controller.transfer_types.TxSamplingStop>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSamplingStop
+          :summary:
+   * - :py:obj:`TxGetUptime <py3dpaxxel.controller.transfer_types.TxGetUptime>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetUptime
+          :summary:
+   * - :py:obj:`TxGetBufferStatus <py3dpaxxel.controller.transfer_types.TxGetBufferStatus>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetBufferStatus
+          :summary:
+   * - :py:obj:`RxFrame <py3dpaxxel.controller.transfer_types.RxFrame>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrame
+          :summary:
+   * - :py:obj:`FirmwareVersion <py3dpaxxel.controller.transfer_types.FirmwareVersion>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.FirmwareVersion
+          :summary:
+   * - :py:obj:`RxFirmwareVersion <py3dpaxxel.controller.transfer_types.RxFirmwareVersion>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFirmwareVersion
+          :summary:
+   * - :py:obj:`RxOutputDataRate <py3dpaxxel.controller.transfer_types.RxOutputDataRate>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxOutputDataRate
+          :summary:
+   * - :py:obj:`RxRange <py3dpaxxel.controller.transfer_types.RxRange>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxRange
+          :summary:
+   * - :py:obj:`RxScale <py3dpaxxel.controller.transfer_types.RxScale>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxScale
+          :summary:
+   * - :py:obj:`RxDeviceSetup <py3dpaxxel.controller.transfer_types.RxDeviceSetup>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxDeviceSetup
+          :summary:
+   * - :py:obj:`RxFifoOverflow <py3dpaxxel.controller.transfer_types.RxFifoOverflow>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFifoOverflow
+          :summary:
+   * - :py:obj:`RxBufferOverflow <py3dpaxxel.controller.transfer_types.RxBufferOverflow>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxBufferOverflow
+          :summary:
+   * - :py:obj:`RxTransmissionError <py3dpaxxel.controller.transfer_types.RxTransmissionError>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxTransmissionError
+          :summary:
+   * - :py:obj:`RxSamplingStarted <py3dpaxxel.controller.transfer_types.RxSamplingStarted>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingStarted
+          :summary:
+   * - :py:obj:`RxSamplingStopped <py3dpaxxel.controller.transfer_types.RxSamplingStopped>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingStopped
+          :summary:
+   * - :py:obj:`RxSamplingFinished <py3dpaxxel.controller.transfer_types.RxSamplingFinished>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingFinished
+          :summary:
+   * - :py:obj:`RxSamplingAborted <py3dpaxxel.controller.transfer_types.RxSamplingAborted>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingAborted
+          :summary:
+   * - :py:obj:`RxUnknownResponse <py3dpaxxel.controller.transfer_types.RxUnknownResponse>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxUnknownResponse
+          :summary:
+   * - :py:obj:`RxAcceleration <py3dpaxxel.controller.transfer_types.RxAcceleration>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxAcceleration
+          :summary:
+   * - :py:obj:`RxUptime <py3dpaxxel.controller.transfer_types.RxUptime>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxUptime
+          :summary:
+   * - :py:obj:`RxBufferStatus <py3dpaxxel.controller.transfer_types.RxBufferStatus>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxBufferStatus
+          :summary:
+   * - :py:obj:`BufferStatus <py3dpaxxel.controller.transfer_types.BufferStatus>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.BufferStatus
+          :summary:
+   * - :py:obj:`RxFault <py3dpaxxel.controller.transfer_types.RxFault>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFault
+          :summary:
+   * - :py:obj:`RxFrameFromHeaderId <py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId>`
+     - .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId
+          :summary:
+
+API
+~~~
+
+.. py:class:: Frame(header_id: py3dpaxxel.controller.constants.TransportHeaderId, payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.Frame
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.Frame
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.Frame.__init__
+
+.. py:class:: TxFrame(header_id: py3dpaxxel.controller.constants.TransportHeaderId, payload: bytearray = bytearray())
+   :canonical: py3dpaxxel.controller.transfer_types.TxFrame
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.Frame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxFrame
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxFrame.__init__
+
+   .. py:method:: pack() -> bytearray
+      :canonical: py3dpaxxel.controller.transfer_types.TxFrame.pack
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxFrame.pack
+
+.. py:class:: TxGetFirmwareVersion()
+   :canonical: py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetFirmwareVersion.__init__
+
+.. py:class:: TxSetOutputDataRate(odr: py3dpaxxel.controller.constants.OutputDataRate)
+   :canonical: py3dpaxxel.controller.transfer_types.TxSetOutputDataRate
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetOutputDataRate
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetOutputDataRate.__init__
+
+.. py:class:: TxGetOutputDataRate()
+   :canonical: py3dpaxxel.controller.transfer_types.TxGetOutputDataRate
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetOutputDataRate
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetOutputDataRate.__init__
+
+.. py:class:: TxSetRange(data_range: py3dpaxxel.controller.constants.Range)
+   :canonical: py3dpaxxel.controller.transfer_types.TxSetRange
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetRange
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetRange.__init__
+
+.. py:class:: TxGetRange()
+   :canonical: py3dpaxxel.controller.transfer_types.TxGetRange
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetRange
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetRange.__init__
+
+.. py:class:: TxSetScale(scale: py3dpaxxel.controller.constants.Scale)
+   :canonical: py3dpaxxel.controller.transfer_types.TxSetScale
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetScale
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSetScale.__init__
+
+.. py:class:: TxGetScale()
+   :canonical: py3dpaxxel.controller.transfer_types.TxGetScale
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetScale
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetScale.__init__
+
+.. py:class:: TxReboot()
+   :canonical: py3dpaxxel.controller.transfer_types.TxReboot
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxReboot
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxReboot.__init__
+
+.. py:class:: TxSamplingStart(num_samples: int = 0)
+   :canonical: py3dpaxxel.controller.transfer_types.TxSamplingStart
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSamplingStart
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSamplingStart.__init__
+
+.. py:class:: TxSamplingStop()
+   :canonical: py3dpaxxel.controller.transfer_types.TxSamplingStop
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSamplingStop
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxSamplingStop.__init__
+
+.. py:class:: TxGetUptime()
+   :canonical: py3dpaxxel.controller.transfer_types.TxGetUptime
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetUptime
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetUptime.__init__
+
+.. py:class:: TxGetBufferStatus()
+   :canonical: py3dpaxxel.controller.transfer_types.TxGetBufferStatus
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.TxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetBufferStatus
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.TxGetBufferStatus.__init__
+
+.. py:class:: RxFrame
+   :canonical: py3dpaxxel.controller.transfer_types.RxFrame
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrame
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxFrame.LEN
+      :value: 0
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrame.LEN
+
+   .. py:method:: consume_all(payload: bytearray)
+      :canonical: py3dpaxxel.controller.transfer_types.RxFrame.consume_all
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrame.consume_all
+
+.. py:class:: FirmwareVersion(major: int = 0, minor: int = 0, patch: int = 0)
+   :canonical: py3dpaxxel.controller.transfer_types.FirmwareVersion
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.FirmwareVersion
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.FirmwareVersion.__init__
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.FirmwareVersion.__str__
+
+   .. py:method:: from_string(version: str) -> py3dpaxxel.controller.transfer_types.FirmwareVersion
+      :canonical: py3dpaxxel.controller.transfer_types.FirmwareVersion.from_string
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.FirmwareVersion.from_string
+
+.. py:class:: RxFirmwareVersion(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxFirmwareVersion
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFirmwareVersion
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFirmwareVersion.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxFirmwareVersion.LEN
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFirmwareVersion.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxFirmwareVersion.__str__
+
+.. py:class:: RxOutputDataRate(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxOutputDataRate
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxOutputDataRate
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxOutputDataRate.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxOutputDataRate.LEN
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxOutputDataRate.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxOutputDataRate.__str__
+
+.. py:class:: RxRange(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxRange
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxRange
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxRange.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxRange.LEN
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxRange.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxRange.__str__
+
+.. py:class:: RxScale(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxScale
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxScale
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxScale.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxScale.LEN
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxScale.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxScale.__str__
+
+.. py:class:: RxDeviceSetup(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxDeviceSetup
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxDeviceSetup
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxDeviceSetup.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxDeviceSetup.LEN
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxDeviceSetup.LEN
+
+   .. py:attribute:: REPR_FILTER_REGEX
+      :canonical: py3dpaxxel.controller.transfer_types.RxDeviceSetup.REPR_FILTER_REGEX
+      :type: str
+      :value: '^Device Setup.*({.*})$'
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxDeviceSetup.REPR_FILTER_REGEX
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxDeviceSetup.__str__
+
+.. py:class:: RxFifoOverflow(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxFifoOverflow
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFifoOverflow
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFifoOverflow.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxFifoOverflow.LEN
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFifoOverflow.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxFifoOverflow.__str__
+
+.. py:class:: RxBufferOverflow(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxBufferOverflow
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxBufferOverflow
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxBufferOverflow.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxBufferOverflow.LEN
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxBufferOverflow.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxBufferOverflow.__str__
+
+.. py:class:: RxTransmissionError(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxTransmissionError
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxTransmissionError
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxTransmissionError.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxTransmissionError.LEN
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxTransmissionError.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxTransmissionError.__str__
+
+.. py:class:: RxSamplingStarted(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxSamplingStarted
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingStarted
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingStarted.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxSamplingStarted.LEN
+      :value: 3
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingStarted.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxSamplingStarted.__str__
+
+.. py:class:: RxSamplingStopped(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxSamplingStopped
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingStopped
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingStopped.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxSamplingStopped.LEN
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingStopped.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxSamplingStopped.__str__
+
+.. py:class:: RxSamplingFinished(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxSamplingFinished
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingFinished
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingFinished.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxSamplingFinished.LEN
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingFinished.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxSamplingFinished.__str__
+
+.. py:class:: RxSamplingAborted(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxSamplingAborted
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingAborted
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingAborted.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxSamplingAborted.LEN
+      :value: 1
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxSamplingAborted.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxSamplingAborted.__str__
+
+.. py:class:: RxUnknownResponse(unknown_header_id: int)
+   :canonical: py3dpaxxel.controller.transfer_types.RxUnknownResponse
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxUnknownResponse
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxUnknownResponse.__init__
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxUnknownResponse.__str__
+
+.. py:class:: RxAcceleration(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxAcceleration
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxAcceleration
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxAcceleration.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxAcceleration.LEN
+      :value: 9
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxAcceleration.LEN
+
+   .. py:attribute:: FULL_RESOLUTION_LSB_SCALE
+      :canonical: py3dpaxxel.controller.transfer_types.RxAcceleration.FULL_RESOLUTION_LSB_SCALE
+      :value: 3.9
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxAcceleration.FULL_RESOLUTION_LSB_SCALE
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxAcceleration.__str__
+
+.. py:class:: RxUptime(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxUptime
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxUptime
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxUptime.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxUptime.LEN
+      :value: 5
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxUptime.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxUptime.__str__
+
+.. py:class:: RxBufferStatus(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxBufferStatus
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxBufferStatus
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxBufferStatus.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxBufferStatus.LEN
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxBufferStatus.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxBufferStatus.__str__
+
+.. py:class:: BufferStatus(size_bytes: int = 0, capacity_total: int = 0, capacity_used_max: int = 0, put_count: int = 0, take_count: int = 0, largest_tx_chunk_bytes: int = 0)
+   :canonical: py3dpaxxel.controller.transfer_types.BufferStatus
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.BufferStatus
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.BufferStatus.__init__
+
+.. py:class:: RxFault(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxFault
+
+   Bases: :py:obj:`py3dpaxxel.controller.transfer_types.RxFrame`
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFault
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFault.__init__
+
+   .. py:attribute:: LEN
+      :canonical: py3dpaxxel.controller.transfer_types.RxFault.LEN
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFault.LEN
+
+   .. py:method:: __str__() -> str
+      :canonical: py3dpaxxel.controller.transfer_types.RxFault.__str__
+
+.. py:class:: RxFrameFromHeaderId(payload: bytearray)
+   :canonical: py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.__init__
+
+   .. py:attribute:: MAPPING
+      :canonical: py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.MAPPING
+      :type: typing.Dict[py3dpaxxel.controller.constants.TransportHeaderId, typing.Type[typing.Union[py3dpaxxel.controller.transfer_types.RxOutputDataRate, py3dpaxxel.controller.transfer_types.RxRange, py3dpaxxel.controller.transfer_types.RxScale, py3dpaxxel.controller.transfer_types.RxSamplingStarted, py3dpaxxel.controller.transfer_types.RxSamplingStopped, py3dpaxxel.controller.transfer_types.RxSamplingFinished, py3dpaxxel.controller.transfer_types.RxSamplingAborted, py3dpaxxel.controller.transfer_types.RxUnknownResponse]]]
+      :value: None
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.MAPPING
+
+   .. py:method:: unpack() -> typing.Union[py3dpaxxel.controller.transfer_types.RxOutputDataRate, py3dpaxxel.controller.transfer_types.RxRange, py3dpaxxel.controller.transfer_types.RxScale, py3dpaxxel.controller.transfer_types.RxDeviceSetup, py3dpaxxel.controller.transfer_types.RxFifoOverflow, py3dpaxxel.controller.transfer_types.RxBufferOverflow, py3dpaxxel.controller.transfer_types.RxSamplingStarted, py3dpaxxel.controller.transfer_types.RxSamplingStopped, py3dpaxxel.controller.transfer_types.RxSamplingFinished, py3dpaxxel.controller.transfer_types.RxSamplingAborted, py3dpaxxel.controller.transfer_types.RxFirmwareVersion, py3dpaxxel.controller.transfer_types.RxUnknownResponse, py3dpaxxel.controller.transfer_types.RxUptime, py3dpaxxel.controller.transfer_types.RxBufferStatus, py3dpaxxel.controller.transfer_types.RxFault, py3dpaxxel.controller.transfer_types.RxTransmissionError, None]
+      :canonical: py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.unpack
+
+      .. autodoc2-docstring:: py3dpaxxel.controller.transfer_types.RxFrameFromHeaderId.unpack

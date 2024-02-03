@@ -1,0 +1,81 @@
+:py:mod:`py3dpaxxel.record_step`
+================================
+
+.. py:module:: py3dpaxxel.record_step
+
+.. autodoc2-docstring:: py3dpaxxel.record_step
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`Args <py3dpaxxel.record_step.Args>`
+     - .. autodoc2-docstring:: py3dpaxxel.record_step.Args
+          :summary:
+   * - :py:obj:`Runner <py3dpaxxel.record_step.Runner>`
+     - .. autodoc2-docstring:: py3dpaxxel.record_step.Runner
+          :summary:
+
+Functions
+~~~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`args_for_sphinx <py3dpaxxel.record_step.args_for_sphinx>`
+     - .. autodoc2-docstring:: py3dpaxxel.record_step.args_for_sphinx
+          :summary:
+
+API
+~~~
+
+.. py:function:: args_for_sphinx()
+   :canonical: py3dpaxxel.record_step.args_for_sphinx
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step.args_for_sphinx
+
+.. py:class:: Args()
+   :canonical: py3dpaxxel.record_step.Args
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step.Args
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step.Args.__init__
+
+   .. py:method:: parse() -> py3dpaxxel.record_step.Args
+      :canonical: py3dpaxxel.record_step.Args.parse
+
+      .. autodoc2-docstring:: py3dpaxxel.record_step.Args.parse
+
+.. py:class:: Runner()
+   :canonical: py3dpaxxel.record_step.Runner
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step.Runner
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.record_step.Runner.__init__
+
+   .. py:property:: args
+      :canonical: py3dpaxxel.record_step.Runner.args
+
+      .. autodoc2-docstring:: py3dpaxxel.record_step.Runner.args
+
+   .. py:property:: parser
+      :canonical: py3dpaxxel.record_step.Runner.parser
+
+      .. autodoc2-docstring:: py3dpaxxel.record_step.Runner.parser
+
+   .. py:method:: run() -> int
+      :canonical: py3dpaxxel.record_step.Runner.run
+
+      .. autodoc2-docstring:: py3dpaxxel.record_step.Runner.run

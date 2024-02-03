@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py3dpaxxel.samples.loader &mdash; py3dpaxxel 0.1.16 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-toolbox-code.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/sphinx-toolbox.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx_toolbox_installation.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d50bcae4"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/sphinx_toolbox_installation.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="py3dpaxxel.gcode" href="py3dpaxxel.gcode.html" />
+    <link rel="prev" title="py3dpaxxel.samples.samples" href="py3dpaxxel.samples.samples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py3dpaxxel
+          </a>
+              <div class="version">
+                0.1.16
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#getting-started">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Commandline Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#recording">Recording</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#recording-sequences">Recording Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html#data-visualization">Data Visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="py3dpaxxel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="py3dpaxxel.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.storage.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.storage</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.data_decomposition.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.data_decomposition</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.controller.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.controller</span></code></a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="py3dpaxxel.samples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.samples</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.gcode.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.gcode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.cli.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.cli</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.log.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.log</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.sampling_tasks.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.sampling_tasks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="py3dpaxxel.octoprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.octoprint</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="py3dpaxxel.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/3dp-accelerometer/py3dpaxxel">GitHub</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py3dpaxxel</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="py3dpaxxel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel</span></code></a></li>
+          <li class="breadcrumb-item"><a href="py3dpaxxel.samples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.samples</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.samples.loader</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-py3dpaxxel.samples.loader">
+<span id="py3dpaxxel-samples-loader"></span><h1><a class="reference internal" href="#module-py3dpaxxel.samples.loader" title="py3dpaxxel.samples.loader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3dpaxxel.samples.loader</span></code></a><a class="headerlink" href="#module-py3dpaxxel.samples.loader" title="Link to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<table class="autosummary longtable docutils align-left">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#py3dpaxxel.samples.loader.SamplesLoader" title="py3dpaxxel.samples.loader.SamplesLoader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplesLoader</span></code></a></p></td>
+<td><p>Class to load samples from a file.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="py3dpaxxel.samples.loader.SamplesLoader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SamplesLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/py3dpaxxel/samples/loader.html#SamplesLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.samples.loader.SamplesLoader" title="Link to this definition"></a></dt>
+<dd><p>Class to load samples from a file.</p>
+<p class="rubric">Initialization</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.samples.loader.SamplesLoader.TABULAR_DELIMITER_CHARACTER">
+<span class="sig-name descname"><span class="pre">TABULAR_DELIMITER_CHARACTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'</span> <span class="pre">'</span></em><a class="headerlink" href="#py3dpaxxel.samples.loader.SamplesLoader.TABULAR_DELIMITER_CHARACTER" title="Link to this definition"></a></dt>
+<dd><p>delimiter for .tsv file</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="py3dpaxxel.samples.loader.SamplesLoader.LINE_COMMENT_CHARACTER">
+<span class="sig-name descname"><span class="pre">LINE_COMMENT_CHARACTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'#'</span></em><a class="headerlink" href="#py3dpaxxel.samples.loader.SamplesLoader.LINE_COMMENT_CHARACTER" title="Link to this definition"></a></dt>
+<dd><p>comments must start at beginning of line with LINE_COMMENT_CHARACTER</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.samples.loader.SamplesLoader._try_read_metadata_if_any">
+<span class="sig-name descname"><span class="pre">_try_read_metadata_if_any</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="py3dpaxxel.samples.samples.html#py3dpaxxel.samples.samples.Samples" title="py3dpaxxel.samples.samples.Samples"><span class="pre">py3dpaxxel.samples.samples.Samples</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/samples/loader.html#SamplesLoader._try_read_metadata_if_any"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.samples.loader.SamplesLoader._try_read_metadata_if_any" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py3dpaxxel.samples.loader.SamplesLoader.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="py3dpaxxel.samples.samples.html#py3dpaxxel.samples.samples.Samples" title="py3dpaxxel.samples.samples.Samples"><span class="pre">py3dpaxxel.samples.samples.Samples</span></a></span></span><a class="reference internal" href="../../_modules/py3dpaxxel/samples/loader.html#SamplesLoader.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py3dpaxxel.samples.loader.SamplesLoader.load" title="Link to this definition"></a></dt>
+<dd><p>Loads stores stream file.</p>
+<ul class="simple">
+<li><p>ignores 1.st line which shall be the header (column names, i.e. <cite>run sample x y z</cite>)</p></li>
+<li><p>interprets sample data, i.e.: <cite>00 06399 +0538.200 +0187.200 +0600.600</cite></p></li>
+<li><p>interpret last line (metadata), i.e.: <cite># { …, sensor: {‘rate’: ‘ODR3200’, ‘range’: ‘G4’, ‘scale’: ‘FULL_RES_4MG_LSB’, ‘version’: ‘0.1.1’}}</cite></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Samples</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 Raoul Rubien.
+      <span class="lastupdated">Last updated on 03 Feb 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

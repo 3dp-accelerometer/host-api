@@ -1,0 +1,56 @@
+:py:mod:`py3dpaxxel.data_decomposition.datavis_runner`
+======================================================
+
+.. py:module:: py3dpaxxel.data_decomposition.datavis_runner
+
+.. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_runner
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`DataVisualizerRunner <py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner>`
+     - .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner
+          :summary:
+
+API
+~~~
+
+.. py:class:: DataVisualizerRunner(command: typing.Optional[str], input_filename: str, algorithm_d1: typing.Optional[str], algorithm_d2: typing.Optional[str], algorithm_d3: typing.Optional[str], output_save: bool, output_plot: bool)
+   :canonical: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner
+
+   .. rubric:: Initialization
+
+   .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner.__init__
+
+   .. py:method:: _fft_1d(algorithm: str, samples: py3dpaxxel.samples.loader.Samples, window_title: typing.Optional[str], save_filename: typing.Optional[str])
+      :canonical: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._fft_1d
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._fft_1d
+
+   .. py:method:: _fft_2d(algorithm: str, samples: py3dpaxxel.samples.loader.Samples, _window_title: typing.Optional[str], _save_filename: typing.Optional[str])
+      :canonical: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._fft_2d
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._fft_2d
+
+   .. py:method:: _trajectory_3d(algorithm: str, samples: py3dpaxxel.samples.loader.Samples, _window_title: typing.Optional[str], _save_filename: typing.Optional[str])
+      :canonical: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._trajectory_3d
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner._trajectory_3d
+
+   .. py:method:: run() -> int
+      :canonical: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner.run
+
+      .. autodoc2-docstring:: py3dpaxxel.data_decomposition.datavis_runner.DataVisualizerRunner.run

@@ -1,0 +1,35 @@
+:py:mod:`py3dpaxxel.gcode.trajectory_generator`
+===============================================
+
+.. py:module:: py3dpaxxel.gcode.trajectory_generator
+
+.. autodoc2-docstring:: py3dpaxxel.gcode.trajectory_generator
+   :allowtitles:
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. list-table::
+   :class: autosummary longtable
+   :align: left
+
+   * - :py:obj:`CoplanarTrajectory <py3dpaxxel.gcode.trajectory_generator.CoplanarTrajectory>`
+     - .. autodoc2-docstring:: py3dpaxxel.gcode.trajectory_generator.CoplanarTrajectory
+          :summary:
+
+API
+~~~
+
+.. py:class:: CoplanarTrajectory
+   :canonical: py3dpaxxel.gcode.trajectory_generator.CoplanarTrajectory
+
+   .. autodoc2-docstring:: py3dpaxxel.gcode.trajectory_generator.CoplanarTrajectory
+
+   .. py:method:: generate(axis: typing.Literal[x, y, z], start_xyz_mm: typing.Tuple[int, int, int], distance_mm: int = 10, step_repeat_count: int = 2, go_to_start: bool = True, return_to_start: bool = True, auto_home=True) -> typing.List[str]
+      :canonical: py3dpaxxel.gcode.trajectory_generator.CoplanarTrajectory.generate
+      :staticmethod:
+
+      .. autodoc2-docstring:: py3dpaxxel.gcode.trajectory_generator.CoplanarTrajectory.generate
