@@ -1,3 +1,4 @@
+import struct
 from typing import Dict, Type, Union, Optional
 
 from .constants import TransportHeaderId, OutputDataRate, Scale, Range, FaultCode
@@ -21,14 +22,15 @@ class TxFrame(Frame):
     def __init__(self, header_id: TransportHeaderId, payload: bytearray = bytearray()) -> None:
         super().__init__(header_id, payload)
 
-    def pack(self) -> bytes:
+    def pack(self) -> bytearray:
         """
         Packs header_id + payload into bytes: [header_id, byte1, byte2, ...]
         :return:
         """
-        values = [int(self.header_id.value)]
-        values.extend(self.payload)
-        return bytes(values)
+        package = bytearray()
+        package.extend(struct.pack(">c", bytes([self.header_id.value])))
+        package.extend(self.payload)
+        return package
 
 
 class TxGetFirmwareVersion(TxFrame):

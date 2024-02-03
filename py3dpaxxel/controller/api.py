@@ -74,7 +74,7 @@ class Py3dpAxxel(CdcSerial):
     DEVICE_VID = 0x1209
     "see https://pid.codes/1209/"
     DEVICE_PID = 0xE11A
-    "see https://pid.codes/1209/411A/"
+    "see https://pid.codes/1209/e11a/"
 
     def __init__(self, ser_dev_name: str, serial_read_timeout_s: float = 1, serial_write_timeout_s: float = 1) -> None:
         """
